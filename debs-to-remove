@@ -1,0 +1,126 @@
+wolfram-engine
+
+# LibreOffice
+libreoffice
+libreoffice-avmedia-backend-gstreamer
+libreoffice-base
+libreoffice-base-core
+libreoffice-base-drivers
+libreoffice-calc
+libreoffice-common
+libreoffice-core
+libreoffice-draw
+libreoffice-gtk
+libreoffice-impress
+libreoffice-java-common
+libreoffice-math
+libreoffice-report-builder-bin
+libreoffice-sdbc-hsqldb
+libreoffice-style-galaxy
+libreoffice-writer
+libmwaw-0.3-3
+libcmis-0.4-4
+libwps-0.3-3
+liborcus-0.8-0
+libcdr-0.1-1
+librevenge-0.0-0
+libfreehand-0.1-1
+libwpg-0.3-3
+libetonyek-0.1-1
+libabw-0.1-1
+libe-book-0.1-1
+libwpd-0.10-10
+libmspub-0.1-1
+libvisio-0.1-1
+libodfgen-0.1-1
+fonts-opensymbol
+python3-uno
+uno-libs3
+ure
+
+# Remove all web browsers except epiphany
+chromium-browser
+rpi-chromium-mods
+dillo
+libfltk1.3
+netsurf-gtk
+netsurf-common
+libmozjs185-1.0
+
+# Games
+minecraft-pi
+python-minecraftpi
+python3-minecraftpi
+penguinspuzzle
+python3-pgzero
+
+# "Scratch is a visual programming tool which allows the user to create
+# animations and games with a drag-and-drop interface."
+scratch
+nuscratch
+squeak-plugins-scratch
+
+# Graphical mail reader
+claws-mail
+claws-mail-i18n
+libcompfaceg1
+libetpan17
+
+# "Learn to code creatively by composing or performing music in an incredible
+# range of styles from classical & jazz to EDM."
+sonic-pi
+
+# "FreePats is a project to create a free and open collection of digital
+# instruments for music production."
+freepats
+
+# "SuperCollider is a platform for audio synthesis and algorithmic composition,
+# used by musicians, artists, and researchers working with sound."
+supercollider
+supercollider-common
+supercollider-ide
+supercollider-language
+supercollider-server
+supercollider-supernova
+libcwiid1
+
+# "TiMidity++ is a software synthesizer. It can play MIDI files by converting
+# them into PCM waveform data."
+timidity
+libesd0
+esound-common
+
+# Documentation not linked from the desktop menu
+debian-reference-en
+debian-reference-common
+
+# Remove duplicate boost libraries, keep only libboost-iostreams1.55.0
+libboost-iostreams1.54.0
+libboost-iostreams1.53.0
+libboost-iostreams1.50.0
+libboost-iostreams1.49.0
+
+# Remove all fonts not required by any other package
+fonts-sil-gentium-basic
+fonts-dejavu
+fonts-dejavu-extra
+xfonts-100dpi
+
+# "This package provides the CMap tables required to display PDF documents
+# containing CJK characters with libpoppler.  Users who want to view or create
+# PDF files in Chinese, Japanese, or Korean without embedded fonts will need
+# this package."
+poppler-data
+
+# Remove lxde-icon-theme (adwaita-icon-theme and pix-icons should suffice)
+# and the lxde meta-package requiring it
+lxde-icon-theme
+lxde
+
+# More wallpapers, icons and themes, the Foundation's PIXEL desktop seems to
+# work fine without them
+desktop-base
+gtk2-engines
+
+# Collides with the RevPi's hardware RTC
+fake-hwclock

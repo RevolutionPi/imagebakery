@@ -1,0 +1,18 @@
+Create custom images for Revolution Pi
+
+Intended usage:
+
+* Download latest Raspbian image:
+  curl -LO https://downloads.raspberrypi.org/raspbian_latest
+  unzip raspbian_latest
+  rm raspbian_latest
+
+* Shrink to fit on the eMMC of a CM1 or CM3
+  (requires root):
+  shrink_image.sh <raspbian-image> `date +%F`-raspbian-shrunk.img
+
+* Customize for Revolution Pi
+  (requires root, an armhf system (RasPi or VM), Internet connectivity and
+  the following custom packages in debs-to-install/: raspberrypi-kernel
+  revpi-webstatus pictory piserial pitest logi-rts revpi-wallpaper):
+  customize_image.sh `date +%F`-raspbian-shrunk.img
