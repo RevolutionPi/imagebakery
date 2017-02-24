@@ -41,6 +41,14 @@ echo piControl >> $IMAGEDIR/etc/modules
 sed -i -r -e 's/^(XKBLAYOUT).*/\1="de"/'		\
 	  -e 's/^(XKBVARIANT).*/\1="nodeadkeys"/'	\
 	  $IMAGEDIR/etc/default/keyboard
+sed -i -e '/country=GB/d' $IMAGEDIR/etc/wpa_supplicant/wpa_supplicant.conf
+cat >> $IMAGEDIR/etc/wpa_supplicant/wpa_supplicant.conf <<-EOF
+	# network={
+	#	ssid=""
+	#	psk=""
+	#	key_mgmt=WPA-PSK
+	# }
+EOF
 install -d -m 755 -o root -g root $IMAGEDIR/etc/revpi
 ln -s /var/www/pictory/projects/_config.rsc $IMAGEDIR/etc/revpi/config.rsc
 
