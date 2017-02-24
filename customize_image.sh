@@ -21,6 +21,7 @@ mount /dev/loop0p1 $IMAGEDIR/boot
 # copy templates
 cp $BAKERYDIR/templates/cmdline.txt $IMAGEDIR/boot
 cp $BAKERYDIR/templates/config.txt $IMAGEDIR/boot
+cp $BAKERYDIR/templates/revpi-aliases.sh $IMAGEDIR/etc/profile.d
 
 # copy piTest source code
 git clone https://github.com/RevolutionPi/piControl /tmp/piControl.$$
