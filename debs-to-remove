@@ -1,4 +1,5 @@
 wolfram-engine
+wolframscript
 
 # LibreOffice
 libreoffice
@@ -76,13 +77,7 @@ freepats
 
 # "SuperCollider is a platform for audio synthesis and algorithmic composition,
 # used by musicians, artists, and researchers working with sound."
-supercollider
-supercollider-common
-supercollider-ide
-supercollider-language
 supercollider-server
-supercollider-supernova
-libcwiid1
 
 # "TiMidity++ is a software synthesizer. It can play MIDI files by converting
 # them into PCM waveform data."
