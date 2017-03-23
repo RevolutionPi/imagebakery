@@ -23,6 +23,10 @@ cp $BAKERYDIR/templates/cmdline.txt $IMAGEDIR/boot
 cp $BAKERYDIR/templates/config.txt $IMAGEDIR/boot
 cp $BAKERYDIR/templates/revpi-aliases.sh $IMAGEDIR/etc/profile.d
 
+# bootstrap apt source, will be overwritten by revpi-repo package
+cp $BAKERYDIR/templates/revpi.gpg $IMAGEDIR/etc/apt/trusted.gpg.d
+cp $BAKERYDIR/templates/revpi.list $IMAGEDIR/etc/apt/sources.list.d
+
 # copy piTest source code
 git clone https://github.com/RevolutionPi/piControl /tmp/piControl.$$
 cp -pr /tmp/piControl.$$/piTest $IMAGEDIR/home/pi/demo
@@ -65,6 +69,8 @@ echo 'APT::Install-Recommends "false";' >> $IMAGEDIR/etc/apt/apt.conf
 # download and install missing packages
 chroot $IMAGEDIR apt-get update
 chroot $IMAGEDIR apt-get -y install `egrep -v '^#' $BAKERYDIR/debs-to-download`
+dpkg --root $IMAGEDIR --force-depends --purge pixel-wallpaper
+chroot $IMAGEDIR apt-get -y install revpi-wallpaper
 chroot $IMAGEDIR apt-get clean
 
 # annoyingly, the postinstall script starts apache2 on fresh installs
@@ -79,8 +85,9 @@ chroot $IMAGEDIR a2enmod ssl
 rm $IMAGEDIR/var/lib/apt/lists/*Packages
 
 # install local packages
-dpkg --root $IMAGEDIR --force-depends --purge pixel-wallpaper
-dpkg --root $IMAGEDIR -i $BAKERYDIR/debs-to-install/*.deb
+if [ $(/bin/ls $BAKERYDIR/debs-to-install/*.deb 2>/dev/null) ] ; then
+	dpkg --root $IMAGEDIR -i $BAKERYDIR/debs-to-install/*.deb
+fi
 
 # remove logs
 find $IMAGEDIR/var/log -type f -delete

@@ -12,9 +12,8 @@ Intended usage:
   shrink_image.sh <raspbian-image> `date +%F`-raspbian-shrunk.img
 
 * Customize for Revolution Pi
-  (requires root, an armhf system (RasPi or VM), Internet connectivity and
-  the following custom packages in debs-to-install/: raspberrypi-kernel
-  revpi-webstatus pictory piserial pitest logi-rts revpi-wallpaper):
+  (requires root, an armhf system (RasPi or VM) and Internet connectivity;
+  custom packages can be placed in debs-to-install/):
   customize_image.sh `date +%F`-raspbian-shrunk.img
 
 * Collect sources on a physical medium for GPL compliance

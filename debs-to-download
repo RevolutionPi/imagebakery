@@ -1,4 +1,9 @@
-apache2
-libapache2-mod-php5
 libmodbus5
 libmodbus-dev
+raspberrypi-kernel
+revpi-repo
+revpi-webstatus
+pictory
+piserial
+pitest
+logi-rts
