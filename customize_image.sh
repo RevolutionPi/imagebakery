@@ -22,6 +22,24 @@ mount /dev/loop0p1 $IMAGEDIR/boot
 cp $BAKERYDIR/templates/cmdline.txt $IMAGEDIR/boot
 cp $BAKERYDIR/templates/config.txt $IMAGEDIR/boot
 cp $BAKERYDIR/templates/revpi-aliases.sh $IMAGEDIR/etc/profile.d
+cp $BAKERYDIR/templates/rsyslog.conf $IMAGEDIR/etc
+
+# limit disk space occupied by logs
+ln -s ../cron.daily/logrotate $IMAGEDIR/etc/cron.hourly
+sed -r -i -e 's/delaycompress/#delaycompress/' \
+	  -e 's/sharedscripts/#sharedscripts/' \
+	  $IMAGEDIR/etc/logrotate.d/rsyslog
+sed -r -i -e 's/#compress/compress/' -e '2i \
+\
+# limit size of each log file\
+maxsize 50M\
+\
+# compress harder\
+compresscmd /usr/bin/nice\
+compressoptions /usr/bin/xz\
+compressext .xz\
+uncompresscmd /usr/bin/unxz\
+' $IMAGEDIR/etc/logrotate.conf
 
 # bootstrap apt source, will be overwritten by revpi-repo package
 cp $BAKERYDIR/templates/revpi.gpg $IMAGEDIR/etc/apt/trusted.gpg.d
