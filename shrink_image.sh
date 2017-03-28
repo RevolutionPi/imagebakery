@@ -24,7 +24,7 @@ dpkg --root /tmp/src.$$ -L wolfram-engine |
 	done
 set -x
 
-# create destination image, the eMCC on CM1 and CM3 has 7634944 sectors
+# create destination image, the eMMC on CM1 and CM3 has 7634944 sectors
 dd if=/dev/zero of=$2 conv=sparse count=7634944
 
 # copy partition table and FAT partition, the ext4 partition starts at 137216
