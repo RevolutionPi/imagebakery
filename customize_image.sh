@@ -99,6 +99,9 @@ umount $IMAGEDIR/proc
 # configure apache2
 chroot $IMAGEDIR a2enmod ssl
 
+# enable ssh daemon by default
+chroot $IMAGEDIR systemctl enable ssh
+
 # remove package lists, they will be outdated within days
 rm $IMAGEDIR/var/lib/apt/lists/*Packages
 
