@@ -70,7 +70,7 @@ ln -s /var/www/pictory/projects/_config.rsc $IMAGEDIR/etc/revpi/config.rsc
 chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive keyboard-configuration
 chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive tzdata
 
-# provide WPA template
+# provide WPA template and prioritize wlan0 routes by default
 sed -i -e '/country=GB/d' $IMAGEDIR/etc/wpa_supplicant/wpa_supplicant.conf
 cat >> $IMAGEDIR/etc/wpa_supplicant/wpa_supplicant.conf <<-EOF
         
@@ -80,6 +80,12 @@ cat >> $IMAGEDIR/etc/wpa_supplicant/wpa_supplicant.conf <<-EOF
         	psk=""
         	key_mgmt=WPA-PSK
         }
+EOF
+cat >> $IMAGEDIR/etc/dhcpcd.conf <<-EOF
+        
+        # Prioritize wlan0 routes over eth0 routes.
+        interface wlan0
+        	metric 100
 EOF
 
 # free up disk space
