@@ -88,6 +88,10 @@ cat >> $IMAGEDIR/etc/dhcpcd.conf <<-EOF
         	metric 100
 EOF
 
+# harden network configuration
+chroot $IMAGEDIR /usr/bin/patch /etc/sysctl.conf	\
+	< $BAKERYDIR/templates/sysctl.conf.patch
+
 # free up disk space
 dpkg --root $IMAGEDIR --purge `egrep -v '^#' $BAKERYDIR/debs-to-remove`
 

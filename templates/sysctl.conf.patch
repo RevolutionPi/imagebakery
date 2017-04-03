@@ -1,0 +1,41 @@
+--- /etc/sysctl.conf.orig
++++ /etc/sysctl.conf
+@@ -16,8 +16,8 @@
+ # Uncomment the next two lines to enable Spoof protection (reverse-path filter)
+ # Turn on Source Address Verification in all interfaces to
+ # prevent some spoofing attacks
+-#net.ipv4.conf.default.rp_filter=1
+-#net.ipv4.conf.all.rp_filter=1
++net.ipv4.conf.default.rp_filter=1
++net.ipv4.conf.all.rp_filter=1
+ 
+ # Uncomment the next line to enable TCP/IP SYN cookies
+ # See http://lwn.net/Articles/277146/
+@@ -41,8 +41,11 @@
+ # settings are disabled so review and enable them as needed.
+ #
+ # Do not accept ICMP redirects (prevent MITM attacks)
+-#net.ipv4.conf.all.accept_redirects = 0
+-#net.ipv6.conf.all.accept_redirects = 0
++net.ipv4.conf.all.accept_redirects = 0
++net.ipv4.conf.default.accept_redirects = 0
++net.ipv6.conf.all.accept_redirects = 0
++net.ipv6.conf.default.accept_redirects = 0
++net.ipv6.conf.eth0.accept_redirects = 0
+ # _or_
+ # Accept ICMP redirects only for gateways listed in our default
+ # gateway list (enabled by default)
+@@ -54,6 +57,13 @@
+ # Do not accept IP source route packets (we are not a router)
+ #net.ipv4.conf.all.accept_source_route = 0
+ #net.ipv6.conf.all.accept_source_route = 0
++net.ipv4.conf.default.accept_source_route = 0
++#
++# Reply to received ARP requests only if the target IP address to be
++# resolved is a local address configured on the incoming interface
++# (no cross-interface resolution)
++net.ipv4.conf.all.arp_ignore = 1
++net.ipv4.conf.default.arp_ignore = 1
+ #
+ # Log Martian Packets
+ #net.ipv4.conf.all.log_martians = 1
