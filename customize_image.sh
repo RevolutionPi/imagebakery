@@ -32,7 +32,7 @@ sed -r -i -e 's/delaycompress/#delaycompress/' \
 sed -r -i -e 's/#compress/compress/' -e '2i \
 \
 # limit size of each log file\
-maxsize 50M\
+maxsize 10M\
 \
 # compress harder\
 compresscmd /usr/bin/nice\
