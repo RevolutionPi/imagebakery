@@ -112,6 +112,8 @@ umount $IMAGEDIR/proc
 
 # configure apache2
 chroot $IMAGEDIR a2enmod ssl
+sed -r -i -e 's/^(\tOptions .*Indexes.*)/#\1/'		\
+	$IMAGEDIR/etc/apache2/apache2.conf
 
 # enable ssh daemon by default
 chroot $IMAGEDIR systemctl enable ssh
