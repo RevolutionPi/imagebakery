@@ -1,5 +1,3 @@
-libmodbus5
-libmodbus-dev
 raspberrypi-kernel
 revpi-repo
 revpi-tunnel
@@ -7,4 +5,6 @@ revpi-webstatus
 pictory
 piserial
 pitest
+pimodbus-master
+pimodbus-slave
 logi-rts
