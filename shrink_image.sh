@@ -30,10 +30,9 @@ dd if=/dev/zero of=$2 conv=sparse count=7634944
 # copy partition table and FAT partition, the ext4 partition starts at 137216
 dd if=$1 of=$2 conv=notrunc count=137215
 
-# shrink ext4 partition to end at 7634944 minus 1
-#sfdisk --delete $2 2 # requires util-linux 2.28
-sfdisk --dump $2 | egrep -v '(type|Id)=83$' | sfdisk $2
-parted $2 mkpart primary ext4 137216s 7634943s
+# shrink ext4 partition to 7497728 sectors (= 7634944 - 137216)
+sfdisk --dump $2 | sed -r '/(type|Id)=83$/s/size=[^,]+/size=7497728/' |
+	sfdisk $2
 partx $2
 
 # mount destination ext4 filesystem
