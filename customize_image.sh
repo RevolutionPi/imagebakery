@@ -143,6 +143,7 @@ umount $IMAGEDIR
 rmdir $IMAGEDIR
 fsck.vfat -a /dev/loop0p1
 fsck.ext4 -f -p /dev/loop0p2
+sleep 2
 delpart /dev/loop0 1
 delpart /dev/loop0 2
 losetup -d /dev/loop0
