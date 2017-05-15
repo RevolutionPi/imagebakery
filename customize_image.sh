@@ -65,6 +65,7 @@ sed -i -r -e 's/^(XKBLAYOUT).*/\1="de"/'		\
 	  $IMAGEDIR/etc/default/keyboard
 install -d -m 755 -o root -g root $IMAGEDIR/etc/revpi
 ln -s /var/www/pictory/projects/_config.rsc $IMAGEDIR/etc/revpi/config.rsc
+install -d -m 700 -o 1000 -g 1000 $IMAGEDIR/home/pi/.ssh
 
 # activate settings
 chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive keyboard-configuration
