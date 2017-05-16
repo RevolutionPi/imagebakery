@@ -127,6 +127,10 @@ ln -fs /lib/systemd/system/getty@.service		\
 sed -r -i -e "s/^autologin-user=/#autologin-user=/"	\
 	$IMAGEDIR/etc/lightdm/lightdm.conf
 
+# avoid gratuitous errors on first boot
+rm $IMAGEDIR/etc/init.d/apply_noobs_os_config
+rm $IMAGEDIR/etc/rc2.d/S01apply_noobs_os_config
+
 # remove package lists, they will be outdated within days
 rm $IMAGEDIR/var/lib/apt/lists/*Packages
 
