@@ -74,20 +74,20 @@ chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive tzdata
 # provide WPA template and prioritize wlan0 routes by default
 sed -i -e '/country=GB/d' $IMAGEDIR/etc/wpa_supplicant/wpa_supplicant.conf
 cat >> $IMAGEDIR/etc/wpa_supplicant/wpa_supplicant.conf <<-EOF
-        
-        # WiFi of Revolutionary Pastries, Inc.
-        network={
-        	ssid=""
-        	psk=""
-        	key_mgmt=WPA-PSK
-        }
-EOF
+	
+	# WiFi of Revolutionary Pastries, Inc.
+	network={
+	        ssid=""
+	        psk=""
+	        key_mgmt=WPA-PSK
+	}
+	EOF
 cat >> $IMAGEDIR/etc/dhcpcd.conf <<-EOF
-        
-        # Prioritize wlan0 routes over eth0 routes.
-        interface wlan0
-        	metric 100
-EOF
+	
+	# Prioritize wlan0 routes over eth0 routes.
+	interface wlan0
+	        metric 100
+	EOF
 
 # harden network configuration
 chroot $IMAGEDIR /usr/bin/patch /etc/sysctl.conf	\
