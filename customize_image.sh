@@ -93,6 +93,9 @@ cat >> $IMAGEDIR/etc/dhcpcd.conf <<-EOF
 chroot $IMAGEDIR /usr/bin/patch /etc/sysctl.conf	\
 	< $BAKERYDIR/templates/sysctl.conf.patch
 
+# display IP address at login prompt
+sed -i -e '1s/$/ \\4 \\6/' $IMAGEDIR/etc/issue
+
 # free up disk space
 dpkg --root $IMAGEDIR --purge `egrep -v '^#' $BAKERYDIR/debs-to-remove`
 
