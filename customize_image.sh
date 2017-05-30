@@ -19,6 +19,11 @@ mkdir $IMAGEDIR
 mount "$LOOPDEVICE"p2 $IMAGEDIR
 mount "$LOOPDEVICE"p1 $IMAGEDIR/boot
 
+# see https://wiki.debian.org/QemuUserEmulation
+if [ -e /usr/bin/qemu-arm-static ] ; then
+    cp /usr/bin/qemu-arm-static $IMAGEDIR/usr/bin
+fi
+
 # copy templates
 cp $BAKERYDIR/templates/cmdline.txt $IMAGEDIR/boot
 cp $BAKERYDIR/templates/config.txt $IMAGEDIR/boot
@@ -150,6 +155,7 @@ fi
 find $IMAGEDIR/var/log -type f -delete
 
 # clean up
+rm -f $IMAGEDIR/usr/bin/qemu-arm-static
 umount $IMAGEDIR/boot
 umount $IMAGEDIR
 rmdir $IMAGEDIR
