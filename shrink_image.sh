@@ -8,11 +8,12 @@ fi
 
 set -ex
 
+SRC_LOOP_DEV=$(losetup -f)
 # mount source ext4 filesystem
-losetup /dev/loop0 $1
-partprobe /dev/loop0
+losetup "$SRC_LOOP_DEV" $1
+partprobe "$SRC_LOOP_DEV"
 mkdir /tmp/src.$$
-mount /dev/loop0p2 /tmp/src.$$
+mount "$SRC_LOOP_DEV"p2 /tmp/src.$$
 
 # truncate files in wolfram-engine package to release 660 MBytes
 set +x
@@ -35,24 +36,25 @@ sfdisk --dump $2 | sed -r '/(type|Id)=83$/s/size=[^,]+/size=7497728/' |
 	sfdisk $2
 partx $2
 
+DEST_LOOP_DEV=$(losetup -f)
 # mount destination ext4 filesystem
-losetup /dev/loop1 $2
-partprobe /dev/loop1
-mkfs.ext4 /dev/loop1p2
+losetup "$DEST_LOOP_DEV" $2
+partprobe "$DEST_LOOP_DEV"
+mkfs.ext4 "$DEST_LOOP_DEV"p2
 mkdir /tmp/dest.$$
-mount /dev/loop1p2 /tmp/dest.$$
+mount "$DEST_LOOP_DEV"p2 /tmp/dest.$$
 
 # copy contents of ext4 filesystem, this is more space efficient than resize2fs
 cp -pr /tmp/src.$$/* /tmp/dest.$$
 
 # clean up
 umount /tmp/src.$$
-delpart /dev/loop0 1
-delpart /dev/loop0 2
-losetup -d /dev/loop0
+delpart "$SRC_LOOP_DEV" 1
+delpart "$SRC_LOOP_DEV" 2
+losetup -d "$SRC_LOOP_DEV"
 rmdir /tmp/src.$$
 umount /tmp/dest.$$
-delpart /dev/loop1 1
-delpart /dev/loop1 2
-losetup -d /dev/loop1
+delpart "$DEST_LOOP_DEV" 1
+delpart "$DEST_LOOP_DEV" 2
+losetup -d "$DEST_LOOP_DEV"
 rmdir /tmp/dest.$$
