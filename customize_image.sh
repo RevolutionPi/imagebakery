@@ -10,13 +10,14 @@ set -ex
 
 IMAGEDIR=/tmp/img.$$
 BAKERYDIR=`dirname $0`
+LOOPDEVICE=$(losetup -f)
 
 # mount ext4 + FAT filesystems
-losetup /dev/loop0 $1
-partprobe /dev/loop0
+losetup "$LOOPDEVICE" $1
+partprobe "$LOOPDEVICE"
 mkdir $IMAGEDIR
-mount /dev/loop0p2 $IMAGEDIR
-mount /dev/loop0p1 $IMAGEDIR/boot
+mount "$LOOPDEVICE"p2 $IMAGEDIR
+mount "$LOOPDEVICE"p1 $IMAGEDIR/boot
 
 # copy templates
 cp $BAKERYDIR/templates/cmdline.txt $IMAGEDIR/boot
@@ -150,9 +151,9 @@ find $IMAGEDIR/var/log -type f -delete
 umount $IMAGEDIR/boot
 umount $IMAGEDIR
 rmdir $IMAGEDIR
-fsck.vfat -a /dev/loop0p1
-fsck.ext4 -f -p /dev/loop0p2
+fsck.vfat -a "$LOOPDEVICE"p1
+fsck.ext4 -f -p "$LOOPDEVICE"p2
 sleep 2
-delpart /dev/loop0 1
-delpart /dev/loop0 2
-losetup -d /dev/loop0
+delpart "$LOOPDEVICE" 1
+delpart "$LOOPDEVICE" 2
+losetup -d "$LOOPDEVICE"
