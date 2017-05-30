@@ -3,7 +3,7 @@ Create custom images for Revolution Pi
 Intended usage:
 
 * Download latest Raspbian image:
-  curl -LO https://downloads.raspberrypi.org/raspbian_latest
+  curl -LO https://downloads.raspberrypi.org/raspbian_lite_latest
   unzip raspbian_latest
   rm raspbian_latest
 
