@@ -28,12 +28,18 @@ set -x
 # create destination image, the eMMC on CM1 and CM3 has 7634944 sectors
 dd if=/dev/zero of=$2 conv=sparse count=7634944
 
-# copy partition table and FAT partition, the ext4 partition starts at 137216
-dd if=$1 of=$2 conv=notrunc count=137215
+# determine end sector of FAT partition (usually 92159)
+FAT_END_SECTOR=$(sfdisk --dump $1 | awk '/start=/ {print $4 + $6 - 1; exit}')
 
-# shrink ext4 partition to 7497728 sectors (= 7634944 - 137216)
-sfdisk --dump $2 | sed -r '/(type|Id)=83$/s/size=[^,]+/size=7497728/' |
-	sfdisk $2
+# copy partition table and FAT partition
+dd if=$1 of=$2 conv=notrunc count=$FAT_END_SECTOR
+
+# calculate size of ext4 partition (usually 7634944 - 92160 = 7542784)
+EXT4_SIZE=$((7634944 - $FAT_END_SECTOR - 1))
+
+# shrink ext4 partition to calculated size
+sfdisk --dump $2 | sed -r "/(type|Id)=83\$/s/size=[^,]+/size=$EXT4_SIZE/" |
+	sfdisk -f $2
 partx $2
 
 DEST_LOOP_DEV=$(losetup -f)
