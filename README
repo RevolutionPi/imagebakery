@@ -13,6 +13,7 @@ Intended usage:
 
 * Customize for Revolution Pi
   (requires root, an armhf system (RasPi or VM) and Internet connectivity;
+  to cross-build, apt-get install qemu-user-static binfmt-support;
   custom packages can be placed in debs-to-install/):
   customize_image.sh `date +%F`-raspbian-shrunk.img
 
