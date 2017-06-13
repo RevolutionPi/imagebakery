@@ -118,6 +118,7 @@ chroot $IMAGEDIR apt-get clean
 
 # annoyingly, the postinstall script starts apache2 on fresh installs
 mount -t proc procfs $IMAGEDIR/proc
+sed -r -i -e 's/pidof /pidof -x /' $IMAGEDIR/etc/init.d/apache2
 chroot $IMAGEDIR /etc/init.d/apache2 stop
 umount $IMAGEDIR/proc
 
