@@ -78,6 +78,9 @@ install -d -m 700 -o 1000 -g 1000 $IMAGEDIR/home/pi/.ssh
 chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive keyboard-configuration
 chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive tzdata
 
+# automatically bring up eth0 again after a USB bus reset
+sed -i -e '/^iface eth0/iallow-hotplug eth0' $IMAGEDIR/etc/network/interfaces
+
 # provide WPA template and prioritize wlan0 routes by default
 sed -i -e '/country=GB/d' $IMAGEDIR/etc/wpa_supplicant/wpa_supplicant.conf
 cat >> $IMAGEDIR/etc/wpa_supplicant/wpa_supplicant.conf <<-EOF
