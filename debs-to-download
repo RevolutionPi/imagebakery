@@ -8,5 +8,7 @@ piserial
 pitest
 pimodbus-master
 pimodbus-slave
+tcpdump
 logi-rts
 spidercontrol
+procon-web-iot
