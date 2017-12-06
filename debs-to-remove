@@ -1,5 +1,4 @@
 wolfram-engine
-wolframscript
 
 # LibreOffice
 libreoffice
@@ -12,17 +11,19 @@ libreoffice-common
 libreoffice-core
 libreoffice-draw
 libreoffice-gtk
+libreoffice-gtk2
 libreoffice-impress
 libreoffice-java-common
 libreoffice-math
 libreoffice-report-builder-bin
 libreoffice-sdbc-hsqldb
 libreoffice-style-galaxy
+libreoffice-systray
 libreoffice-writer
 libmwaw-0.3-3
-libcmis-0.4-4
-libwps-0.3-3
-liborcus-0.8-0
+libcmis-0.5-5v5
+libwps-0.4-4
+liborcus-0.11-0
 libcdr-0.1-1
 librevenge-0.0-0
 libfreehand-0.1-1
@@ -34,6 +35,11 @@ libwpd-0.10-10
 libmspub-0.1-1
 libvisio-0.1-1
 libodfgen-0.1-1
+libpagemaker-0.0-0
+libboost-date-time1.61.0
+libboost-date-time1.62.0
+libboost-filesystem1.61.0
+libboost-system1.61.0
 fonts-opensymbol
 python3-uno
 uno-libs3
@@ -46,18 +52,17 @@ dillo
 libfltk1.3
 netsurf-gtk
 netsurf-common
-libmozjs185-1.0
 
 # Games
 minecraft-pi
 python-minecraftpi
 python3-minecraftpi
-penguinspuzzle
 python3-pgzero
 
 # "Scratch is a visual programming tool which allows the user to create
 # animations and games with a drag-and-drop interface."
 scratch
+scratch2
 nuscratch
 squeak-plugins-scratch
 
@@ -70,6 +75,14 @@ libetpan17
 # "Learn to code creatively by composing or performing music in an incredible
 # range of styles from classical & jazz to EDM."
 sonic-pi
+libqt5scintilla2-12v5
+libqt5scintilla2-l10n
+
+# User interface for controlling the JACK sound server
+qjackctl
+libqwt-qt5-6
+libqt5xml5
+libqt5x11extras5
 
 # "FreePats is a project to create a free and open collection of digital
 # instruments for music production."
@@ -78,27 +91,44 @@ freepats
 # "SuperCollider is a platform for audio synthesis and algorithmic composition,
 # used by musicians, artists, and researchers working with sound."
 supercollider-server
+libscsynth1
+libboost-thread1.62.0
 
 # "TiMidity++ is a software synthesizer. It can play MIDI files by converting
 # them into PCM waveform data."
 timidity
 libesd0
 esound-common
+bluealsa
 
 # Documentation not linked from the desktop menu
 debian-reference-en
 debian-reference-common
 
-# Remove duplicate boost libraries, keep only libboost-iostreams1.55.0
-libboost-iostreams1.54.0
-libboost-iostreams1.53.0
-libboost-iostreams1.50.0
-libboost-iostreams1.49.0
+# Remove duplicate boost libraries, keep only libboost-iostreams1.62.0
+libboost-iostreams1.61.0
+libboost-iostreams1.60.0
+libboost-iostreams1.58.0
+
+# Remove duplicate gcc base files, keep only gcc-6-base
+gcc-4.6-base
+gcc-4.7-base
+gcc-4.8-base
+gcc-4.9-base
+gcc-5-base
+
+# Remove header files not required by any other package
+libfreetype6-dev
+libpng-dev
 
 # Remove all fonts not required by any other package
-fonts-sil-gentium-basic
 fonts-dejavu
 fonts-dejavu-extra
+fonts-droid-fallback
+fonts-lato
+fonts-liberation2
+fonts-noto-mono
+fonts-piboto
 xfonts-100dpi
 
 # "This package provides the CMap tables required to display PDF documents
@@ -119,3 +149,6 @@ gtk2-engines
 
 # Collides with the RevPi's hardware RTC
 fake-hwclock
+
+# Unnecessary after installation
+blends-tasks

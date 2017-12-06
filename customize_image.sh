@@ -26,7 +26,6 @@ fi
 
 # copy templates
 cp $BAKERYDIR/templates/cmdline.txt $IMAGEDIR/boot
-cp $BAKERYDIR/templates/config.txt $IMAGEDIR/boot
 cp $BAKERYDIR/templates/revpi-aliases.sh $IMAGEDIR/etc/profile.d
 cp $BAKERYDIR/templates/rsyslog.conf $IMAGEDIR/etc
 
@@ -115,7 +114,7 @@ echo 'APT::Install-Recommends "false";' >> $IMAGEDIR/etc/apt/apt.conf
 # download and install missing packages
 chroot $IMAGEDIR apt-get update
 chroot $IMAGEDIR apt-get -y install `egrep -v '^#' $BAKERYDIR/debs-to-download`
-dpkg --root $IMAGEDIR --force-depends --purge pixel-wallpaper
+dpkg --root $IMAGEDIR --force-depends --purge rpd-wallpaper
 chroot $IMAGEDIR apt-get -y install revpi-wallpaper
 chroot $IMAGEDIR apt-get update
 chroot $IMAGEDIR apt-get -y install teamviewer-revpi
@@ -146,10 +145,6 @@ if [ -e $IMAGEDIR/etc/lightdm/lightdm.conf ] ; then
 	sed -r -i -e "s/^autologin-user=/#autologin-user=/"	\
 		$IMAGEDIR/etc/lightdm/lightdm.conf
 fi
-
-# avoid gratuitous errors on first boot
-rm $IMAGEDIR/etc/init.d/apply_noobs_os_config
-rm $IMAGEDIR/etc/rc2.d/S01apply_noobs_os_config
 
 # remove package lists, they will be outdated within days
 rm $IMAGEDIR/var/lib/apt/lists/*Packages
