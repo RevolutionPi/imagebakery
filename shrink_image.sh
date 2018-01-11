@@ -35,7 +35,7 @@ FAT_END_SECTOR=$(sfdisk --dump $1 | awk '/start=/ {print $4 + $6 - 1; exit}')
 dd if=$1 of=$2 conv=notrunc count=$FAT_END_SECTOR
 
 # determine start sector of ext4 partition (usually 94208)
-EXT4_START_SECTOR=$(sfdisk --dump $1 | awk -F '[ ,]+' '/start=.*type=83/ {print $4}')
+EXT4_START_SECTOR=$(sfdisk --dump $1 | awk -F '[ ,]+' '/start=.*(type|Id)=83/ {print $4}')
 
 # calculate size of ext4 partition (usually 7634944 - 94208 = 7542784)
 EXT4_SIZE=$((7634944 - $EXT4_START_SECTOR))
