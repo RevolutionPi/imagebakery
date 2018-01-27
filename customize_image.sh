@@ -8,14 +8,18 @@ fi
 
 set -ex
 
-IMAGEDIR=/tmp/img.$$
+# pivot to new PID namespace
+if [ $$ != 2 ] && [ -x /usr/bin/newpid ] ; then
+	exec /usr/bin/newpid "$0" "$@"
+fi
+
+IMAGEDIR=`mktemp -d -p /tmp img.XXXXXXXX`
 BAKERYDIR=`dirname $0`
 LOOPDEVICE=$(losetup -f)
 
 # mount ext4 + FAT filesystems
 losetup "$LOOPDEVICE" $1
 partprobe "$LOOPDEVICE"
-mkdir $IMAGEDIR
 mount "$LOOPDEVICE"p2 $IMAGEDIR
 mount "$LOOPDEVICE"p1 $IMAGEDIR/boot
 
@@ -51,13 +55,14 @@ cp $BAKERYDIR/templates/revpi.gpg $IMAGEDIR/etc/apt/trusted.gpg.d
 cp $BAKERYDIR/templates/revpi.list $IMAGEDIR/etc/apt/sources.list.d
 
 # copy piTest source code
-git clone https://github.com/RevolutionPi/piControl /tmp/piControl.$$
-cp -pr /tmp/piControl.$$/piTest $IMAGEDIR/home/pi/demo
-cp -p /tmp/piControl.$$/piControl.h $IMAGEDIR/home/pi/demo
+PICONTROLDIR=`mktemp -d -p /tmp piControl.XXXXXXXX`
+git clone https://github.com/RevolutionPi/piControl $PICONTROLDIR
+cp -pr $PICONTROLDIR/piTest $IMAGEDIR/home/pi/demo
+cp -p $PICONTROLDIR/piControl.h $IMAGEDIR/home/pi/demo
 sed -i -r -e 's%\.\./%%' $IMAGEDIR/home/pi/demo/Makefile
 chown -R 1000:1000 $IMAGEDIR/home/pi/demo
 chmod -R a+rX $IMAGEDIR/home/pi/demo
-rm -r /tmp/piControl.$$
+rm -r $PICONTROLDIR
 
 # customize settings
 echo Europe/Berlin > $IMAGEDIR/etc/timezone
