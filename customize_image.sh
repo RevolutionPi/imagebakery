@@ -17,6 +17,37 @@ IMAGEDIR=`mktemp -d -p /tmp img.XXXXXXXX`
 BAKERYDIR=`dirname $0`
 LOOPDEVICE=$(losetup -f)
 
+cleanup() {
+	lsof -t $IMAGEDIR | xargs --no-run-if-empty kill
+	if [ -e $IMAGEDIR/usr/bin/qemu-arm-static ] ; then
+		rm -f $IMAGEDIR/usr/bin/qemu-arm-static
+	fi
+	if mountpoint -q $IMAGEDIR/boot ; then
+		umount $IMAGEDIR/boot
+	fi
+	if mountpoint -q $IMAGEDIR ; then
+		umount $IMAGEDIR
+	fi
+	if [ -d $IMAGEDIR ] ; then
+		rmdir $IMAGEDIR
+	fi
+	if [ -e /dev/"$LOOPDEVICE"p1 ] ; then
+		fsck.vfat -a "$LOOPDEVICE"p1
+		sleep 2
+		delpart "$LOOPDEVICE" 1
+	fi
+	if [ -e /dev/"$LOOPDEVICE"p2 ] ; then
+		fsck.ext4 -f -p "$LOOPDEVICE"p2
+		sleep 2
+		delpart "$LOOPDEVICE" 2
+	fi
+	if losetup "$LOOPDEVICE" 2>/dev/null ; then
+		losetup -d "$LOOPDEVICE"
+	fi
+}
+
+trap cleanup EXIT ERR SIGINT
+
 # mount ext4 + FAT filesystems
 losetup "$LOOPDEVICE" $1
 partprobe "$LOOPDEVICE"
@@ -162,14 +193,4 @@ fi
 # remove logs
 find $IMAGEDIR/var/log -type f -delete
 
-# clean up
-rm -f $IMAGEDIR/usr/bin/qemu-arm-static
-umount $IMAGEDIR/boot
-umount $IMAGEDIR
-rmdir $IMAGEDIR
-fsck.vfat -a "$LOOPDEVICE"p1
-fsck.ext4 -f -p "$LOOPDEVICE"p2
-sleep 2
-delpart "$LOOPDEVICE" 1
-delpart "$LOOPDEVICE" 2
-losetup -d "$LOOPDEVICE"
+# clean up is done by cleanup() trap
