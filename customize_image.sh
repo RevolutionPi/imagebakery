@@ -64,6 +64,11 @@ cp $BAKERYDIR/templates/cmdline.txt $IMAGEDIR/boot
 cp $BAKERYDIR/templates/revpi-aliases.sh $IMAGEDIR/etc/profile.d
 cp $BAKERYDIR/templates/rsyslog.conf $IMAGEDIR/etc
 
+# force HDMI mode even if no HDMI monitor is detected
+sed -r -i -e 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' \
+	  -e 's/#hdmi_drive=2/hdmi_drive=2/' \
+	  $IMAGEDIR/boot/config.txt
+
 # limit disk space occupied by logs
 ln -s ../cron.daily/logrotate $IMAGEDIR/etc/cron.hourly
 sed -r -i -e 's/delaycompress/#delaycompress/' \
