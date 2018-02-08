@@ -10,6 +10,7 @@ pitest
 pimodbus-master
 pimodbus-slave
 tcpdump
+gdbserver
 logi-rts
 spidercontrol
 procon-web-iot
