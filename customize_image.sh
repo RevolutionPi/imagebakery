@@ -192,7 +192,7 @@ rm $IMAGEDIR/var/lib/apt/lists/*Packages
 
 # install local packages
 if [ "$(/bin/ls $BAKERYDIR/debs-to-install/*.deb 2>/dev/null)" ] ; then
-	dpkg --root $IMAGEDIR -i $BAKERYDIR/debs-to-install/*.deb
+	dpkg --root $IMAGEDIR --force-architecture -i $BAKERYDIR/debs-to-install/*.deb
 fi
 
 # remove logs
