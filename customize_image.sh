@@ -175,9 +175,10 @@ if [ -e "$IMAGEDIR/etc/init.d/apache2" ] ; then
 		$IMAGEDIR/etc/apache2/apache2.conf
 fi
 
-# enable ssh daemon by default, disable swap
+# enable ssh daemon by default, disable swap, disable bluetooth on mini-uart
 chroot $IMAGEDIR systemctl enable ssh
 chroot $IMAGEDIR systemctl disable dphys-swapfile
+chroot $IMAGEDIR systemctl disable hciuart
 
 # boot to console by default, disable autologin
 chroot $IMAGEDIR systemctl set-default multi-user.target
