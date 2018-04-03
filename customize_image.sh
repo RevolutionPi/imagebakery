@@ -180,6 +180,9 @@ chroot $IMAGEDIR systemctl enable ssh
 chroot $IMAGEDIR systemctl disable dphys-swapfile
 chroot $IMAGEDIR systemctl disable hciuart
 
+# disable 3rd party software
+chroot $IMAGEDIR systemctl disable procon-web-iot
+
 # boot to console by default, disable autologin
 chroot $IMAGEDIR systemctl set-default multi-user.target
 ln -fs /lib/systemd/system/getty@.service		\
