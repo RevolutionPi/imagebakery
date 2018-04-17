@@ -9,6 +9,7 @@ piserial
 pitest
 pimodbus-master
 pimodbus-slave
+can-utils
 cpufrequtils
 tcpdump
 gdbserver
