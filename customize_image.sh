@@ -120,7 +120,6 @@ chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive tzdata
 chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive console-setup
 
 # automatically bring up eth0 and eth1 again after a USB bus reset
-sed -i -e '4i# Workaround for https://github.com/RPi-Distro/repo/issues/102\nnodev\n' $IMAGEDIR/etc/dhcpcd.conf
 sed -i -e '6i# allow-hotplug eth0\n# allow-hotplug eth1\n' $IMAGEDIR/etc/network/interfaces
 
 # provide WPA template and prioritize wlan0 routes by default
