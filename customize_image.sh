@@ -105,6 +105,9 @@ echo Europe/Berlin > $IMAGEDIR/etc/timezone
 rm $IMAGEDIR/etc/localtime
 echo RevPi > $IMAGEDIR/etc/hostname
 sed -i -e 's/raspberrypi/RevPi/g' $IMAGEDIR/etc/hosts
+if ! grep -qE '^i2c-dev$' $IMAGEDIR/etc/modules ; then
+	echo i2c-dev >> $IMAGEDIR/etc/modules
+fi
 echo piControl >> $IMAGEDIR/etc/modules
 sed -i -r -e 's/^(XKBLAYOUT).*/\1="de"/'		\
 	  -e 's/^(XKBVARIANT).*/\1="nodeadkeys"/'	\
