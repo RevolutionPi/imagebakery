@@ -46,7 +46,7 @@ cleanup() {
 	fi
 }
 
-trap cleanup EXIT ERR SIGINT
+trap cleanup ERR SIGINT
 
 # mount ext4 + FAT filesystems
 losetup "$LOOPDEVICE" $1
@@ -210,4 +210,4 @@ fi
 # remove logs
 find $IMAGEDIR/var/log -type f -delete
 
-# clean up is done by cleanup() trap
+cleanup
