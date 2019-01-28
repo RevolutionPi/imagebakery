@@ -2,21 +2,21 @@ Create custom images for Revolution Pi
 
 Intended usage:
 
-* Download latest Raspbian image, works with both normal and lite images:
+* Download latest Raspbian image, works with both desktop and lite images:
   curl -LO https://downloads.raspberrypi.org/raspbian_latest
   unzip raspbian_latest
   rm raspbian_latest
 
-* Shrink to fit on the eMMC of a CM1 or CM3
+* Resize to fit on the eMMC of a CM1 or CM3
   (requires root):
-  shrink_image.sh <raspbian-image> `date +%F`-raspbian-shrunk.img
+  resize_image.sh <raspbian-image> `date +%F`-raspbian-resized.img
 
 * Customize for Revolution Pi
   (requires root, an armhf system (RasPi or VM) and Internet connectivity;
   to cross-build, apt-get install qemu-user-static binfmt-support;
   custom packages can be placed in debs-to-install/):
-  customize_image.sh `date +%F`-raspbian-shrunk.img
+  customize_image.sh `date +%F`-raspbian-resized.img
 
 * Collect sources on a physical medium for GPL compliance
   (requires root and Internet connectivity):
-  collect_sources.sh `date +%F`-raspbian-shrunk.img /media/usbstick
+  collect_sources.sh `date +%F`-raspbian-resized.img /media/usbstick

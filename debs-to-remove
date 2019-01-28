@@ -1,53 +1,42 @@
-wolfram-engine
-wolframscript
-
-# LibreOffice
-libreoffice
-libreoffice-avmedia-backend-gstreamer
-libreoffice-base
-libreoffice-base-core
-libreoffice-base-drivers
-libreoffice-calc
-libreoffice-common
-libreoffice-core
-libreoffice-draw
-libreoffice-gtk
-libreoffice-gtk2
-libreoffice-impress
-libreoffice-java-common
-libreoffice-math
-libreoffice-report-builder-bin
-libreoffice-sdbc-hsqldb
-libreoffice-style-galaxy
-libreoffice-systray
-libreoffice-writer
-libmwaw-0.3-3
-libcmis-0.5-5v5
-libwps-0.4-4
-liborcus-0.11-0
-libcdr-0.1-1
-librevenge-0.0-0
-libfreehand-0.1-1
-libwpg-0.3-3
-libetonyek-0.1-1
-libabw-0.1-1
-libe-book-0.1-1
-libwpd-0.10-10
-libmspub-0.1-1
-libvisio-0.1-1
-libodfgen-0.1-1
-libpagemaker-0.0-0
-libboost-date-time1.61.0
-libboost-date-time1.62.0
-libboost-filesystem1.61.0
-libboost-system1.61.0
-fonts-opensymbol
-python3-uno
-uno-libs3
-ure
+# VLC media player
+vlc
+vlc-bin
+vlc-data
+vlc-l10n
+vlc-plugin-base
+vlc-plugin-notify
+vlc-plugin-qt
+vlc-plugin-samba
+vlc-plugin-skins2
+vlc-plugin-video-output
+vlc-plugin-video-splitter
+vlc-plugin-visualization
+liba52-0.7.4
+libaudio2
+libaudiofile1
+libbasicusageenvironment1
+libcddb2
+libdvbpsi10
+libebml4v5
+libgroupsock8
+liblirc-client0
+liblivemedia57
+libmatroska6v5
+libmpeg2-4
+libopenmpt-modplug1
+libresid-builder0c2a
+libsidplay2
+libspeexdsp1
+libupnp6
+libusageenvironment3
+libvlc-bin
+libvlc5
+libvlccore9
 
 # Remove all web browsers except epiphany
 chromium-browser
+chromium-browser-l10n
+chromium-codecs-ffmpeg-extra
 rpi-chromium-mods
 dillo
 libfltk1.3
@@ -55,45 +44,11 @@ netsurf-gtk
 netsurf-common
 
 # Games
-minecraft-pi
-python-minecraftpi
-python3-minecraftpi
 python3-pgzero
-
-# "Scratch is a visual programming tool which allows the user to create
-# animations and games with a drag-and-drop interface."
-scratch
-scratch2
-nuscratch
-squeak-plugins-scratch
-
-# Graphical mail reader
-claws-mail
-claws-mail-i18n
-libcompfaceg1
-libetpan17
-
-# "Learn to code creatively by composing or performing music in an incredible
-# range of styles from classical & jazz to EDM."
-sonic-pi
-libqt5scintilla2-12v5
-libqt5scintilla2-l10n
-
-# User interface for controlling the JACK sound server
-qjackctl
-libqwt-qt5-6
-libqt5xml5
-libqt5x11extras5
 
 # "FreePats is a project to create a free and open collection of digital
 # instruments for music production."
 freepats
-
-# "SuperCollider is a platform for audio synthesis and algorithmic composition,
-# used by musicians, artists, and researchers working with sound."
-supercollider-server
-libscsynth1
-libboost-thread1.62.0
 
 # "TiMidity++ is a software synthesizer. It can play MIDI files by converting
 # them into PCM waveform data."
@@ -107,7 +62,6 @@ debian-reference-en
 debian-reference-common
 
 # Remove duplicate boost libraries, keep only libboost-iostreams1.62.0
-libboost-iostreams1.61.0
 libboost-iostreams1.60.0
 libboost-iostreams1.58.0
 
@@ -123,20 +77,10 @@ libfreetype6-dev
 libpng-dev
 
 # Remove all fonts not required by any other package
-fonts-dejavu
-fonts-dejavu-extra
 fonts-droid-fallback
-fonts-lato
 fonts-liberation2
 fonts-noto-mono
 fonts-piboto
-xfonts-100dpi
-
-# "This package provides the CMap tables required to display PDF documents
-# containing CJK characters with libpoppler.  Users who want to view or create
-# PDF files in Chinese, Japanese, or Korean without embedded fonts will need
-# this package."
-poppler-data
 
 # Remove lxde-icon-theme (adwaita-icon-theme and pix-icons should suffice)
 # and the lxde meta-package requiring it

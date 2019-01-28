@@ -1,5 +1,5 @@
 #!/bin/sh
-# shrink raspbian image to fit on the eMMC of a CM1 or CM3
+# resize raspbian image to fit on the eMMC of a CM1 or CM3
 
 if [ "$#" != 2 ] ; then
 	echo 1>&1 "Usage: `basename $0` <source> <destination>"
@@ -14,16 +14,6 @@ losetup "$SRC_LOOP_DEV" $1
 partprobe "$SRC_LOOP_DEV"
 mkdir /tmp/src.$$
 mount "$SRC_LOOP_DEV"p2 /tmp/src.$$
-
-# truncate files in these three packages to release 982 MBytes
-set +x
-dpkg --root /tmp/src.$$ -L wolfram-engine chromium-browser scratch2 |
-	while read name ; do
-		if [ -f "/tmp/src.$$/$name" ] ; then
-			> "/tmp/src.$$/$name"
-		fi
-	done
-set -x
 
 # create destination image, the eMMC on CM1 and CM3 has 7634944 sectors
 dd if=/dev/zero of=$2 conv=sparse count=7634944
@@ -40,7 +30,7 @@ EXT4_START_SECTOR=$(sfdisk --dump $1 | awk -F '[ ,]+' '/start=.*(type|Id)=83/ {p
 # calculate size of ext4 partition (usually 7634944 - 94208 = 7542784)
 EXT4_SIZE=$((7634944 - $EXT4_START_SECTOR))
 
-# shrink ext4 partition to calculated size
+# resize ext4 partition to calculated size
 sfdisk --dump $2 | sed -r "/(type|Id)=83\$/s/size=[^,]+/size=$EXT4_SIZE/" |
 	sfdisk -f $2
 partx $2
