@@ -22,6 +22,12 @@ cleanup() {
 	if [ -e $IMAGEDIR/usr/bin/qemu-arm-static ] ; then
 		rm -f $IMAGEDIR/usr/bin/qemu-arm-static
 	fi
+	if mountpoint -q $IMAGEDIR/tmp/debs-to-install ; then
+		umount $IMAGEDIR/tmp/debs-to-install
+	fi
+	if [ -e $IMAGEDIR/tmp/debs-to-install ] ; then
+		rmdir $IMAGEDIR/tmp/debs-to-install
+	fi
 	if mountpoint -q $IMAGEDIR/boot ; then
 		umount $IMAGEDIR/boot
 	fi
@@ -210,7 +216,9 @@ rm $IMAGEDIR/var/lib/apt/lists/*Packages
 
 # install local packages
 if [ "$(/bin/ls $BAKERYDIR/debs-to-install/*.deb 2>/dev/null)" ] ; then
-	dpkg --root $IMAGEDIR --force-architecture -i $BAKERYDIR/debs-to-install/*.deb
+	mkdir $IMAGEDIR/tmp/debs-to-install
+	mount --bind $BAKERYDIR/debs-to-install $IMAGEDIR/tmp/debs-to-install
+	chroot $IMAGEDIR sh -c "dpkg -i /tmp/debs-to-install/*.deb"
 fi
 
 # remove logs
