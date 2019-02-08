@@ -7,16 +7,12 @@ Intended usage:
   unzip raspbian_latest
   rm raspbian_latest
 
-* Resize to fit on the eMMC of a CM1 or CM3
-  (requires root):
-  resize_image.sh <raspbian-image> `date +%F`-raspbian-resized.img
-
 * Customize for Revolution Pi
   (requires root, an armhf system (RasPi or VM) and Internet connectivity;
   to cross-build, apt-get install qemu-user-static binfmt-support;
   custom packages can be placed in debs-to-install/):
-  customize_image.sh `date +%F`-raspbian-resized.img
+  customize_image.sh <raspbian-image>
 
 * Collect sources on a physical medium for GPL compliance
   (requires root and Internet connectivity):
-  collect_sources.sh `date +%F`-raspbian-resized.img /media/usbstick
+  collect_sources.sh <raspbian-image> /media/usbstick
