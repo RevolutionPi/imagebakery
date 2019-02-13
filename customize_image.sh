@@ -18,7 +18,9 @@ BAKERYDIR=`dirname $0`
 LOOPDEVICE=$(losetup -f)
 
 cleanup_umount() {
-	lsof -t $IMAGEDIR | xargs --no-run-if-empty kill
+	if [ -e $IMAGEDIR ] ; then
+		lsof -t $IMAGEDIR | xargs --no-run-if-empty kill
+	fi
 	if [ -e $IMAGEDIR/usr/bin/qemu-arm-static ] ; then
 		rm -f $IMAGEDIR/usr/bin/qemu-arm-static
 	fi
