@@ -235,4 +235,13 @@ sleep 2
 fsck.ext4 -f -p "$LOOPDEVICE"p2
 sleep 2
 
+# shrink image to speed up flashing
+resize2fs -M "$LOOPDEVICE"p2
+PARTSIZE=$(dumpe2fs -h "$LOOPDEVICE"p2 | egrep "^Block count:" | cut -d" " -f3-)
+PARTSIZE=$(($PARTSIZE * 8))   # ext4 uses 4k blocks, partitions use 512 bytes
+sfdisk --dump "$LOOPDEVICE" | /bin/sed -r -e "\$!n
+\$s/size=[^,]+/size=$PARTSIZE/" | /sbin/sfdisk "$LOOPDEVICE"
+PARTSTART=$(cat /sys/block/$(basename "$LOOPDEVICE")/$(basename "$LOOPDEVICE"p2)/start)
+truncate -s $((512 * ($PARTSTART + $PARTSIZE))) "$1"
+
 cleanup_losetup
