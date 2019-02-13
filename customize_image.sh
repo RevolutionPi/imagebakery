@@ -227,8 +227,9 @@ if [ "$(/bin/ls $BAKERYDIR/debs-to-install/*.deb 2>/dev/null)" ] ; then
 	chroot $IMAGEDIR sh -c "dpkg -i /tmp/debs-to-install/*.deb"
 fi
 
-# remove logs
+# remove logs and ssh host keys
 find $IMAGEDIR/var/log -type f -delete
+find $IMAGEDIR/etc/ssh -name "ssh_host_*_key*" -delete
 
 cleanup_umount
 
