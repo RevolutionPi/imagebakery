@@ -42,10 +42,10 @@ cleanup_umount() {
 }
 
 cleanup_losetup() {
-	if [ -e /dev/"$LOOPDEVICE"p1 ] ; then
+	if [ -e "$LOOPDEVICE"p1 ] ; then
 		delpart "$LOOPDEVICE" 1
 	fi
-	if [ -e /dev/"$LOOPDEVICE"p2 ] ; then
+	if [ -e "$LOOPDEVICE"p2 ] ; then
 		delpart "$LOOPDEVICE" 2
 	fi
 	if losetup "$LOOPDEVICE" 2>/dev/null ; then
