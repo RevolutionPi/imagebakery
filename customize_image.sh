@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # customize raspbian image for revolution pi
 
 if [ "$#" != 1 ] ; then
