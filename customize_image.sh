@@ -181,7 +181,9 @@ dpkg --root $IMAGEDIR --force-depends --purge rpd-wallpaper
 chroot $IMAGEDIR apt-get -y install revpi-wallpaper
 chroot $IMAGEDIR apt-get update
 chroot $IMAGEDIR apt-get -y install teamviewer-revpi
+chroot $IMAGEDIR apt-mark hold raspi-copies-and-fills
 chroot $IMAGEDIR apt-get -y upgrade
+chroot $IMAGEDIR apt-mark unhold raspi-copies-and-fills
 chroot $IMAGEDIR apt-get clean
 
 if [ -e "$IMAGEDIR/etc/init.d/apache2" ] ; then
