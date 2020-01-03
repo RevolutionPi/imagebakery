@@ -23,7 +23,9 @@ mount -o ro /dev/loop0p1 $IMAGEDIR/boot
 # duplicate the config, patch it and download the package lists
 mkdir -p $APTROOT/var/cache/apt/archives/partial
 (cd $IMAGEDIR ; tar cf - --exclude=var/lib/dpkg/info	\
-	etc/apt var/lib/apt var/lib/dpkg usr/lib/apt)	\
+	etc/apt var/lib/apt var/lib/dpkg usr/share/dpkg)\
+	| (cd $APTROOT ; tar xf -)
+(cd / ; tar cf - /usr/lib/apt)	\
 	| (cd $APTROOT ; tar xf -)
 sed -i -r -e 's/#(deb-src.*)/\1/' $APTROOT/etc/apt/sources.list \
 				  $APTROOT/etc/apt/sources.list.d/*
