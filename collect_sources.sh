@@ -47,11 +47,17 @@ fetch_deb_src() {
 # exclude binary-only Raspbian packages
 EXCLUDE='realvnc-vnc|oracle-java8-jdk'
 # exclude Raspbian packages with missing source code
-EXCLUDE+='|bluej|greenfoot|nodered|omxplayer|pifacedigital-scratch-handler|smartsim|wiringpi'
+EXCLUDE+='|nodered|wiringpi'
 # exclude binary-only RevolutionPi packages
-EXCLUDE+='|logi-rts|pictory|piserial|revpi-(repo|wallpaper|webstatus)'
+EXCLUDE+='|logi-rts|logiclab|piserial|procon-web-iot|teamviewer-revpi'
+# exclude binary-only RevolutionPi packages
+EXCLUDE+='|pimodbus-master|pimodbus-slave'
+# exclude non-binary RevolutionPi packages
+EXCLUDE+='|pictory|revpi-(repo|tools|wallpaper|webstatus)|revpi7'
 # exclude RevolutionPi packages whose source code is fetched from GitHub
-EXCLUDE+='|raspberrypi-firmware|picontrol'
+EXCLUDE+='|linux-4.9|raspberrypi-firmware|picontrol|revpi-firmware'
+# exclude RevolutionPi packages whose source code is fetched from GitHub
+EXCLUDE+='|python-snap7|snap7'
 
 # fetch Raspbian sources
 [ ! -d "$2" ] && mkdir -p "$2"
@@ -62,38 +68,24 @@ dpkg-query --admindir $APTROOT/var/lib/dpkg -W		\
 	| while read package ; do fetch_deb_src "$package" ; done
 
 # fetch missing Raspbian sources
-wget -O omxplayer.tar.gz \
-	https://github.com/popcornmix/omxplayer/archive/master.tar.gz
-version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
-	-f='${source:Version}' bluej | tr -dC '[0-9]')
-wget http://www.bluej.org/download/files/source/BlueJ-source-$version.zip
-version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
-	-f='${source:Version}' greenfoot | tr -dC '[0-9].')
-wget http://www.greenfoot.org/download/files/source/Greenfoot-source-$version.zip
 version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
 	-f='${source:Version}' nodered | tr -dC '[0-9].')
+[ -z "$version" ] && version=master
 wget -O node-red_$version.tar.gz \
 	https://github.com/node-red/node-red/archive/$version.tar.gz
 wget -O node-red-nodes.tar.gz \
 	https://github.com/node-red/node-red-nodes/archive/master.tar.gz
-version=v$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
-	-f='${source:Version}' python3-pifacedigital-scratch-handler \
-	| cut -d- -f1 | tr -dC '[0-9].')
-wget -O pifacedigital-scratch-handler_$version.tar.gz \
-	https://github.com/piface/pifacedigital-scratch-handler/archive/$version.tar.gz
-version=v$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
-	-f='${source:Version}' smartsim \
-	| cut -d- -f1 | tr -dC '[0-9].')
-wget -O smartsim_$version.tar.gz \
-	https://github.com/ashleynewson/SmartSim/archive/$version.tar.gz
 version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
 	-f='${source:Version}' wiringpi | tr -dC '[0-9].')
 wget -O wiringpi_$version.tar.gz \
-	"https://git.drogon.net/?p=wiringPi;a=snapshot;h=$version;sf=tgz"
+	https://github.com/WiringPi/WiringPi/archive/final_official_$version.tar.gz
 
 # fetch RevolutionPi sources
-wget -O linux.tar.gz https://github.com/RevolutionPi/linux/archive/revpi-4.4.tar.gz
+wget -O linux.tar.gz https://github.com/RevolutionPi/linux/archive/revpi-4.9.tar.gz
 wget -O piControl.tar.gz https://github.com/RevolutionPi/piControl/archive/master.tar.gz
+wget -O IODeviceExample.tar.gz https://github.com/RevolutionPi/IODeviceExample/archive/master.tar.gz
+wget -O python-snap7.tar.gz https://github.com/RevolutionPi/python-snap7/archive/master.tar.gz
+wget -O snap7-debian.tar.gz https://github.com/RevolutionPi/snap7-debian/archive/master.tar.gz
 
 # clean up
 rm -r $APTROOT
