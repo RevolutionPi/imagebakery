@@ -30,6 +30,7 @@ mkdir -p $APTROOT/var/cache/apt/archives/partial
 sed -i -r -e 's/#(deb-src.*)/\1/' $APTROOT/etc/apt/sources.list \
 				  $APTROOT/etc/apt/sources.list.d/*
 apt-get -o Dir=$APTROOT -o Dir::State::status=$APTROOT/var/lib/dpkg/status \
+	--allow-releaseinfo-change \
 	update
 
 # try downloading the exact version of a package,
