@@ -38,8 +38,10 @@ apt-get -o Dir=$APTROOT -o Dir::State::status=$APTROOT/var/lib/dpkg/status \
 # (in the future we may additionally try downloading from
 # snapshot.debian.org, e.g. using Debian::Snapshot on CPAN)
 fetch_deb_src() {
-	apt-get -o RootDir=$APTROOT --download-only source "$1" ||
-	apt-get -o RootDir=$APTROOT --download-only source "$(echo $1 | cut -d= -f1)"
+	apt-get -o RootDir=$APTROOT -o APT::Sandbox::User="" --download-only \
+		source "$1" ||
+	apt-get -o RootDir=$APTROOT -o APT::Sandbox::User="" --download-only \
+		source "$(echo $1 | cut -d= -f1)"
 }
 
 # exclude binary-only Raspbian packages
