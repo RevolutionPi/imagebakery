@@ -57,7 +57,7 @@ EXCLUDE+='|pictory|revpi-(repo|tools|wallpaper|webstatus)|revpi7'
 # exclude RevolutionPi packages whose source code is fetched from GitHub
 EXCLUDE+='|linux-4.9|raspberrypi-firmware|picontrol|revpi-firmware'
 # exclude RevolutionPi packages whose source code is fetched from GitHub
-EXCLUDE+='|python-snap7|snap7'
+EXCLUDE+='|python-snap7|snap7|revpimodio2'
 
 # fetch Raspbian sources
 [ ! -d "$2" ] && mkdir -p "$2"
@@ -69,7 +69,8 @@ dpkg-query --admindir $APTROOT/var/lib/dpkg -W		\
 
 # fetch missing Raspbian sources
 version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
-	-f='${source:Version}' nodered | tr -dC '[0-9].')
+	-f='${source:Version}' nodered || true)
+version="${version%-*}"
 [ -z "$version" ] && version=master
 wget -O node-red_$version.tar.gz \
 	https://github.com/node-red/node-red/archive/$version.tar.gz
@@ -86,6 +87,7 @@ wget -O piControl.tar.gz https://github.com/RevolutionPi/piControl/archive/maste
 wget -O IODeviceExample.tar.gz https://github.com/RevolutionPi/IODeviceExample/archive/master.tar.gz
 wget -O python-snap7.tar.gz https://github.com/RevolutionPi/python-snap7/archive/master.tar.gz
 wget -O snap7-debian.tar.gz https://github.com/RevolutionPi/snap7-debian/archive/master.tar.gz
+wget -O python3-revpimodio2.tar.gz https://github.com/naruxde/revpimodio2/archive/master.tar.gz
 
 # clean up
 rm -r $APTROOT
