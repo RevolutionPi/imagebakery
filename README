@@ -2,10 +2,11 @@ Create custom images for Revolution Pi
 
 Intended usage:
 
-* Download latest Raspbian image, works with both desktop and lite images:
-  curl -LO https://downloads.raspberrypi.org/raspbian_latest
-  unzip raspbian_latest
-  rm raspbian_latest
+* Download Raspbian image, works with both desktop and lite images:
+  curl -O http://downloads.raspberrypi.org/raspbian/images/raspbian-2019-04-09/2019-04-08-raspbian-stretch.zip
+  curl -O http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-04-09/2019-04-08-raspbian-stretch-lite.zip
+  unzip *-raspbian-*.zip
+  rm *-raspbian-*.zip
 
 * Customize for Revolution Pi
   (requires root, an armhf system (RasPi or VM) and Internet connectivity;
