@@ -23,3 +23,5 @@ logiclab
 nodered
 noderedrevpinodes-server
 python3-revpimodio2
+revpipycontrol
+revpipyload
