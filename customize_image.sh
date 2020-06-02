@@ -205,7 +205,6 @@ chroot $IMAGEDIR systemctl disable dphys-swapfile
 chroot $IMAGEDIR systemctl disable hciuart
 
 # disable 3rd party software
-chroot $IMAGEDIR systemctl disable procon-web-iot
 chroot $IMAGEDIR systemctl disable logiclab
 
 # boot to console by default, disable autologin
