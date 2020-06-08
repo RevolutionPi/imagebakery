@@ -206,6 +206,9 @@ chroot $IMAGEDIR systemctl disable hciuart
 
 # disable 3rd party software
 chroot $IMAGEDIR systemctl disable logiclab
+chroot $IMAGEDIR systemctl disable nodered
+chroot $IMAGEDIR systemctl disable noderedrevpinodes-server
+chroot $IMAGEDIR systemctl disable revpipyload
 
 # boot to console by default, disable autologin
 chroot $IMAGEDIR systemctl set-default multi-user.target
