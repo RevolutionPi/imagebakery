@@ -1,1 +1,2 @@
 deb http://packages.revolutionpi.de/ stretch main contrib
+deb http://packages.revolutionpi.de/ stretch-backports main
