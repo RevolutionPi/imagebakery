@@ -22,6 +22,7 @@ logi-rts
 logiclab
 nodered
 noderedrevpinodes-server
+node-red-contrib-revpi-nodes
 python3-revpimodio2
 revpipycontrol
 revpipyload
