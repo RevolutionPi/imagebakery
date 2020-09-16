@@ -170,6 +170,7 @@ sed -i -e '1s/$/ \\4 \\6/' $IMAGEDIR/etc/issue
 
 # free up disk space
 dpkg --root $IMAGEDIR --purge `egrep -v '^#' $BAKERYDIR/debs-to-remove`
+chroot $IMAGEDIR apt-get -y autoremove --purge
 rm -rf $IMAGEDIR/home/pi/MagPi
 
 # avoid installing unnecessary packages on this space-constrained machine

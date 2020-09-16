@@ -1,37 +1,5 @@
 # VLC media player
 vlc
-vlc-bin
-vlc-data
-vlc-l10n
-vlc-plugin-base
-vlc-plugin-notify
-vlc-plugin-qt
-vlc-plugin-samba
-vlc-plugin-skins2
-vlc-plugin-video-output
-vlc-plugin-video-splitter
-vlc-plugin-visualization
-liba52-0.7.4
-libaudio2
-libaudiofile1
-libbasicusageenvironment1
-libcddb2
-libdvbpsi10
-libebml4v5
-libgroupsock8
-liblirc-client0
-liblivemedia57
-libmatroska6v5
-libmpeg2-4
-libopenmpt-modplug1
-libresid-builder0c2a
-libsidplay2
-libspeexdsp1
-libupnp6
-libusageenvironment3
-libvlc-bin
-libvlc5
-libvlccore9
 
 # Remove all web browsers except epiphany
 chromium-browser
@@ -61,16 +29,14 @@ bluealsa
 debian-reference-en
 debian-reference-common
 
-# Remove duplicate boost libraries, keep only libboost-iostreams1.62.0
-libboost-iostreams1.60.0
+# Remove duplicate boost libraries, keep only libboost-iostreams1.67.0
 libboost-iostreams1.58.0
 
 # Remove duplicate gcc base files, keep only gcc-6-base
-gcc-4.6-base
-gcc-4.7-base
-gcc-4.8-base
 gcc-4.9-base
 gcc-5-base
+gcc-6-base
+gcc-7-base
 
 # Remove header files not required by any other package
 libfreetype6-dev
@@ -80,7 +46,6 @@ libpng-dev
 fonts-droid-fallback
 fonts-liberation2
 fonts-noto-mono
-fonts-piboto
 
 # Remove lxde-icon-theme (adwaita-icon-theme and pix-icons should suffice)
 # and the lxde meta-package requiring it
@@ -94,6 +59,3 @@ gtk2-engines
 
 # Collides with the RevPi's hardware RTC
 fake-hwclock
-
-# Unnecessary after installation
-blends-tasks
