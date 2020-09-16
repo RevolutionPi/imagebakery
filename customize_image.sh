@@ -175,9 +175,8 @@ rm -rf $IMAGEDIR/home/pi/MagPi
 # avoid installing unnecessary packages on this space-constrained machine
 echo 'APT::Install-Recommends "false";' >> $IMAGEDIR/etc/apt/apt.conf
 
-# download and install missing packages (with CVE-2019-3462 fix)
-sed -r -i -e '1iAcquire::http::AllowRedirect "false";' $IMAGEDIR/etc/apt/apt.conf
-sed -r -i -e '1ideb http://ftp.gwdg.de/pub/linux/debian/raspbian/raspbian stretch main' $IMAGEDIR/etc/apt/sources.list
+# download and install missing packages
+sed -r -i -e '1ideb http://mirrordirector.raspbian.org/raspbian buster main' $IMAGEDIR/etc/apt/sources.list
 chroot $IMAGEDIR apt-get update
 chroot $IMAGEDIR apt-get -y install apt apt-transport-https libapt-inst2.0 libapt-pkg5.0
 sed -r -i -e '1d' $IMAGEDIR/etc/apt/apt.conf $IMAGEDIR/etc/apt/sources.list
