@@ -253,6 +253,5 @@ PARTSIZE=$(($PARTSIZE * 8))   # ext4 uses 4k blocks, partitions use 512 bytes
 sfdisk --dump "$LOOPDEVICE" | /bin/sed -r -e "\$!n
 \$s/size=[^,]+/size=$PARTSIZE/" | /sbin/sfdisk "$LOOPDEVICE"
 PARTSTART=$(cat /sys/block/$(basename "$LOOPDEVICE")/$(basename "$LOOPDEVICE"p2)/start)
-truncate -s $((512 * ($PARTSTART + $PARTSIZE))) "$1"
-
 cleanup_losetup
+truncate -s $((512 * ($PARTSTART + $PARTSIZE))) "$1"
