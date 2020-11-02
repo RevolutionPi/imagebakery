@@ -231,9 +231,6 @@ chroot $IMAGEDIR /usr/bin/revpi-config enable perf-governor
 # remove package lists, they will be outdated within days
 rm $IMAGEDIR/var/lib/apt/lists/*Packages
 
-# work around duplicate teamviewer apt source
-rm $IMAGEDIR/etc/apt/sources.list.d/teamviewer-iot-agent.list
-
 # install local packages
 if [ "$(/bin/ls $BAKERYDIR/debs-to-install/*.deb 2>/dev/null)" ] ; then
 	mkdir $IMAGEDIR/tmp/debs-to-install
