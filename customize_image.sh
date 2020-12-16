@@ -131,7 +131,6 @@ sed -i -r -e 's/^(XKBLAYOUT).*/\1="de"/'		\
 	  -e 's/^(XKBVARIANT).*/\1="nodeadkeys"/'	\
 	  $IMAGEDIR/etc/default/keyboard
 install -d -m 755 -o root -g root $IMAGEDIR/etc/revpi
-ln -s /var/www/pictory/projects/_config.rsc $IMAGEDIR/etc/revpi/config.rsc
 echo `basename "$1"` > $IMAGEDIR/etc/revpi/image-release
 install -d -m 700 -o 1000 -g 1000 $IMAGEDIR/home/pi/.ssh
 
