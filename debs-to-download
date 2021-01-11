@@ -5,6 +5,8 @@ revpi-tools
 revpi-webstatus
 revpi7
 pictory
+libtss2-dev
+libtss2-esys0
 piserial
 pitest
 pimodbus-master
