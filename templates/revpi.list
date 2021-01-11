@@ -1,2 +1,2 @@
-deb http://packages.revolutionpi.de/ stretch main contrib
-deb http://packages.revolutionpi.de/ stretch-backports main
+deb http://192.168.168.109/ buster main contrib
+deb http://192.168.168.109/ buster-backports main contrib
