@@ -19,7 +19,6 @@ newpid
 tcpdump
 gdbserver
 logi-rts
-logiclab
 nodered
 noderedrevpinodes-server
 node-red-contrib-revpi-nodes
