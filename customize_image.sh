@@ -6,6 +6,11 @@ if [ "$#" != 1 ] ; then
 	exit 1
 fi
 
+if [ ! -x /usr/sbin/parted ] ; then
+   echo 1>&1 "Error: /usr/sbin/parted is not executable."
+   exit 1
+fi
+
 set -ex
 
 # pivot to new PID namespace
@@ -59,6 +64,26 @@ cleanup() {
 }
 
 trap cleanup ERR SIGINT
+imgsize=$(parted "$1" unit b print | grep -e "\.img" | awk -F ":" '{gsub(/^[ \t]+|[B \t]+$/,"",$2); print $2}')
+[ "x$imgsize" = "x" ] && echo 1>&1 "Error: Image size not found" && exit 1
+secsize=$(parted "$1" unit b print | grep -e "Sector size" | awk -F "/" '{gsub(/^[ \t]+|[B \t]+$/,"",$3); print $3}')
+[ "x$secsize" = "x" ] && echo 1>&1 "Error: Sector size not found" && exit 1
+
+# The smallest size of CM3-eMMC is 4 GB  , the available disksize for a system is 3909091328 bytes
+# An image like raspios-lite just have 2 GB , so we need to resize rootfs first before
+# we start processing the image. Otherwise build will fail with "no space left on device"
+if [ $imgsize -lt 3900000000 ] ; then
+   disksize=3909091328
+   bcount=$(echo "($disksize-$imgsize)/$secsize" | bc )
+   dd if=/dev/zero count=$bcount bs=$secsize >> "$1"
+   parted "$1" resizepart 2 "$((disksize-1))"B
+   losetup "$LOOPDEVICE" "$1"
+   partprobe "$LOOPDEVICE"
+   resize2fs "$LOOPDEVICE"p2
+   e2fsck -f "$LOOPDEVICE"p2
+   sync
+   losetup -D
+fi
 
 # mount ext4 + FAT filesystems
 losetup "$LOOPDEVICE" $1
@@ -254,9 +279,8 @@ sleep 2
 # shrink image to speed up flashing
 resize2fs -M "$LOOPDEVICE"p2
 PARTSIZE=$(dumpe2fs -h "$LOOPDEVICE"p2 | egrep "^Block count:" | cut -d" " -f3-)
-PARTSIZE=$(($PARTSIZE * 8))   # ext4 uses 4k blocks, partitions use 512 bytes
-sfdisk --dump "$LOOPDEVICE" | /bin/sed -r -e "\$!n
-\$s/size=[^,]+/size=$PARTSIZE/" | /sbin/sfdisk "$LOOPDEVICE"
+PARTSIZE=$((($PARTSIZE+1) * 8))   # ext4 uses 4k blocks, partitions use 512 bytes
 PARTSTART=$(cat /sys/block/$(basename "$LOOPDEVICE")/$(basename "$LOOPDEVICE"p2)/start)
+parted ---pretend-input-tty "$LOOPDEVICE" resizepart 2 "$(($PARTSTART+$PARTSIZE-1))"s yes
 cleanup_losetup
 truncate -s $((512 * ($PARTSTART + $PARTSIZE))) "$1"
