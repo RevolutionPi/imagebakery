@@ -10,8 +10,11 @@ dillo
 libfltk1.3
 netsurf-gtk
 netsurf-common
-
+libreoffice-help-en-gb
+ 
 # Games
+mu-editor
+code-the-classics
 python3-pgzero
 
 # "FreePats is a project to create a free and open collection of digital
