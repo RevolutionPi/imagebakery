@@ -162,7 +162,6 @@ install -d -m 700 -o 1000 -g 1000 $IMAGEDIR/home/pi/.ssh
 # activate settings
 chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive keyboard-configuration
 chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive tzdata
-chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive console-setup
 
 # automatically bring up eth0 and eth1 again after a USB bus reset
 sed -i -e '6i# allow-hotplug eth0\n# allow-hotplug eth1\n' $IMAGEDIR/etc/network/interfaces
