@@ -152,9 +152,11 @@ if ! grep -qE '^i2c-dev$' $IMAGEDIR/etc/modules ; then
 	echo i2c-dev >> $IMAGEDIR/etc/modules
 fi
 echo piControl >> $IMAGEDIR/etc/modules
-sed -i -r -e 's/^(XKBLAYOUT).*/\1="de"/'		\
-	  -e 's/^(XKBVARIANT).*/\1="nodeadkeys"/'	\
+sed -i -r -e 's/^(XKBMODEL).*/\1="pc104"/' \
+	-e 's/^(XKBLAYOUT).*/\1="us"/' \
+	-e 's/^(XKBVARIANT).*/\1=""/' \
 	  $IMAGEDIR/etc/default/keyboard
+sed -i -r -e 's/^(LANG).*/\1="en_US.UTF-8"/' $IMAGEDIR/etc/default/locale
 install -d -m 755 -o root -g root $IMAGEDIR/etc/revpi
 echo `basename "$1"` > $IMAGEDIR/etc/revpi/image-release
 install -d -m 700 -o 1000 -g 1000 $IMAGEDIR/home/pi/.ssh
@@ -162,7 +164,6 @@ install -d -m 700 -o 1000 -g 1000 $IMAGEDIR/home/pi/.ssh
 # activate settings
 chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive keyboard-configuration
 chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive tzdata
-chroot $IMAGEDIR dpkg-reconfigure -fnoninteractive console-setup
 
 # automatically bring up eth0 and eth1 again after a USB bus reset
 sed -i -e '6i# allow-hotplug eth0\n# allow-hotplug eth1\n' $IMAGEDIR/etc/network/interfaces
