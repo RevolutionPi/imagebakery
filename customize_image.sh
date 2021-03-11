@@ -232,6 +232,16 @@ if [ -e "$IMAGEDIR/etc/init.d/apache2" ] ; then
 		$IMAGEDIR/etc/apache2/apache2.conf
 fi
 
+# install nodejs and nodered with an install script and revpi-nodes from npm repository
+NODEREDSCRIPT="/tmp/update-nodejs-and-nodered.sh"
+/usr/bin/curl -sL \
+	https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered\
+	--output $IMAGEDIR/$NODEREDSCRIPT
+/usr/bin/chmod 755 $IMAGEDIR/$NODEREDSCRIPT
+chroot $IMAGEDIR /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi
+/usr/bin/rm $IMAGEDIR/$NODEREDSCRIPT
+chroot $IMAGEDIR /usr/bin/npm install --prefix /home/pi/.node-red node-red-contrib-revpi-nodes
+
 # enable ssh daemon by default, disable swap, disable bluetooth on mini-uart
 chroot $IMAGEDIR systemctl enable ssh
 chroot $IMAGEDIR systemctl disable dphys-swapfile
