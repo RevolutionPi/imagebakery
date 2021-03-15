@@ -262,6 +262,12 @@ if [ -e $IMAGEDIR/etc/lightdm/lightdm.conf ] ; then
 		$IMAGEDIR/etc/lightdm/lightdm.conf
 fi
 
+# autologin.conf enables autologin in raspios and raspios-full 
+# but not in raspios-lite
+if [ -e $IMAGEDIR/etc/systemd/system/getty@tty1.service.d/autologin.conf ] ; then
+	rm -f $IMAGEDIR/etc/systemd/system/getty@tty1.service.d/autologin.conf
+fi
+
 # peg cpu at 1200 MHz to maximize spi0 throughput and avoid jitter
 chroot $IMAGEDIR /usr/bin/revpi-config enable perf-governor
 
