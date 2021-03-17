@@ -25,3 +25,4 @@ node-red-contrib-revpi-nodes
 python3-revpimodio2
 revpipycontrol
 revpipyload
+revpicommander
