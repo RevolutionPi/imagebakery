@@ -8,8 +8,8 @@ fi
 
 PARTED="$(which parted)"
 if [ ! -x "$PARTED" ] ; then
-   echo 1>&1 "Error: $PARTED is not executable."
-   exit 1
+	echo 1>&1 "Error: $PARTED is not executable."
+	exit 1
 fi
 
 set -ex
@@ -74,16 +74,16 @@ secsize=$($PARTED "$1" unit b print | grep -e "Sector size" | awk -F "/" '{gsub(
 # An image like raspios-lite just have 2 GB , so we need to resize rootfs first before
 # we start processing the image. Otherwise build will fail with "no space left on device"
 if [ $imgsize -lt 3900000000 ] ; then
-   disksize=3909091328
-   bcount=$(echo "($disksize-$imgsize)/$secsize" | bc )
-   dd if=/dev/zero count=$bcount bs=$secsize >> "$1"
-   $PARTED "$1" resizepart 2 "$((disksize-1))"B
-   losetup "$LOOPDEVICE" "$1"
-   partprobe "$LOOPDEVICE"
-   resize2fs "$LOOPDEVICE"p2
-   e2fsck -f "$LOOPDEVICE"p2
-   sync
-   losetup -D
+	disksize=3909091328
+	bcount=$(echo "($disksize-$imgsize)/$secsize" | bc )
+	dd if=/dev/zero count=$bcount bs=$secsize >> "$1"
+	$PARTED "$1" resizepart 2 "$((disksize-1))"B
+	losetup "$LOOPDEVICE" "$1"
+	partprobe "$LOOPDEVICE"
+	resize2fs "$LOOPDEVICE"p2
+	e2fsck -f "$LOOPDEVICE"p2
+	sync
+	losetup -D
 fi
 
 # mount ext4 + FAT filesystems
@@ -94,7 +94,7 @@ mount "$LOOPDEVICE"p1 "$IMAGEDIR/boot"
 
 # see https://wiki.debian.org/QemuUserEmulation
 if [ -e /usr/bin/qemu-arm-static ] ; then
-    cp /usr/bin/qemu-arm-static "$IMAGEDIR/usr/bin"
+	cp /usr/bin/qemu-arm-static "$IMAGEDIR/usr/bin"
 fi
 
 # copy templates
