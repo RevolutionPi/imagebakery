@@ -2,7 +2,7 @@
 # customize raspbian image for revolution pi
 
 if [ "$#" != 1 ] ; then
-	echo 1>&1 "Usage: `basename $0` <image>"
+	echo 1>&1 "Usage: `basename "$0"` <image>"
 	exit 1
 fi
 
@@ -20,7 +20,7 @@ if [ $$ != 2 ] && [ -x /usr/bin/newpid ] ; then
 fi
 
 IMAGEDIR=`mktemp -d -p /tmp img.XXXXXXXX`
-BAKERYDIR=`dirname $0`
+BAKERYDIR=$(dirname "$0")
 LOOPDEVICE=$(losetup -f)
 
 cleanup_umount() {
@@ -98,9 +98,9 @@ if [ -e /usr/bin/qemu-arm-static ] ; then
 fi
 
 # copy templates
-cp $BAKERYDIR/templates/cmdline.txt $IMAGEDIR/boot
-cp $BAKERYDIR/templates/revpi-aliases.sh $IMAGEDIR/etc/profile.d
-cp $BAKERYDIR/templates/rsyslog.conf $IMAGEDIR/etc
+cp "$BAKERYDIR/templates/cmdline.txt" $IMAGEDIR/boot
+cp "$BAKERYDIR/templates/revpi-aliases.sh" $IMAGEDIR/etc/profile.d
+cp "$BAKERYDIR/templates/rsyslog.conf" $IMAGEDIR/etc
 
 # force HDMI mode even if no HDMI monitor is detected
 sed -r -i -e 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' \
@@ -125,8 +125,8 @@ uncompresscmd /usr/bin/unxz\
 ' $IMAGEDIR/etc/logrotate.conf
 
 # bootstrap apt source, will be overwritten by revpi-repo package
-cp $BAKERYDIR/templates/revpi.gpg $IMAGEDIR/etc/apt/trusted.gpg.d
-cp $BAKERYDIR/templates/revpi.list $IMAGEDIR/etc/apt/sources.list.d
+cp "$BAKERYDIR/templates/revpi.gpg" $IMAGEDIR/etc/apt/trusted.gpg.d
+cp "$BAKERYDIR/templates/revpi.list" $IMAGEDIR/etc/apt/sources.list.d
 
 # Move ld.so.preload until installation is finished. Otherwise we get errors
 # from ld.so:
@@ -191,13 +191,13 @@ cat >> $IMAGEDIR/etc/dhcpcd.conf <<-EOF
 
 # harden network configuration
 chroot $IMAGEDIR /usr/bin/patch /etc/sysctl.conf	\
-	< $BAKERYDIR/templates/sysctl.conf.patch
+	< "$BAKERYDIR/templates/sysctl.conf.patch"
 
 # display IP address at login prompt
 sed -i -e '1s/$/ \\4 \\6/' $IMAGEDIR/etc/issue
 
 # free up disk space
-dpkg --root $IMAGEDIR --purge `egrep -v '^#' $BAKERYDIR/debs-to-remove`
+dpkg --root $IMAGEDIR --purge `egrep -v '^#' "$BAKERYDIR/debs-to-remove"`
 chroot $IMAGEDIR apt-get -y autoremove --purge
 rm -rf $IMAGEDIR/home/pi/MagPi
 
@@ -210,7 +210,7 @@ chroot $IMAGEDIR apt-get update
 chroot $IMAGEDIR apt-get -y install apt apt-transport-https libapt-inst2.0 libapt-pkg5.0
 sed -r -i -e '1d' $IMAGEDIR/etc/apt/apt.conf $IMAGEDIR/etc/apt/sources.list
 
-chroot $IMAGEDIR apt-get -y install `egrep -v '^#' $BAKERYDIR/debs-to-download`
+chroot $IMAGEDIR apt-get -y install `egrep -v '^#' "$BAKERYDIR/debs-to-download"`
 dpkg --root $IMAGEDIR --force-depends --purge rpd-wallpaper
 chroot $IMAGEDIR apt-get -y install revpi-wallpaper
 chroot $IMAGEDIR apt-get update
@@ -276,9 +276,9 @@ chroot $IMAGEDIR /usr/bin/revpi-config enable perf-governor
 rm $IMAGEDIR/var/lib/apt/lists/*Packages
 
 # install local packages
-if [ "$(/bin/ls $BAKERYDIR/debs-to-install/*.deb 2>/dev/null)" ] ; then
+if [ "$(/bin/ls "$BAKERYDIR/debs-to-install/"*.deb 2>/dev/null)" ] ; then
 	mkdir $IMAGEDIR/tmp/debs-to-install
-	mount --bind $BAKERYDIR/debs-to-install $IMAGEDIR/tmp/debs-to-install
+	mount --bind "$BAKERYDIR/debs-to-install" $IMAGEDIR/tmp/debs-to-install
 	chroot $IMAGEDIR sh -c "dpkg -i /tmp/debs-to-install/*.deb"
 fi
 
