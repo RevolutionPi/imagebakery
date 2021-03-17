@@ -87,7 +87,7 @@ if [ $imgsize -lt 3900000000 ] ; then
 fi
 
 # mount ext4 + FAT filesystems
-losetup "$LOOPDEVICE" $1
+losetup "$LOOPDEVICE" "$1"
 partprobe "$LOOPDEVICE"
 mount "$LOOPDEVICE"p2 $IMAGEDIR
 mount "$LOOPDEVICE"p1 $IMAGEDIR/boot
