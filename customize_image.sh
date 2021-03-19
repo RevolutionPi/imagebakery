@@ -7,8 +7,13 @@ if [ "$#" != 1 ] ; then
 fi
 
 PARTED="$(which parted)"
+if [ "x$PARTED" = "x" ] ; then
+	echo 1>&1 "Error: Command parted not found."
+	exit 1
+fi
+
 if [ ! -x "$PARTED" ] ; then
-	echo 1>&1 "Error: $PARTED is not executable."
+	echo 1>&1 "Error: Command $PARTED is not executable."
 	exit 1
 fi
 
