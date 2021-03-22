@@ -65,14 +65,6 @@ dpkg-query --admindir $APTROOT/var/lib/dpkg -W		\
 
 # fetch missing Raspbian sources
 version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
-	-f='${source:Version}' nodered || true)
-version="${version%-*}"
-[ -z "$version" ] && version=master
-wget -O node-red_$version.tar.gz \
-	https://github.com/node-red/node-red/archive/$version.tar.gz
-wget -O node-red-nodes.tar.gz \
-	https://github.com/node-red/node-red-nodes/archive/master.tar.gz
-version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
 	-f='${source:Version}' wiringpi | tr -dC '[0-9].')
 wget -O wiringpi_$version.tar.gz \
 	https://github.com/WiringPi/WiringPi/archive/final_official_$version.tar.gz
