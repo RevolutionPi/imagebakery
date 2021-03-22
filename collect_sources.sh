@@ -45,19 +45,15 @@ fetch_deb_src() {
 }
 
 # exclude binary-only Raspbian packages
-EXCLUDE='realvnc-vnc|oracle-java8-jdk'
+EXCLUDE='realvnc-vnc'
 # exclude Raspbian packages with missing source code
-EXCLUDE+='|nodered|wiringpi'
+EXCLUDE+='|nodered|wiringpi|nodejs'
 # exclude binary-only RevolutionPi packages
-EXCLUDE+='|logi-rts|logiclab|piserial|procon-web-iot|teamviewer-revpi'
-# exclude binary-only RevolutionPi packages
-EXCLUDE+='|pimodbus-master|pimodbus-slave'
+EXCLUDE+='|piserial|teamviewer-revpi|revpi-modbus'
 # exclude non-binary RevolutionPi packages
-EXCLUDE+='|pictory|revpi-(repo|tools|wallpaper|webstatus)'
+EXCLUDE+='|pictory|revpi-(tools|webstatus)'
 # exclude RevolutionPi packages whose source code is fetched from GitHub
-EXCLUDE+='|linux-4.9|raspberrypi-firmware|picontrol|revpi-firmware'
-# exclude RevolutionPi packages whose source code is fetched from GitHub
-EXCLUDE+='|python-snap7|snap7|revpimodio2'
+EXCLUDE+='|raspberrypi-firmware|picontrol|revpi-firmware'
 
 # fetch Raspbian sources
 [ ! -d "$2" ] && mkdir -p "$2"
