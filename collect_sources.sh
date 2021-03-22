@@ -82,8 +82,11 @@ wget -O wiringpi_$version.tar.gz \
 	https://github.com/WiringPi/WiringPi/archive/final_official_$version.tar.gz
 
 # fetch RevolutionPi sources
-wget -O linux.tar.gz https://github.com/RevolutionPi/linux/archive/revpi-4.9.tar.gz
-wget -O piControl.tar.gz https://github.com/RevolutionPi/piControl/archive/master.tar.gz
+knl_version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
+	-f='${source:Version}' raspberrypi-kernel || true)
+knl_tag="raspberrypi-kernel_$knl_version"
+wget -O "linux-$knl_version.tar.gz" "https://github.com/RevolutionPi/linux/archive/refs/tags/$knl_tag.tar.gz"
+wget -O "piControl-$knl_version.tar.gz" "https://github.com/RevolutionPi/piControl/archive/refs/tags/$knl_tag.tar.gz"
 wget -O IODeviceExample.tar.gz https://github.com/RevolutionPi/IODeviceExample/archive/master.tar.gz
 wget -O python-snap7.tar.gz https://github.com/RevolutionPi/python-snap7/archive/master.tar.gz
 wget -O snap7-debian.tar.gz https://github.com/RevolutionPi/snap7-debian/archive/master.tar.gz
