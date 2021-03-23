@@ -11,13 +11,14 @@ set -ex
 
 IMAGEDIR=/tmp/img.$$
 APTROOT=/tmp/apt.$$
+LOOPDEVICE=$(losetup -f)
 
 # mount ext4 + FAT filesystems
-losetup /dev/loop0 "$1"
-partprobe /dev/loop0
+losetup "$LOOPDEVICE" "$1"
+partprobe "$LOOPDEVICE"
 mkdir $IMAGEDIR
-mount -o ro /dev/loop0p2 $IMAGEDIR
-mount -o ro /dev/loop0p1 $IMAGEDIR/boot
+mount -o ro "$LOOPDEVICE"p2 $IMAGEDIR
+mount -o ro "$LOOPDEVICE"p1 $IMAGEDIR/boot
 
 # deb-src entries in sources.list are commented out by default;
 # duplicate the config, patch it and download the package lists
@@ -85,6 +86,6 @@ rm -r $APTROOT
 umount $IMAGEDIR/boot
 umount $IMAGEDIR
 rmdir $IMAGEDIR
-delpart /dev/loop0 1
-delpart /dev/loop0 2
-losetup -d /dev/loop0
+delpart "$LOOPDEVICE" 1
+delpart "$LOOPDEVICE" 2
+losetup -d "$LOOPDEVICE"
