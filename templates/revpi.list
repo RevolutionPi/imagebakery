@@ -1,2 +1,2 @@
 deb http://packages.revolutionpi.de/ buster main contrib
-deb http://packages.revolutionpi.de/ buster-backports main
+deb http://packages.revolutionpi.de/ buster-backports main contrib
