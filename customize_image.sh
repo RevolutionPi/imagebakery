@@ -6,6 +6,16 @@ if [ "$#" != 1 ] ; then
 	exit 1
 fi
 
+if [ ! -x "$(which curl)" ]; then
+	echo 1>&1 "Error: Command curl not found."
+	exit 1
+fi
+
+if [ ! -x "$(which fsck.vfat)" ]; then
+	echo 1>&1 "Error: Command fsck.vfat not found."
+	exit 1
+fi
+
 PARTED="$(which parted)"
 if [ "x$PARTED" = "x" ] ; then
 	echo 1>&1 "Error: Command parted not found."
