@@ -53,7 +53,7 @@ EXCLUDE+='|logi-rts|logiclab|piserial|procon-web-iot|teamviewer-revpi'
 # exclude binary-only RevolutionPi packages
 EXCLUDE+='|pimodbus-master|pimodbus-slave'
 # exclude non-binary RevolutionPi packages
-EXCLUDE+='|pictory|revpi-(repo|tools|wallpaper|webstatus)|revpi7'
+EXCLUDE+='|pictory|revpi-(repo|tools|wallpaper|webstatus)'
 # exclude RevolutionPi packages whose source code is fetched from GitHub
 EXCLUDE+='|linux-4.9|raspberrypi-firmware|picontrol|revpi-firmware'
 # exclude RevolutionPi packages whose source code is fetched from GitHub
