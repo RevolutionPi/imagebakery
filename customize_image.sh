@@ -16,7 +16,7 @@ if [ ! -x "$(which fsck.vfat)" ]; then
 	exit 1
 fi
 
-if [ ! -x "(which lsof)" ]; then
+if [ ! -x "$(which lsof)" ]; then
 	echo 1>&1 "Error: Command lsof not found."
 	exit 1
 fi
