@@ -28,6 +28,10 @@ mkdir -p $APTROOT/var/cache/apt/archives/partial
 	| (cd $APTROOT ; tar xf -)
 (cd / ; tar cf - /usr/lib/apt)	\
 	| (cd $APTROOT ; tar xf -)
+
+# no source package is provided by nodesource.list
+rm -f $APTROOT/etc/apt/sources.list.d/nodesource.list
+
 sed -i -r -e 's/#(deb-src.*)/\1/' $APTROOT/etc/apt/sources.list \
 				  $APTROOT/etc/apt/sources.list.d/*
 apt-get -o Dir=$APTROOT -o Dir::State::status=$APTROOT/var/lib/dpkg/status \
