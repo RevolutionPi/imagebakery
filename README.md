@@ -7,14 +7,14 @@ Works with both [RaspiOS](https://www.raspberrypi.org/software/operating-systems
 
 *Raspberry Pi OS with desktop*
 ```
-curl -O https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2021-01-12/2021-01-11-raspios-buster-armhf.zip
-unzip 2021-01-11-raspios-buster-armhf.zip
+curl -O https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2021-03-25/2021-03-04-raspios-buster-armhf.zip
+unzip 2021-03-04-raspios-buster-armhf.zip
 ```
 
 *Raspberry Pi OS Lite*
 ```
-curl -O https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-01-12/2021-01-11-raspios-buster-armhf-lite.zip
-unzip 2021-01-11-raspios-buster-armhf-lite.zip
+curl -O https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-03-25/2021-03-04-raspios-buster-armhf-lite.zip
+unzip 2021-03-04-raspios-buster-armhf-lite.zip
 ```
 
 ### Customize for Revolution Pi
