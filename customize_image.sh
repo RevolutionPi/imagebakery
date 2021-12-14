@@ -261,7 +261,7 @@ NODEREDSCRIPT="/tmp/update-nodejs-and-nodered.sh"
 chmod 755 "$IMAGEDIR/$NODEREDSCRIPT"
 chroot "$IMAGEDIR" /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi
 rm "$IMAGEDIR/$NODEREDSCRIPT"
-chroot "$IMAGEDIR" /usr/bin/npm install --prefix /home/pi/.node-red node-red-contrib-revpi-nodes
+chroot "$IMAGEDIR" /usr/bin/sudo -u pi /usr/bin/npm install --prefix /home/pi/.node-red node-red-contrib-revpi-nodes
 
 # enable ssh daemon by default, disable swap, disable bluetooth on mini-uart
 chroot "$IMAGEDIR" systemctl enable ssh
