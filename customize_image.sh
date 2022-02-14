@@ -128,6 +128,11 @@ sed -r -i -e 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' \
 	  -e 's/#hdmi_drive=2/hdmi_drive=2/' \
 	  "$CONFIGTXT"
 
+# Add dwc2 overlay for CM4(S)
+MF_DWC2="\[cm4s\]"
+grep -q  "$MF_DWC2" "$CONFIGTXT" || sed -i "/^\[all\]/i $MF_DWC2\n" "$CONFIGTXT"
+sed -r -i -e "/$MF_DWC2/ a dtoverlay=dwc2,dr_mode=host"  "$CONFIGTXT"
+
 # limit disk space occupied by logs
 ln -s ../cron.daily/logrotate "$IMAGEDIR/etc/cron.hourly"
 sed -r -i -e 's/delaycompress/#delaycompress/' \
