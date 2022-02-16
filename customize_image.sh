@@ -42,6 +42,7 @@ fi
 IMAGEDIR=`mktemp -d -p /tmp img.XXXXXXXX`
 BAKERYDIR=$(dirname "$0")
 LOOPDEVICE=$(losetup -f)
+CONFIGTXT="$IMAGEDIR/boot/config.txt"
 
 cleanup_umount() {
 	if [ -e "$IMAGEDIR" ] ; then
@@ -125,7 +126,7 @@ cp "$BAKERYDIR/templates/rsyslog.conf" "$IMAGEDIR/etc"
 # force HDMI mode even if no HDMI monitor is detected
 sed -r -i -e 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' \
 	  -e 's/#hdmi_drive=2/hdmi_drive=2/' \
-	  "$IMAGEDIR/boot/config.txt"
+	  "$CONFIGTXT"
 
 # limit disk space occupied by logs
 ln -s ../cron.daily/logrotate "$IMAGEDIR/etc/cron.hourly"
