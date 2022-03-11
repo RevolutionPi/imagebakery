@@ -232,7 +232,7 @@ echo 'APT::Install-Recommends "false";' >> "$IMAGEDIR/etc/apt/apt.conf"
 
 # download and install missing packages
 sed -r -i -e '1ideb http://mirrordirector.raspbian.org/raspbian buster main' "$IMAGEDIR/etc/apt/sources.list"
-chroot "$IMAGEDIR" apt-get update
+chroot "$IMAGEDIR" apt-get update --allow-releaseinfo-change -y
 chroot "$IMAGEDIR" apt-get -y install apt apt-transport-https libapt-inst2.0 libapt-pkg5.0
 sed -r -i -e '1d' "$IMAGEDIR/etc/apt/apt.conf" "$IMAGEDIR/etc/apt/sources.list"
 
