@@ -17,11 +17,8 @@ lsof
 newpid
 tcpdump
 gdbserver
-logi-rts
-noderedrevpinodes-server
 python3-revpimodio2
 revpipycontrol
 revpipyload
 revpicommander
-epiphany-browser
 revpi-bluetooth

@@ -231,7 +231,7 @@ chroot "$IMAGEDIR" apt-get -y install `egrep -v '^#' "$BAKERYDIR/debs-to-downloa
 dpkg --root "$IMAGEDIR" --force-depends --purge rpd-wallpaper
 chroot "$IMAGEDIR" apt-get -y install revpi-wallpaper
 chroot "$IMAGEDIR" apt-get update
-chroot "$IMAGEDIR" apt-get -y install teamviewer-revpi
+#chroot "$IMAGEDIR" apt-get -y install teamviewer-revpi
 chroot "$IMAGEDIR" apt-mark hold raspi-copies-and-fills
 chroot "$IMAGEDIR" apt-get -y upgrade
 chroot "$IMAGEDIR" apt-mark unhold raspi-copies-and-fills
@@ -251,14 +251,14 @@ if [ -e "$IMAGEDIR/etc/init.d/apache2" ] ; then
 fi
 
 # install nodejs and nodered with an install script and revpi-nodes from npm repository
-NODEREDSCRIPT="/tmp/update-nodejs-and-nodered.sh"
-/usr/bin/curl -sL \
-	https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered\
-	--output "$IMAGEDIR/$NODEREDSCRIPT"
-chmod 755 "$IMAGEDIR/$NODEREDSCRIPT"
-chroot "$IMAGEDIR" /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi
-rm "$IMAGEDIR/$NODEREDSCRIPT"
-chroot "$IMAGEDIR" /usr/bin/sudo -u pi /usr/bin/npm install --prefix /home/pi/.node-red node-red-contrib-revpi-nodes
+#NODEREDSCRIPT="/tmp/update-nodejs-and-nodered.sh"
+#/usr/bin/curl -sL \
+#	https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered\
+#	--output "$IMAGEDIR/$NODEREDSCRIPT"
+#chmod 755 "$IMAGEDIR/$NODEREDSCRIPT"
+#chroot "$IMAGEDIR" /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi
+#rm "$IMAGEDIR/$NODEREDSCRIPT"
+#chroot "$IMAGEDIR" /usr/bin/sudo -u pi /usr/bin/npm install --prefix /home/pi/.node-red node-red-contrib-revpi-nodes
 
 # enable ssh daemon by default, disable swap, disable bluetooth on mini-uart
 chroot "$IMAGEDIR" systemctl enable ssh
@@ -266,8 +266,8 @@ chroot "$IMAGEDIR" systemctl disable dphys-swapfile
 chroot "$IMAGEDIR" systemctl disable hciuart
 
 # disable 3rd party software
-chroot "$IMAGEDIR" systemctl disable logiclab
-chroot "$IMAGEDIR" systemctl disable nodered
+#chroot "$IMAGEDIR" systemctl disable logiclab
+#chroot "$IMAGEDIR" systemctl disable nodered
 chroot "$IMAGEDIR" systemctl disable noderedrevpinodes-server
 chroot "$IMAGEDIR" systemctl disable revpipyload
 
