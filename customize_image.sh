@@ -85,7 +85,33 @@ cleanup() {
 	cleanup_losetup
 }
 
-trap cleanup ERR SIGINT
+build_error() {
+  cleanup
+  set +x
+  echo -e '\e[31;1m'
+  echo '====================================================================================='
+  echo '|                                                                                   |'
+  echo '| THE BUILD PROCESS WAS INTERRUPTED / FAILED. THE RESULTING IMAGE MIGHT BE UNUSABLE |'
+  echo '|                                                                                   |'
+  echo '====================================================================================='
+  echo -e '\e[0m'
+
+}
+
+build_success() {
+  cleanup
+  set +x
+  echo -e '\e[32;1m'
+  echo '==================================='
+  echo '|                                 |'
+  echo '| THE BUILD PROCESS WAS SUCCESFUL |'
+  echo '|                                 |'
+  echo '==================================='
+  echo -e '\e[0m'
+
+}
+
+trap build_error ERR SIGINT
 imgsize=$($PARTED "$1" unit b print | grep -e "\.img" | awk -F ":" '{gsub(/^[ \t]+|[B \t]+$/,"",$2); print $2}')
 [ "x$imgsize" = "x" ] && echo 1>&1 "Error: Image size not found" && exit 1
 secsize=$($PARTED "$1" unit b print | grep -e "Sector size" | awk -F "/" '{gsub(/^[ \t]+|[B \t]+$/,"",$3); print $3}')
@@ -321,3 +347,5 @@ PARTSTART=$(cat /sys/block/$(basename "$LOOPDEVICE")/$(basename "$LOOPDEVICE"p2)
 $PARTED --script "$LOOPDEVICE" resizepart 2 "$(($PARTSTART+$PARTSIZE-1))"s Yes
 cleanup_losetup
 truncate -s $((512 * ($PARTSTART + $PARTSIZE))) "$1"
+
+build_sucess
