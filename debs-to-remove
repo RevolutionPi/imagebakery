@@ -2,6 +2,7 @@
 vlc
 
 # Remove all web browsers except epiphany
+chromium
 chromium-browser
 chromium-browser-l10n
 chromium-codecs-ffmpeg-extra
