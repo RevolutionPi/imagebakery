@@ -161,6 +161,11 @@ chown -R 1000:1000 "$IMAGEDIR/home/pi/demo"
 chmod -R a+rX "$IMAGEDIR/home/pi/demo"
 rm -r $PICONTROLDIR
 
+# remove bookshelf if present
+if [[ -d $IMAGEDIR/home/pi/Bookshelf ]]; then
+    rm -r $IMAGEDIR/home/pi/Bookshelf
+fi
+
 # customize settings
 echo Europe/Berlin > "$IMAGEDIR/etc/timezone"
 rm "$IMAGEDIR/etc/localtime"
