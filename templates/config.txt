@@ -64,3 +64,4 @@ dtparam=audio=on
 [cm4s]
 dtoverlay=dwc2,dr_mode=host
 
+[all]
