@@ -56,8 +56,10 @@ hdmi_drive=2
 # Enable audio (loads snd_bcm2835)
 dtparam=audio=on
 
-[cm4s]
-dtoverlay=dwc2,dr_mode=host
+# Enable DRM VC4 V3D driver
 #dtoverlay=vc4-kms-v3d
 #max_framebuffers=2
+
+[cm4s]
+dtoverlay=dwc2,dr_mode=host
 
