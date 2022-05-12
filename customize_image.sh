@@ -323,6 +323,6 @@ resize2fs -M "$LOOPDEVICE"p2
 PARTSIZE=$(dumpe2fs -h "$LOOPDEVICE"p2 | egrep "^Block count:" | cut -d" " -f3-)
 PARTSIZE=$((($PARTSIZE) * 8))   # ext4 uses 4k blocks, partitions use 512 bytes
 PARTSTART=$(cat /sys/block/$(basename "$LOOPDEVICE")/$(basename "$LOOPDEVICE"p2)/start)
-$PARTED "$LOOPDEVICE" resizepart 2 "$(($PARTSTART+$PARTSIZE-1))"s
+echo Yes | $PARTED ---pretend-input-tty "$LOOPDEVICE" resizepart 2 "$(($PARTSTART+$PARTSIZE-1))"s
 cleanup_losetup
 truncate -s $((512 * ($PARTSTART + $PARTSIZE))) "$1"
