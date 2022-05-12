@@ -102,7 +102,7 @@ if [ $imgsize -lt 3900000000 ] ; then
 	losetup "$LOOPDEVICE" "$1"
 	partprobe "$LOOPDEVICE"
 	resize2fs "$LOOPDEVICE"p2
-	e2fsck -f "$LOOPDEVICE"p2
+	e2fsck -p -f "$LOOPDEVICE"p2
 	sync
 	losetup -D
 fi
