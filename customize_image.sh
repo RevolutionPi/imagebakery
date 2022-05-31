@@ -102,7 +102,7 @@ if [ $imgsize -lt 3900000000 ] ; then
 	losetup "$LOOPDEVICE" "$1"
 	partprobe "$LOOPDEVICE"
 	resize2fs "$LOOPDEVICE"p2
-	e2fsck -f "$LOOPDEVICE"p2
+	e2fsck -p -f "$LOOPDEVICE"p2
 	sync
 	losetup -D
 fi
@@ -160,6 +160,11 @@ sed -i -r -e 's%\.\./%%' "$IMAGEDIR/home/pi/demo/Makefile"
 chown -R 1000:1000 "$IMAGEDIR/home/pi/demo"
 chmod -R a+rX "$IMAGEDIR/home/pi/demo"
 rm -r $PICONTROLDIR
+
+# remove bookshelf if present
+if [[ -d $IMAGEDIR/home/pi/Bookshelf ]]; then
+    rm -r $IMAGEDIR/home/pi/Bookshelf
+fi
 
 # customize settings
 echo Europe/Berlin > "$IMAGEDIR/etc/timezone"
@@ -318,6 +323,6 @@ resize2fs -M "$LOOPDEVICE"p2
 PARTSIZE=$(dumpe2fs -h "$LOOPDEVICE"p2 | egrep "^Block count:" | cut -d" " -f3-)
 PARTSIZE=$((($PARTSIZE) * 8))   # ext4 uses 4k blocks, partitions use 512 bytes
 PARTSTART=$(cat /sys/block/$(basename "$LOOPDEVICE")/$(basename "$LOOPDEVICE"p2)/start)
-$PARTED --script "$LOOPDEVICE" resizepart 2 "$(($PARTSTART+$PARTSIZE-1))"s Yes
+echo Yes | $PARTED ---pretend-input-tty "$LOOPDEVICE" resizepart 2 "$(($PARTSTART+$PARTSIZE-1))"s
 cleanup_losetup
 truncate -s $((512 * ($PARTSTART + $PARTSIZE))) "$1"
