@@ -2,7 +2,9 @@
 # customize raspbian image for revolution pi
 
 usage () {
-	echo 1>&1 "Usage: $(basename "$0") <image>"
+	echo 'Usage: customize_image.sh [-h, --help] <image>
+  -h, --help		print the usage page
+'
 }
 
 if [ "$#" != 1 ] ; then
@@ -42,6 +44,21 @@ set -ex
 if [ $$ != 2 ] && [ -x /usr/bin/newpid ] ; then
 	exec /usr/bin/newpid "$0" "$@"
 fi
+
+# get the options
+if ! MYOPTS=$(getopt -o h --long help -- "$@"); then
+	usage;
+	exit 1;
+fi
+eval set -- "$MYOPTS"
+
+# extract options and their arguments into variables.
+while true ; do
+	case "$1" in
+		-h|--help) usage ; exit 0;;
+		*) shift; break ;;
+	esac
+done
 
 IMAGEDIR=`mktemp -d -p /tmp img.XXXXXXXX`
 BAKERYDIR=$(dirname "$0")
