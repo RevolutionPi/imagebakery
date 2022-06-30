@@ -1,8 +1,12 @@
 #!/bin/bash
 # customize raspbian image for revolution pi
 
-if [ "$#" != 1 ] ; then
+usage () {
 	echo 1>&1 "Usage: $(basename "$0") <image>"
+}
+
+if [ "$#" != 1 ] ; then
+	usage;
 	exit 1
 fi
 
