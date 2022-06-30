@@ -2,9 +2,9 @@
 # customize raspbian image for revolution pi
 
 usage () {
-	echo 'Usage: customize_image.sh [-h, --help] <image>
-  -h, --help		print the usage page
-'
+	echo 'Usage: customize_image.sh [-m, --minimize | -h, --help] <image>
+  -m, --minimize	Install only software that is necessary for basic operation (eg. Pictory and other RevPi tools)
+  -h, --help		Print the usage page'
 }
 
 if [ "$#" != 1 ] ; then
@@ -45,8 +45,11 @@ if [ $$ != 2 ] && [ -x /usr/bin/newpid ] ; then
 	exec /usr/bin/newpid "$0" "$@"
 fi
 
+# set MINIMG as 0: build the normal image by default
+MINIMG=0
+
 # get the options
-if ! MYOPTS=$(getopt -o h --long help -- "$@"); then
+if ! MYOPTS=$(getopt -o mh --long minimize,help -- "$@"); then
 	usage;
 	exit 1;
 fi
@@ -55,10 +58,17 @@ eval set -- "$MYOPTS"
 # extract options and their arguments into variables.
 while true ; do
 	case "$1" in
+		-m|--minimize) MINIMG=1 ; shift ;;
 		-h|--help) usage ; exit 0;;
 		*) shift; break ;;
 	esac
 done
+
+if [ "$MINIMG" != "1" ]; then
+	echo "All additional applications will be built into the given image."
+else
+	echo "Only a reduced application set will be built into the given image."
+fi
 
 IMAGEDIR=`mktemp -d -p /tmp img.XXXXXXXX`
 BAKERYDIR=$(dirname "$0")
@@ -253,11 +263,16 @@ chroot "$IMAGEDIR" apt-get update --allow-releaseinfo-change -y
 chroot "$IMAGEDIR" apt-get -y install apt apt-transport-https libapt-inst2.0 libapt-pkg5.0
 sed -r -i -e '1d' "$IMAGEDIR/etc/apt/apt.conf" "$IMAGEDIR/etc/apt/sources.list"
 
-chroot "$IMAGEDIR" apt-get -y install `egrep -v '^#' "$BAKERYDIR/debs-to-download"`
+chroot "$IMAGEDIR" apt-get -y install `egrep -v '^#' "$BAKERYDIR/min-debs-to-download"`
+if [ "$MINIMG" != "1" ]; then
+	chroot "$IMAGEDIR" apt-get -y install `egrep -v '^#' "$BAKERYDIR/debs-to-download"`
+fi
 dpkg --root "$IMAGEDIR" --force-depends --purge rpd-wallpaper
 chroot "$IMAGEDIR" apt-get -y install revpi-wallpaper
 chroot "$IMAGEDIR" apt-get update
-chroot "$IMAGEDIR" apt-get -y install teamviewer-revpi
+if [ "$MINIMG" != "1" ]; then
+	chroot "$IMAGEDIR" apt-get -y install teamviewer-revpi
+fi
 chroot "$IMAGEDIR" apt-mark hold raspi-copies-and-fills
 chroot "$IMAGEDIR" apt-get -y upgrade
 chroot "$IMAGEDIR" apt-mark unhold raspi-copies-and-fills
@@ -276,24 +291,27 @@ if [ -e "$IMAGEDIR/etc/init.d/apache2" ] ; then
 		"$IMAGEDIR/etc/apache2/apache2.conf"
 fi
 
-# install nodejs and nodered with an install script and revpi-nodes from npm repository
-NODEREDSCRIPT="/tmp/update-nodejs-and-nodered.sh"
-/usr/bin/curl -sL \
-	https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered\
-	--output "$IMAGEDIR/$NODEREDSCRIPT"
-chmod 755 "$IMAGEDIR/$NODEREDSCRIPT"
-chroot "$IMAGEDIR" /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi
-rm "$IMAGEDIR/$NODEREDSCRIPT"
-chroot "$IMAGEDIR" /usr/bin/sudo -u pi /usr/bin/npm install --prefix /home/pi/.node-red node-red-contrib-revpi-nodes
-
+if [ "$MINIMG" != "1" ]; then
+	# install nodejs and nodered with an install script and revpi-nodes from npm repository
+	NODEREDSCRIPT="/tmp/update-nodejs-and-nodered.sh"
+	/usr/bin/curl -sL \
+		https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered\
+		--output "$IMAGEDIR/$NODEREDSCRIPT"
+	chmod 755 "$IMAGEDIR/$NODEREDSCRIPT"
+	chroot "$IMAGEDIR" /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi
+	rm "$IMAGEDIR/$NODEREDSCRIPT"
+	chroot "$IMAGEDIR" /usr/bin/sudo -u pi /usr/bin/npm install --prefix /home/pi/.node-red node-red-contrib-revpi-nodes
+fi
 # enable ssh daemon by default, disable swap, disable bluetooth on mini-uart
 chroot "$IMAGEDIR" systemctl enable ssh
 chroot "$IMAGEDIR" systemctl disable dphys-swapfile
 chroot "$IMAGEDIR" systemctl disable hciuart
 
 # disable 3rd party software
-chroot "$IMAGEDIR" systemctl disable logiclab
-chroot "$IMAGEDIR" systemctl disable nodered
+if [ "$MINIMG" != "1" ]; then
+	chroot "$IMAGEDIR" systemctl disable logiclab
+	chroot "$IMAGEDIR" systemctl disable nodered
+fi
 chroot "$IMAGEDIR" systemctl disable noderedrevpinodes-server
 chroot "$IMAGEDIR" systemctl disable revpipyload
 
