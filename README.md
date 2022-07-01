@@ -18,9 +18,20 @@ unzip 2022-01-28-raspios-buster-armhf-lite.zip
 ```
 
 ### Customize for Revolution Pi
-(requires root, an armhf system (RasPi or VM) and Internet connectivity;
-to cross-build, apt-get install qemu-user-static binfmt-support;
-custom packages can be placed in debs-to-install/):
+
+The script requires root privileges, an armhf system (RasPi or VM) and internet connectivity.
+
+If no armhf system is available, a crossbuild can be done with the qemu user static tools:
+
+```
+sudo apt-get install qemu-user-static binfmt-support
+```
+
+In order to build an image with only software that is necessary for basic operation (eg. Pictory and other RevPi tools), you have to call the customization script with the `--minimize` option. This option is used to build our official lite image (based on the foundations lite image).
+
+`customize_image.sh --minimize <raspbian-image>`
+
+For an image with all additional components (like NodeRed, logi-rts and Teamviewer), you must call the customization script without any options:
 
 `customize_image.sh <raspbian-image>`
 
