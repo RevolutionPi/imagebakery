@@ -7,11 +7,6 @@ usage () {
   -h, --help		Print the usage page'
 }
 
-if [ "$#" != 1 ] ; then
-	usage;
-	exit 1
-fi
-
 if [ ! -x "$(which curl)" ]; then
 	echo 1>&1 "Error: Command curl not found."
 	exit 1
