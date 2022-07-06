@@ -1,6 +1,9 @@
 # VLC media player
 vlc
 
+# Remove wiringpi
+wiringpi
+
 # Remove all web browsers except epiphany
 chromium
 chromium-browser
