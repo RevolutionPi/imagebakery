@@ -35,6 +35,13 @@ For an image with all additional components (like NodeRed, logi-rts and Teamview
 
 `customize_image.sh <raspbian-image>`
 
+
+### Install debian packages into Revolution Pi Image
+
+If you would like to modify an existing image by only installing some packages (from repository or local file), you can use the script install_debs_into_image.sh. To add a package you can either add the package name to the file debs-to-download or put the package file into the folder debs-to-install/. After that you have to invoke the script as following:
+
+`install_debs_into_image.sh <revpi-image>`
+
 ### Collect sources on a physical medium for GPL compliance
 (requires root and Internet connectivity):
 
