@@ -254,7 +254,6 @@ echo 'APT::Install-Recommends "false";' >> "$IMAGEDIR/etc/apt/apt.conf"
 
 # download and install missing packages
 chroot "$IMAGEDIR" apt-get update --allow-releaseinfo-change -y
-chroot "$IMAGEDIR" apt-get -y install apt apt-transport-https libapt-inst2.0 libapt-pkg5.0
 
 chroot "$IMAGEDIR" apt-get -y install `egrep -v '^#' "$BAKERYDIR/min-debs-to-download"`
 if [ "$MINIMG" != "1" ]; then
