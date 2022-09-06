@@ -345,6 +345,14 @@ fi
 # peg cpu at 1200 MHz to maximize spi0 throughput and avoid jitter
 chroot "$IMAGEDIR" /usr/bin/revpi-config enable perf-governor
 
+# Since Raspberry Pi OS Bullseye the default user pi will only be used for the first
+# boot and then replaced by a username which has to be defined in the first boot wizard.
+# Therefore we need to disable the userconfig and set the password to the previous default `raspberry`
+if [[ ! $(grep -q -E '^pi:\*' "$IMAGEDIR/etc/shadow" ]]; then
+	echo 'pi:raspberry' | chroot "$IMAGEDIR" /usr/sbin/chpasswd
+	chroot "$IMAGEDIR" systemctl disable userconfig
+fi
+
 # remove package lists, they will be outdated within days
 rm "$IMAGEDIR/var/lib/apt/lists/"*Packages
 
