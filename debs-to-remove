@@ -47,6 +47,7 @@ gcc-7-base
 
 # Remove header files not required by any other package
 libfreetype6-dev
+libfreetype-dev
 libpng-dev
 
 # Remove all fonts not required by any other package
