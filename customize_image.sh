@@ -223,7 +223,7 @@ if [[ -d $IMAGEDIR/home/pi/Bookshelf ]]; then
 fi
 
 # customize settings
-echo Europe/Berlin > "$IMAGEDIR/etc/timezone"
+echo UTC > "$IMAGEDIR/etc/timezone"
 rm "$IMAGEDIR/etc/localtime"
 echo RevPi > "$IMAGEDIR/etc/hostname"
 sed -i -e 's/raspberrypi/RevPi/g' "$IMAGEDIR/etc/hosts"
