@@ -312,8 +312,7 @@ chroot "$IMAGEDIR" systemctl disable revpipyload
 
 # boot to console by default, disable autologin
 chroot "$IMAGEDIR" systemctl set-default multi-user.target
-ln -fs /lib/systemd/system/getty@.service		\
-	"$IMAGEDIR/etc/systemd/system/getty.target.wants/getty@tty1.service"
+chroot "$IMAGEDIR" systemctl enable getty@tty1.service
 if [ -e "$IMAGEDIR/etc/lightdm/lightdm.conf" ] ; then
 	sed -r -i -e "s/^autologin-user=/#autologin-user=/"	\
 		"$IMAGEDIR/etc/lightdm/lightdm.conf"
