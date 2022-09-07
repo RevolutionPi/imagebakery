@@ -19,7 +19,7 @@ unzip 2022-01-28-raspios-buster-armhf-lite.zip
 
 ### Customize for Revolution Pi
 
-The script requires root privileges, an armhf system (RasPi or VM) and internet connectivity.
+The script requires root privileges, an armhf system (eg. Raspberry Pi or VM) and internet connectivity.
 
 If no armhf system is available, a crossbuild can be done with the qemu user static tools:
 
