@@ -2,8 +2,8 @@
 
 ## Intended usage
 
-### Download RaspiOS (previously called Raspbian) image
-Works with both [RaspiOS](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit) desktop and lite images.
+### Download Raspberry Pi OS (previously called Raspbian) image
+Works with both [Raspberry Pi OS](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit) desktop and lite images.
 
 *Raspberry Pi OS with desktop*
 ```
