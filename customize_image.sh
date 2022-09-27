@@ -258,13 +258,6 @@ chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive locales
 # automatically bring up eth0 and eth1 again after a USB bus reset
 sed -i -e '6i# allow-hotplug eth0\n# allow-hotplug eth1\n' "$IMAGEDIR/etc/network/interfaces"
 
-cat >> "$IMAGEDIR/etc/dhcpcd.conf" <<-EOF
-
-	# Prioritize wlan0 routes over eth0 routes.
-	interface wlan0
-	        metric 100
-	EOF
-
 # harden network configuration
 chroot "$IMAGEDIR" /usr/bin/patch /etc/sysctl.conf	\
 	< "$BAKERYDIR/templates/sysctl.conf.patch"
@@ -360,6 +353,9 @@ if [[ ! $(grep -q -E '^pi:\*' "$IMAGEDIR/etc/shadow") ]]; then
 	echo 'pi:raspberry' | chroot "$IMAGEDIR" /usr/sbin/chpasswd
 	chroot "$IMAGEDIR" systemctl disable userconfig
 fi
+
+# Use NetworkManager instead of dhcpcd
+chroot "$IMAGEDIR" raspi-config nonint do_netconf 2
 
 # remove package lists, they will be outdated within days
 rm "$IMAGEDIR/var/lib/apt/lists/"*Packages
