@@ -346,6 +346,11 @@ if [[ ! $(grep -q -E '^pi:\*' "$IMAGEDIR/etc/shadow") ]]; then
 	chroot "$IMAGEDIR" systemctl disable userconfig
 fi
 
+# Remove banner warning which is shows on every ssh login (present since Bullseye)
+if [[ -f "$IMAGEDIR/etc/ssh/sshd_config.d/rename_user.conf" ]]; then
+	rm "$IMAGEDIR/etc/ssh/sshd_config.d/rename_user.conf"
+fi
+
 # Use NetworkManager instead of dhcpcd
 chroot "$IMAGEDIR" raspi-config nonint do_netconf 2
 
