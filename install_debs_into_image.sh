@@ -172,6 +172,9 @@ find "$IMAGEDIR/etc/ssh" -name "ssh_host_*_key*" -delete
 # restore ld.so.preload
 mv "$IMAGEDIR/etc/ld.so.preload.bak" "$IMAGEDIR/etc/ld.so.preload"
 
+# after package raspberrypi-kernel installed, install revpi-dt-blob.dtbo as default dt-blob
+install -T "$IMAGEDIR/boot/overlays/revpi-dt-blob.dtbo" "$IMAGEDIR/boot/dt-blob.bin"
+
 cleanup_umount
 
 fsck.vfat -a "$LOOPDEVICE"p1
