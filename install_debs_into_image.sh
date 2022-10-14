@@ -66,6 +66,7 @@ LOOPDEVICE=$(losetup -f)
 CONFIGTXT="$IMAGEDIR/boot/config.txt"
 
 cleanup_umount() {
+	sync
 	if [ -e "$IMAGEDIR" ] ; then
 		lsof -t "$IMAGEDIR" | xargs --no-run-if-empty kill
 	fi
