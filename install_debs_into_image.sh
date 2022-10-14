@@ -2,7 +2,8 @@
 # Customize packages of an existing image for Revolution Pi
 
 usage () {
-	echo 'Usage: install_debs_into_image.sh [-h, --help] <image>
+	echo 'Usage: install_debs_into_image.sh [-m, --minimize |-h, --help] <image>
+  -m, --minimize	for the minimized image (built with customize_image.sh -m)
   -h, --help		Print the usage page'
 }
 
@@ -34,6 +35,8 @@ if [ $$ != 2 ] && [ -x /usr/bin/newpid ] ; then
 	exec /usr/bin/newpid "$0" "$@"
 fi
 
+# set MINIMG as 0: build the normal image by default
+MINIMG=0
 
 # get the options
 if ! MYOPTS=$(getopt -o mh --long minimize,help -- "$@"); then
@@ -45,10 +48,17 @@ eval set -- "$MYOPTS"
 # extract options and their arguments into variables.
 while true ; do
 	case "$1" in
+		-m|--minimize) MINIMG=1 ; shift ;;
 		-h|--help) usage ; exit 0;;
 		*) shift; break ;;
 	esac
 done
+
+if [ "$MINIMG" != "1" ]; then
+	echo "For normal image."
+else
+	echo "For minimized image."
+fi
 
 IMAGEDIR=`mktemp -d -p /tmp img.XXXXXXXX`
 BAKERYDIR=$(dirname "$0")
@@ -139,7 +149,11 @@ mv "$IMAGEDIR/etc/ld.so.preload" "$IMAGEDIR/etc/ld.so.preload.bak"
 echo `basename "$1"` > "$IMAGEDIR/etc/revpi/image-release"
 
 chroot "$IMAGEDIR" apt-get update
-chroot "$IMAGEDIR" apt-get -y install `egrep -v '^#' "$BAKERYDIR/debs-to-download"`
+
+chroot "$IMAGEDIR" apt-get -y install `egrep -v '^#' "$BAKERYDIR/min-debs-to-download"`
+if [ "$MINIMG" != "1" ]; then
+	chroot "$IMAGEDIR" apt-get -y install `egrep -v '^#' "$BAKERYDIR/debs-to-download"`
+fi
 # remove package lists, they will be outdated within days
 rm "$IMAGEDIR/var/lib/apt/lists/"*Packages
 
