@@ -165,6 +165,16 @@ if [ "$(/bin/ls "$BAKERYDIR/debs-to-install/"*.deb 2>/dev/null)" ] ; then
 	chroot "$IMAGEDIR" sh -c "dpkg -i /tmp/debs-to-install/*.deb"
 fi
 
+# install local files
+LIST_INS="$BAKERYDIR/files-to-install/list.ins"
+if [ -f $LIST_INS  ] ; then
+        while IFS= read -r line
+        do
+                echo "install file:$line"
+                install -T "$BAKERYDIR/files-to-install/$(basename $line)" "$IMAGEDIR/$line"
+        done < "$LIST_INS"
+fi
+
 # remove logs and ssh host keys
 find "$IMAGEDIR/var/log" -type f -delete
 find "$IMAGEDIR/etc/ssh" -name "ssh_host_*_key*" -delete
