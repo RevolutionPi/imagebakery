@@ -52,7 +52,7 @@ fetch_deb_src() {
 # exclude binary-only Raspbian packages
 EXCLUDE='realvnc-vnc'
 # exclude Raspbian packages with missing source code
-EXCLUDE+='|nodered|wiringpi|nodejs'
+EXCLUDE+='|nodered|nodejs'
 # exclude binary-only RevolutionPi packages
 EXCLUDE+='|piserial|teamviewer-revpi|revpi-modbus'
 # exclude non-binary RevolutionPi packages
@@ -67,12 +67,6 @@ dpkg-query --admindir $APTROOT/var/lib/dpkg -W		\
 	-f='${source:Package}=${source:Version}\n'	\
 	| egrep -v "^($EXCLUDE)=" | sort | uniq		\
 	| while read package ; do fetch_deb_src "$package" ; done
-
-# fetch missing Raspbian sources
-version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
-	-f='${source:Version}' wiringpi | tr -dC '[0-9].')
-wget -O wiringpi_$version.tar.gz \
-	https://github.com/WiringPi/WiringPi/archive/final_official_$version.tar.gz
 
 # fetch RevolutionPi sources
 knl_version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
