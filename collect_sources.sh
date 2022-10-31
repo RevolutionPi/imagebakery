@@ -78,6 +78,7 @@ wget -O wiringpi_$version.tar.gz \
 knl_version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
 	-f='${source:Version}' raspberrypi-kernel || true)
 knl_tag="raspberrypi-kernel_$knl_version"
+knl_tag=$(sed 's/:/%25/g' <<< "$knl_tag")
 wget -O "linux-$knl_version.tar.gz" "https://github.com/RevolutionPi/linux/archive/refs/tags/$knl_tag.tar.gz"
 wget -O "piControl-$knl_version.tar.gz" "https://github.com/RevolutionPi/piControl/archive/refs/tags/$knl_tag.tar.gz"
 wget -O IODeviceExample.tar.gz https://github.com/RevolutionPi/IODeviceExample/archive/master.tar.gz
