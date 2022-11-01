@@ -282,10 +282,6 @@ if [ "$MINIMG" != "1" ]; then
 fi
 dpkg --root "$IMAGEDIR" --force-depends --purge rpd-wallpaper
 chroot "$IMAGEDIR" apt-get -y install revpi-wallpaper
-chroot "$IMAGEDIR" apt-get update
-if [ "$MINIMG" != "1" ]; then
-	chroot "$IMAGEDIR" apt-get -y install teamviewer-revpi
-fi
 chroot "$IMAGEDIR" apt-mark hold raspi-copies-and-fills
 chroot "$IMAGEDIR" apt-get -y upgrade
 chroot "$IMAGEDIR" apt-mark unhold raspi-copies-and-fills
