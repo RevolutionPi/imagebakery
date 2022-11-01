@@ -362,6 +362,12 @@ fi
 # Use NetworkManager instead of dhcpcd
 chroot "$IMAGEDIR" raspi-config nonint do_netconf 2
 
+# Don't manage pileft / piright with NetworkManager
+cat <<EOL >$IMAGEDIR/etc/NetworkManager/conf.d/99-unmanaged-devices.conf
+[keyfile]
+unmanaged-devices=interface-name:pileft;interface-name:piright
+EOL
+
 # remove package lists, they will be outdated within days
 rm "$IMAGEDIR/var/lib/apt/lists/"*Packages
 
