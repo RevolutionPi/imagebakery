@@ -78,6 +78,9 @@ wget -O "piControl-$knl_version.tar.gz" "https://github.com/RevolutionPi/piContr
 wget -O IODeviceExample.tar.gz https://github.com/RevolutionPi/IODeviceExample/archive/master.tar.gz
 wget -O python3-revpimodio2.tar.gz https://github.com/naruxde/revpimodio2/archive/master.tar.gz
 
+# take node modules sources from root directory of npm
+tar -czvf node_modules.tar.gz "$IMAGEDIR/usr/lib/node_modules"
+
 # clean up
 rm -r $APTROOT
 umount $IMAGEDIR/boot
