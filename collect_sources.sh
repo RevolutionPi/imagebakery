@@ -76,8 +76,6 @@ knl_tag=$(sed 's/:/%25/g' <<< "$knl_tag")
 wget -O "linux-$knl_version.tar.gz" "https://github.com/RevolutionPi/linux/archive/refs/tags/$knl_tag.tar.gz"
 wget -O "piControl-$knl_version.tar.gz" "https://github.com/RevolutionPi/piControl/archive/refs/tags/$knl_tag.tar.gz"
 wget -O IODeviceExample.tar.gz https://github.com/RevolutionPi/IODeviceExample/archive/master.tar.gz
-wget -O python-snap7.tar.gz https://github.com/RevolutionPi/python-snap7/archive/master.tar.gz
-wget -O snap7-debian.tar.gz https://github.com/RevolutionPi/snap7-debian/archive/master.tar.gz
 wget -O python3-revpimodio2.tar.gz https://github.com/naruxde/revpimodio2/archive/master.tar.gz
 
 # clean up
