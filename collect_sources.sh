@@ -54,9 +54,9 @@ EXCLUDE='realvnc-vnc'
 # exclude Raspbian packages with missing source code
 EXCLUDE+='|nodered|nodejs'
 # exclude binary-only RevolutionPi packages
-EXCLUDE+='|piserial|teamviewer-revpi|revpi-modbus'
+EXCLUDE+='|teamviewer-revpi'
 # exclude non-binary RevolutionPi packages
-EXCLUDE+='|pictory|revpi-(tools|webstatus)'
+EXCLUDE+='|revpi-tools'
 # exclude RevolutionPi packages whose source code is fetched from GitHub
 EXCLUDE+='|raspberrypi-firmware|picontrol|revpi-firmware'
 
