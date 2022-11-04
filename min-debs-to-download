@@ -22,3 +22,6 @@ revpipycontrol
 revpipyload
 revpicommander
 revpi-bluetooth
+python3-libgpiod
+python3-yaml
+python3-schema
