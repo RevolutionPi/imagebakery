@@ -279,7 +279,8 @@ if [ "$MINIMG" != "1" ]; then
 		https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered\
 		--output "$IMAGEDIR/$NODEREDSCRIPT"
 	chmod 755 "$IMAGEDIR/$NODEREDSCRIPT"
-	chroot "$IMAGEDIR" /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi
+	NODERED_VER="2.2.3"
+	chroot "$IMAGEDIR" /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi --nodered-version="$NODERED_VER"
 	rm "$IMAGEDIR/$NODEREDSCRIPT"
 	chroot "$IMAGEDIR" /usr/bin/sudo -u pi /usr/bin/npm install --prefix /home/pi/.node-red node-red-contrib-revpi-nodes
 fi
