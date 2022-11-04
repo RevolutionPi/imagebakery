@@ -219,17 +219,6 @@ chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive locales
 # automatically bring up eth0 and eth1 again after a USB bus reset
 sed -i -e '6i# allow-hotplug eth0\n# allow-hotplug eth1\n' "$IMAGEDIR/etc/network/interfaces"
 
-# provide WPA template and prioritize wlan0 routes by default
-sed -i -e '/country=GB/d' "$IMAGEDIR/etc/wpa_supplicant/wpa_supplicant.conf"
-cat >> "$IMAGEDIR/etc/wpa_supplicant/wpa_supplicant.conf" <<-EOF
-	
-	# WiFi of Revolutionary Pastries, Inc.
-	network={
-	        ssid=""
-	        psk=""
-	        key_mgmt=WPA-PSK
-	}
-	EOF
 cat >> "$IMAGEDIR/etc/dhcpcd.conf" <<-EOF
 	
 	# Prioritize wlan0 routes over eth0 routes.
