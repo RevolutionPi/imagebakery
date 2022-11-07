@@ -220,7 +220,7 @@ chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive locales
 sed -i -e '6i# allow-hotplug eth0\n# allow-hotplug eth1\n' "$IMAGEDIR/etc/network/interfaces"
 
 cat >> "$IMAGEDIR/etc/dhcpcd.conf" <<-EOF
-	
+
 	# Prioritize wlan0 routes over eth0 routes.
 	interface wlan0
 	        metric 100
@@ -305,7 +305,7 @@ if [ -e "$IMAGEDIR/etc/lightdm/lightdm.conf" ] ; then
 		"$IMAGEDIR/etc/lightdm/lightdm.conf"
 fi
 
-# autologin.conf enables autologin in raspios and raspios-full 
+# autologin.conf enables autologin in raspios and raspios-full
 # but not in raspios-lite
 if [ -e "$IMAGEDIR/etc/systemd/system/getty@tty1.service.d/autologin.conf" ] ; then
 	rm -f "$IMAGEDIR/etc/systemd/system/getty@tty1.service.d/autologin.conf"
