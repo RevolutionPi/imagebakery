@@ -2,7 +2,10 @@
 
 ## Intended usage
 
+> **NOTE:** When creating a custom image, always use the most recent release tag (available at https://github.com/RevolutionPi/imagebakery/tags), as the master branch may contain code that is still in development.
+
 ### Download Raspberry Pi OS (previously called Raspbian) image
+
 Works with both [Raspberry Pi OS](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit) desktop and lite images.
 
 *Raspberry Pi OS with desktop*
@@ -43,6 +46,7 @@ If you would like to modify an existing image by only installing some packages (
 `install_debs_into_image.sh <revpi-image>`
 
 ### Collect sources on a physical medium for GPL compliance
+
 (requires root and Internet connectivity):
 
 `collect_sources.sh <raspbian-image> /media/usbstick`
