@@ -207,6 +207,7 @@ sed -i -r -e 's/^(XKBMODEL).*/\1="pc104"/' \
 	  "$IMAGEDIR/etc/default/keyboard"
 sed -i -r -e 's/^(LANG).*/\1="en_US.UTF-8"/' "$IMAGEDIR/etc/default/locale"
 sed -i -r -e 's/^(# en_US.UTF-8 UTF-8)/en_US.UTF-8 UTF-8/' "$IMAGEDIR/etc/locale.gen"
+sed -i -r -e 's/^(en_GB.UTF-8 UTF-8)/# en_GB.UTF-8 UTF-8/' "$IMAGEDIR/etc/locale.gen"
 install -d -m 755 -o root -g root "$IMAGEDIR/etc/revpi"
 echo `basename "$1"` > "$IMAGEDIR/etc/revpi/image-release"
 install -d -m 700 -o 1000 -g 1000 "$IMAGEDIR/home/pi/.ssh"
