@@ -18,9 +18,7 @@ newpid
 tcpdump
 gdbserver
 python3-revpimodio2
-revpipycontrol
 revpipyload
-revpicommander
 revpi-bluetooth
 python3-libgpiod
 python3-yaml
