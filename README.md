@@ -28,6 +28,7 @@ If no armhf system is available, a crossbuild can be done with the qemu user sta
 
 ```
 sudo apt-get install qemu-user-static binfmt-support
+sudo update-binfmts --enable qemu-arm
 ```
 
 In order to build an image with only software that is necessary for basic operation (eg. Pictory and other RevPi tools), you have to call the customization script with the `--minimize` option. This option is used to build our official lite image (based on the foundations lite image).
