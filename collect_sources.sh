@@ -3,7 +3,7 @@
 # burn them on a physical medium for GPL compliance
 
 if [ "$#" != 2 ] ; then
-	echo 1>&1 "Usage: `basename $0` <image> <destination>"
+	echo 1>&1 "Usage: $(basename $0) <image> <destination>"
 	exit 1
 fi
 
