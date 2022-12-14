@@ -65,7 +65,7 @@ EXCLUDE+='|raspberrypi-firmware|picontrol|revpi-firmware'
 cd "$2"
 dpkg-query --admindir $APTROOT/var/lib/dpkg -W		\
 	-f='${source:Package}=${source:Version}\n'	\
-	| egrep -v "^($EXCLUDE)=" | sort | uniq		\
+	| grep -E -v "^($EXCLUDE)=" | sort | uniq		\
 	| while read package ; do fetch_deb_src "$package" ; done
 
 # fetch RevolutionPi sources
