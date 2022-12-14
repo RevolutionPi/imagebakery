@@ -2,7 +2,7 @@
 # collect sources for a given Raspbian image in order to
 # burn them on a physical medium for GPL compliance
 
-if [ "$#" != 2 ] ; then
+if [ "$#" != 2 ]; then
 	echo 1>&1 "Usage: $(basename "$0") <image> <destination>"
 	exit 1
 fi
@@ -23,17 +23,29 @@ mount -o ro "$LOOPDEVICE"p1 $IMAGEDIR/boot
 # deb-src entries in sources.list are commented out by default;
 # duplicate the config, patch it and download the package lists
 mkdir -p $APTROOT/var/cache/apt/archives/partial
-(cd $IMAGEDIR ; tar cf - --exclude=var/lib/dpkg/info	\
-	etc/apt var/lib/apt var/lib/dpkg usr/share/dpkg)\
-	| (cd $APTROOT ; tar xf -)
-(cd / ; tar cf - /usr/lib/apt)	\
-	| (cd $APTROOT ; tar xf -)
+(
+	cd $IMAGEDIR
+	tar cf - --exclude=var/lib/dpkg/info \
+		etc/apt var/lib/apt var/lib/dpkg usr/share/dpkg
+) |
+	(
+		cd $APTROOT
+		tar xf -
+	)
+(
+	cd /
+	tar cf - /usr/lib/apt
+) |
+	(
+		cd $APTROOT
+		tar xf -
+	)
 
 # no source package is provided by nodesource.list
 rm -f $APTROOT/etc/apt/sources.list.d/nodesource.list
 
 sed -i -r -e 's/#(deb-src.*)/\1/' $APTROOT/etc/apt/sources.list \
-				  $APTROOT/etc/apt/sources.list.d/*
+	$APTROOT/etc/apt/sources.list.d/*
 apt-get -o Dir=$APTROOT -o Dir::State::status=$APTROOT/var/lib/dpkg/status \
 	--allow-releaseinfo-change \
 	update
@@ -45,8 +57,8 @@ apt-get -o Dir=$APTROOT -o Dir::State::status=$APTROOT/var/lib/dpkg/status \
 fetch_deb_src() {
 	apt-get -o RootDir=$APTROOT -o APT::Sandbox::User="" --download-only \
 		source "$1" ||
-	apt-get -o RootDir=$APTROOT -o APT::Sandbox::User="" --download-only \
-		source "$(echo "$1" | cut -d= -f1)"
+		apt-get -o RootDir=$APTROOT -o APT::Sandbox::User="" --download-only \
+			source "$(echo "$1" | cut -d= -f1)"
 }
 
 # exclude binary-only Raspbian packages
@@ -63,10 +75,10 @@ EXCLUDE+='|raspberrypi-firmware|picontrol|revpi-firmware'
 # fetch Raspbian sources
 [ ! -d "$2" ] && mkdir -p "$2"
 cd "$2"
-dpkg-query --admindir $APTROOT/var/lib/dpkg -W		\
-	-f='${source:Package}=${source:Version}\n'	\
-	| grep -E -v "^($EXCLUDE)=" | sort | uniq		\
-	| while read -r package ; do fetch_deb_src "$package" ; done
+dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
+	-f='${source:Package}=${source:Version}\n' |
+	grep -E -v "^($EXCLUDE)=" | sort | uniq |
+	while read -r package; do fetch_deb_src "$package"; done
 
 # fetch RevolutionPi sources
 knl_version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
