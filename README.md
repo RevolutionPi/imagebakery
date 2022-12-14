@@ -47,6 +47,14 @@ If you would like to modify an existing image by only installing some packages (
 
 ### Collect sources on a physical medium for GPL compliance
 
-(requires root and Internet connectivity):
+The script `collect_sources.sh` can be used to collect the sources of the packages shipped with our official image. The official images can be found on our [download page](https://revolutionpi.de/tutorials/downloads/#revpiimages). 
 
-`collect_sources.sh <raspbian-image> /media/usbstick`
+> **Note:** This step requires root access and Internet connectivity.
+
+#### Usage
+
+```
+./collect_sources.sh <revpi-image> /media/usbstick
+
+# eg. ./collect_sources.sh 2022-07-28-revpi-buster-lite.img /media/usbstick
+```
