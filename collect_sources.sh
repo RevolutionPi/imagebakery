@@ -3,7 +3,7 @@
 # burn them on a physical medium for GPL compliance
 
 if [ "$#" != 2 ] ; then
-	echo 1>&1 "Usage: $(basename $0) <image> <destination>"
+	echo 1>&1 "Usage: $(basename "$0") <image> <destination>"
 	exit 1
 fi
 
@@ -46,7 +46,7 @@ fetch_deb_src() {
 	apt-get -o RootDir=$APTROOT -o APT::Sandbox::User="" --download-only \
 		source "$1" ||
 	apt-get -o RootDir=$APTROOT -o APT::Sandbox::User="" --download-only \
-		source "$(echo $1 | cut -d= -f1)"
+		source "$(echo "$1" | cut -d= -f1)"
 }
 
 # exclude binary-only Raspbian packages
