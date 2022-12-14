@@ -79,7 +79,7 @@ wget -O IODeviceExample.tar.gz https://github.com/RevolutionPi/IODeviceExample/a
 wget -O python3-revpimodio2.tar.gz https://github.com/naruxde/revpimodio2/archive/master.tar.gz
 
 # take node modules sources from root directory of npm
-tar -czvf node_modules.tar.gz "$IMAGEDIR/usr/lib/node_modules"
+test -d "$IMAGEDIR/usr/lib/node_modules" && tar -czvf node_modules.tar.gz "$IMAGEDIR/usr/lib/node_modules"
 
 # clean up
 rm -r $APTROOT
