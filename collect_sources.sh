@@ -66,7 +66,7 @@ cd "$2"
 dpkg-query --admindir $APTROOT/var/lib/dpkg -W		\
 	-f='${source:Package}=${source:Version}\n'	\
 	| grep -E -v "^($EXCLUDE)=" | sort | uniq		\
-	| while read package ; do fetch_deb_src "$package" ; done
+	| while read -r package ; do fetch_deb_src "$package" ; done
 
 # fetch RevolutionPi sources
 knl_version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
