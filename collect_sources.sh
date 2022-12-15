@@ -84,6 +84,8 @@ dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
 knl_version=$(dpkg-query --admindir $APTROOT/var/lib/dpkg -W \
 	-f='${source:Version}' raspberrypi-kernel || true)
 knl_tag="raspberrypi-kernel_$knl_version"
+# GIT tags cannot contain the ':' character, therefore we substitute it with '%' (url-encoded).
+# see https://dep-team.pages.debian.net/deps/dep14/ (Version mangling) for more details
 knl_tag=${knl_tag//\:/%25}
 wget -O "linux-$knl_version.tar.gz" "https://github.com/RevolutionPi/linux/archive/refs/tags/$knl_tag.tar.gz"
 wget -O "piControl-$knl_version.tar.gz" "https://github.com/RevolutionPi/piControl/archive/refs/tags/$knl_tag.tar.gz"
