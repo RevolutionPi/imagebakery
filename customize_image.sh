@@ -74,6 +74,9 @@ cleanup_umount() {
 	if [ -e "$IMAGEDIR" ] ; then
 		lsof -t "$IMAGEDIR" | xargs --no-run-if-empty kill
 	fi
+	if [ -e "$IMAGEDIR/etc/resolv.conf" ] ; then
+		umount "$IMAGEDIR/etc/resolv.conf"
+	fi
 	if [ -e "$IMAGEDIR/usr/bin/qemu-arm-static" ] ; then
 		rm -f "$IMAGEDIR/usr/bin/qemu-arm-static"
 	fi
@@ -138,6 +141,7 @@ losetup "$LOOPDEVICE" "$1"
 partprobe "$LOOPDEVICE"
 mount "$LOOPDEVICE"p2 "$IMAGEDIR"
 mount "$LOOPDEVICE"p1 "$IMAGEDIR/boot"
+mount --bind /etc/resolv.conf "$IMAGEDIR/etc/resolv.conf"
 
 # see https://wiki.debian.org/QemuUserEmulation
 if [ -e /usr/bin/qemu-arm-static ] ; then
