@@ -308,6 +308,12 @@ if [ -e "$IMAGEDIR/etc/init.d/apache2" ] ; then
 fi
 
 if [ "$MINIMG" != "1" ]; then
+	# fake a revpi procfs ... otherwise NodeRed installer will get confused
+	for procfile in meminfo cpuinfo; do
+		touch "$IMAGEDIR/proc/$procfile"
+		mount -o ro,bind templates/fake-procfs/$procfile "$IMAGEDIR/proc/$procfile"
+	done
+
 	# install nodejs and nodered with an install script and revpi-nodes from npm repository
 	NODEREDSCRIPT="/tmp/update-nodejs-and-nodered.sh"
 	/usr/bin/curl -sL \
@@ -318,6 +324,12 @@ if [ "$MINIMG" != "1" ]; then
 	chroot "$IMAGEDIR" /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi --no-init --nodered-version="$NODERED_VER"
 	rm "$IMAGEDIR/$NODEREDSCRIPT"
 	chroot "$IMAGEDIR" /usr/bin/sudo -u pi /usr/bin/npm install --prefix /home/pi/.node-red node-red-contrib-revpi-nodes
+
+	# remove fake procfs after NodeRed setup
+	for procfile in meminfo cpuinfo; do
+		unmount "$IMAGEDIR/proc/$procfile"
+		rm "$IMAGEDIR/proc/$procfile"
+	done
 fi
 # enable ssh daemon by default, disable swap, disable bluetooth on mini-uart
 chroot "$IMAGEDIR" systemctl enable ssh
