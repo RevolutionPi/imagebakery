@@ -242,6 +242,9 @@ install -d -m 755 -o root -g root "$IMAGEDIR/etc/revpi"
 basename "$OUTPUT_IMAGE" > "$IMAGEDIR/etc/revpi/image-release"
 install -d -m 700 -o 1000 -g 1000 "$IMAGEDIR/home/pi/.ssh"
 
+# show warning about beta image
+cat "$BAKERYDIR/templates/motd-beta-warning" >> "$IMAGEDIR/etc/motd"
+
 # activate settings
 chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive keyboard-configuration
 chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive tzdata
