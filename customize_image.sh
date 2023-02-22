@@ -2,8 +2,9 @@
 # customize raspbian image for revolution pi
 
 usage () {
-	echo 'Usage: customize_image.sh [-m, --minimize | -h, --help] <image>
+	echo 'Usage: customize_image.sh [-m, --minimize | -h, --help] <source-image> [<target-image>]
   -m, --minimize	Install only software that is necessary for basic operation (eg. Pictory and other RevPi tools)
+  -f, --force		Force in-place modification of the source image if not output image was specfied
   -h, --help		Print the usage page'
 }
 
@@ -42,6 +43,7 @@ fi
 
 # set MINIMG as 0: build the normal image by default
 MINIMG=0
+FORCE=0
 
 # get the options
 if ! MYOPTS=$(getopt -o mh --long minimize,help -- "$@"); then
@@ -54,10 +56,31 @@ eval set -- "$MYOPTS"
 while true ; do
 	case "$1" in
 		-m|--minimize) MINIMG=1 ; shift ;;
+		-f|--force) FORCE=1 ; shift ;;
 		-h|--help) usage ; exit 0;;
 		*) shift; break ;;
 	esac
 done
+
+SOURCE_IMAGE=$1
+OUTPUT_IMAGE=${2:-$1}
+
+if [ "$SOURCE_IMAGE" == "$OUTPUT_IMAGE" ]; then
+	echo "WARNING: No name for the output image was specified. The source image will be modfied in-place."
+
+	if [ $FORCE -eq 0 ]; then
+		echo ""
+		echo -n "Do you want to continue? [Ny] "
+		read -r choice
+
+		if ! [[ "$choice" == "y" || "$choice" == "Y" ]]; then
+			exit
+		fi
+	fi
+else
+	echo "Copying source image to ${OUTPUT_IMAGE}. This can take a while ..."
+	cp "$SOURCE_IMAGE" "$OUTPUT_IMAGE"
+fi
 
 if [ "$MINIMG" != "1" ]; then
 	echo "All additional applications will be built into the given image."
@@ -120,7 +143,7 @@ trap cleanup ERR SIGINT
 blocksize=512
 # Minimal eMMC size is 4 GB with an available disk size of 3909091328 bytes
 disksize=3909091328
-imgblocks=$(/sbin/blockdev --getsz "$1")
+imgblocks=$(/sbin/blockdev --getsz "$OUTPUT_IMAGE")
 [ "$imgblocks" = "" ] && echo 1>&1 "Error: Cannot get image size" && exit 1
 imgsize=$((imgblocks * blocksize))
 
@@ -129,9 +152,9 @@ imgsize=$((imgblocks * blocksize))
 # we start processing the image. Otherwise build will fail with "no space left on device"
 if [ "$imgsize" -lt 3900000000 ] ; then
 	bcount=$(((disksize-imgsize)/blocksize))
-	dd if=/dev/zero count=$bcount bs=$blocksize >> "$1"
-	$PARTED "$1" resizepart 2 "$((disksize-1))"B
-	losetup "$LOOPDEVICE" "$1"
+	dd if=/dev/zero count=$bcount bs=$blocksize >> "$OUTPUT_IMAGE"
+	$PARTED "$OUTPUT_IMAGE" resizepart 2 "$((disksize-1))"B
+	losetup "$LOOPDEVICE" "$OUTPUT_IMAGE"
 	partprobe "$LOOPDEVICE"
 	resize2fs "$LOOPDEVICE"p2
 	e2fsck -p -f "$LOOPDEVICE"p2
@@ -140,7 +163,7 @@ if [ "$imgsize" -lt 3900000000 ] ; then
 fi
 
 # mount ext4 + FAT filesystems
-losetup "$LOOPDEVICE" "$1"
+losetup "$LOOPDEVICE" "$OUTPUT_IMAGE"
 partprobe "$LOOPDEVICE"
 mount "$LOOPDEVICE"p2 "$IMAGEDIR"
 mount "$LOOPDEVICE"p1 "$IMAGEDIR/boot"
@@ -216,7 +239,7 @@ sed -i -r -e 's/^(LANG).*/\1="en_US.UTF-8"/' "$IMAGEDIR/etc/default/locale"
 sed -i -r -e 's/^(# en_US.UTF-8 UTF-8)/en_US.UTF-8 UTF-8/' "$IMAGEDIR/etc/locale.gen"
 sed -i -r -e 's/^(en_GB.UTF-8 UTF-8)/# en_GB.UTF-8 UTF-8/' "$IMAGEDIR/etc/locale.gen"
 install -d -m 755 -o root -g root "$IMAGEDIR/etc/revpi"
-echo `basename "$1"` > "$IMAGEDIR/etc/revpi/image-release"
+basename "$OUTPUT_IMAGE" > "$IMAGEDIR/etc/revpi/image-release"
 install -d -m 700 -o 1000 -g 1000 "$IMAGEDIR/home/pi/.ssh"
 
 # activate settings
@@ -361,4 +384,4 @@ PARTSIZE=$((($PARTSIZE) * 8))   # ext4 uses 4k blocks, partitions use 512 bytes
 PARTSTART=$(cat /sys/block/$(basename "$LOOPDEVICE")/$(basename "$LOOPDEVICE"p2)/start)
 echo Yes | $PARTED ---pretend-input-tty "$LOOPDEVICE" resizepart 2 "$(($PARTSTART+$PARTSIZE-1))"s
 cleanup_losetup
-truncate -s $((512 * ($PARTSTART + $PARTSIZE))) "$1"
+truncate -s $((512 * ($PARTSTART + $PARTSIZE))) "$OUTPUT_IMAGE"

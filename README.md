@@ -32,11 +32,11 @@ sudo apt-get install qemu-user-static binfmt-support
 
 In order to build an image with only software that is necessary for basic operation (eg. Pictory and other RevPi tools), you have to call the customization script with the `--minimize` option. This option is used to build our official lite image (based on the foundations lite image).
 
-`customize_image.sh --minimize <raspbian-image>`
+`customize_image.sh --minimize <raspberrypi-image> [output-image]`
 
 For an image with all additional components (like NodeRed, logi-rts and Teamviewer), you must call the customization script without any options:
 
-`customize_image.sh <raspbian-image>`
+`customize_image.sh <raspberrypi-image> [output-image]`
 
 
 ### Install debian packages into Revolution Pi Image
