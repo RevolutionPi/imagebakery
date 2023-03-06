@@ -30,6 +30,12 @@ If no armhf system is available, a crossbuild can be done with the qemu user sta
 sudo apt-get install qemu-user-static binfmt-support
 ```
 
+> **NOTE:** If you are using WSL2 on Windows you might experience issues as binfmt support is not enabled. This is done by systemd in a normal Debian installation. To resolve the issue you might need to run the following command:
+> ```
+> sudo update-binfmts --enable
+> ```
+> The issue is documented here: https://github.com/microsoft/WSL/issues/7181
+
 In order to build an image with only software that is necessary for basic operation (eg. Pictory and other RevPi tools), you have to call the customization script with the `--minimize` option. This option is used to build our official lite image (based on the foundations lite image).
 
 `customize_image.sh --minimize <raspberrypi-image> [output-image]`
