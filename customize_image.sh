@@ -188,6 +188,12 @@ cp "$BAKERYDIR/templates/cmdline.txt" "$IMAGEDIR/boot"
 cp "$BAKERYDIR/templates/revpi-aliases.sh" "$IMAGEDIR/etc/profile.d"
 cp "$BAKERYDIR/templates/rsyslog.conf" "$IMAGEDIR/etc"
 
+# dwc_otg is broken on 64-bit and shows a kernel panic on newer Cores and Connects
+# prevent this by using dwc2 also for CM3 based devices
+if [ -e "$IMAGEDIR/boot/kernel8.img" ]; then
+	sed -i '/^\[all\]/a dtoverlay=dwc2,dr_mode=host' "$IMAGEDIR/boot/config.txt"
+fi
+
 # limit disk space occupied by logs
 ln -s ../cron.daily/logrotate "$IMAGEDIR/etc/cron.hourly"
 sed -r -i -e 's/delaycompress/#delaycompress/' \
