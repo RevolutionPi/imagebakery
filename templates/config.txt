@@ -63,5 +63,7 @@ dtparam=audio=on
 [pi4]
 [cm4s]
 dtoverlay=dwc2,dr_mode=host
+[cm4]
+dtparam=ant2
 
 [all]
