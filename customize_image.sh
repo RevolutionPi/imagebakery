@@ -180,12 +180,6 @@ cp "$BAKERYDIR/templates/cmdline.txt" "$IMAGEDIR/boot"
 cp "$BAKERYDIR/templates/revpi-aliases.sh" "$IMAGEDIR/etc/profile.d"
 cp "$BAKERYDIR/templates/rsyslog.conf" "$IMAGEDIR/etc"
 
-# REVPI-3106
-cp "$BAKERYDIR/templates/50-revpi.rules" "$IMAGEDIR/lib/udev/rules.d"
-
-cp -R "$BAKERYDIR/templates/pictory" "$IMAGEDIR/var/www/revpi/pictory/"
-# REVPI-3106 END
-
 # limit disk space occupied by logs
 ln -s ../cron.daily/logrotate "$IMAGEDIR/etc/cron.hourly"
 sed -r -i -e 's/delaycompress/#delaycompress/' \
@@ -370,6 +364,16 @@ find "$IMAGEDIR/etc/ssh" -name "ssh_host_*_key*" -delete
 
 # after package raspberrypi-kernel installed, install revpi-dt-blob.dtbo as default dt-blob
 install -T "$IMAGEDIR/boot/overlays/revpi-dt-blob.dtbo" "$IMAGEDIR/boot/dt-blob.bin"
+
+# # # # # REVPI-3106
+
+# revpi-tools 4eaffdd76093ef4722afef69900841b0c9f5282a
+cp "$BAKERYDIR/templates/50-revpi.rules" "$IMAGEDIR/lib/udev/rules.d"
+
+# piCtory a4b5761fe3499fddfa76dedd9b45d7ef7485854e
+cp -R "$BAKERYDIR/templates/pictory" "$IMAGEDIR/var/www/revpi/pictory/"
+
+# # # # # REVPI-3106 END
 
 cleanup_umount
 
