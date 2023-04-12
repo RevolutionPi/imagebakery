@@ -285,9 +285,9 @@ chroot "$IMAGEDIR" apt-get update
 if [ "$MINIMG" != "1" ]; then
 	chroot "$IMAGEDIR" apt-get -y install teamviewer-revpi
 fi
-chroot "$IMAGEDIR" apt-mark hold raspi-copies-and-fills
+chroot "$IMAGEDIR" apt-mark hold raspi-copies-and-fills udisks2
 chroot "$IMAGEDIR" apt-get -y upgrade
-chroot "$IMAGEDIR" apt-mark unhold raspi-copies-and-fills
+chroot "$IMAGEDIR" apt-mark unhold raspi-copies-and-fills udisks2
 chroot "$IMAGEDIR" apt-get clean
 
 if [ -e "$IMAGEDIR/etc/init.d/apache2" ] ; then
