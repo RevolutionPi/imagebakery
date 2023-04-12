@@ -373,6 +373,10 @@ cp "$BAKERYDIR/templates/50-revpi.rules" "$IMAGEDIR/lib/udev/rules.d"
 # piCtory a4b5761fe3499fddfa76dedd9b45d7ef7485854e
 cp -R "$BAKERYDIR/templates/pictory" "$IMAGEDIR/var/www/revpi/pictory/"
 
+# Install fake version of piSerial script
+cp "$BAKERYDIR/templates/piSerial" "$IMAGEDIR/usr/sbin/"
+chmod +x "$IMAGEDIR/usr/sbin/piSerial"
+
 # # # # # REVPI-3106 END
 
 cleanup_umount

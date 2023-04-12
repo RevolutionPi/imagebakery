@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# SPDX-License-Identifier: GPL-2.0
+#
+# Copyright: 2023 KUNBUS GmbH
+#
+
+function usage {
+    echo 'usage: piSerial [-p|-s|-v]
+
+  -p print the generated password
+  -s print the serial number
+  -v show revpi-piserial version and exit
+If no option is specified the serial number and password are printed.'
+}
+
+while getopts ":spv" OPTION ; do
+    case ${OPTION} in
+    s)
+        echo 0123456789ABCDEF
+        ;;
+    p)
+        echo revpi4
+        ;;
+    v)
+        echo PiSerial f.a.k.e
+        ;;
+    *)
+        usage
+        exit 1;
+        ;;
+    esac
+done
