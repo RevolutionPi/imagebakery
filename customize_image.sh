@@ -180,6 +180,10 @@ cp "$BAKERYDIR/templates/cmdline.txt" "$IMAGEDIR/boot"
 cp "$BAKERYDIR/templates/revpi-aliases.sh" "$IMAGEDIR/etc/profile.d"
 cp "$BAKERYDIR/templates/rsyslog.conf" "$IMAGEDIR/etc"
 
+# REVPI-3106
+cp "$BAKERYDIR/templates/50-revpi.rules" "$IMAGEDIR/lib/udev/rules.d"
+# REVPI-3106 END
+
 # limit disk space occupied by logs
 ln -s ../cron.daily/logrotate "$IMAGEDIR/etc/cron.hourly"
 sed -r -i -e 's/delaycompress/#delaycompress/' \
