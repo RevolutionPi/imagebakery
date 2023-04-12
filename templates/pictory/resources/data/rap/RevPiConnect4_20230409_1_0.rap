@@ -1,0 +1,206 @@
+{
+	"id": "RevPiConnect4",
+	"version": "1.0",
+	"comment": [
+		"=1= If -range- is empty, original datatype range is used",
+		"=2= -edit- maps whether name and/or value can be edited:",
+		"0: no editing, 1: value editable, 2: name editable, 3: both editable "
+	],
+	"screencomment": "This is a RevPi Connect 4 Device",
+	"size": "1",
+	"devicetype": "BASE",
+	"producttype": 136,
+	"input": [
+		{
+			"name": "RevPiStatus",
+			"type": "BYTE",
+			"offset": 0,
+			"range":
+				{
+				"type": "tooltip_loop",
+				"values": [0,255,1]
+			},
+			"default": "0",
+			"unit": "",
+			"tags": "input, byte",
+			"edit": "2",
+			"order": 1,
+			"description": "RevPi Status",
+			"active": true,
+			"export": true
+		},
+		{
+			"name": "RevPiIOCycle",
+			"type": "BYTE",
+			"offset": 1,
+			"range":
+				{
+				"type": "tooltip_loop",
+				"values": [0,255,1]
+			},
+			"default": "0",
+			"unit": "",
+			"tags": "input, byte",
+			"edit": "2",
+			"order": 2,
+			"description": "RevPi I/O cycle time",
+			"active": true,
+			"export": true
+		},
+		{
+			"name": "RS485ErrorCnt",
+			"type": "WORD",
+			"offset": 2,
+			"range":
+				{
+				"type": "tooltip_loop",
+				"values": [0,65535,1]
+			},
+			"default": "0",
+			"unit": "",
+			"tags": "input, word",
+			"edit": "2",
+			"order": 3,
+			"description": "RevPi Bridge Error Counter for I/O-Modules",
+			"active": true,
+			"export": false
+		},
+		{
+			"name": "Core Temperature",
+			"type": "BYTE",
+			"offset": 4,
+			"range":
+				{
+				"type": "tooltip_loop",
+				"values": [0,255,1]
+			},
+			"default": "0",
+			"unit": "",
+			"tags": "input, byte",
+			"edit": "2",
+			"order": 4,
+			"description": "internal processor temperature in °C",
+			"active": true,
+			"export": false
+		},
+		{
+			"name": "Core Frequency",
+			"type": "BYTE",
+			"offset": 5,
+			"range":
+				{
+				"type": "tooltip_loop",
+				"values": [0,255,1]
+			},
+			"default": "0",
+			"unit": "",
+			"tags": "input, byte",
+			"edit": "2",
+			"order": 5,
+			"description": "RevPi processor frequency",
+			"active": true,
+			"export": false
+		}
+	],
+	"output": [
+		{
+			"name": "RevPiLED",
+			"type": "WORD",
+			"offset": 6,
+			"range":
+				{
+				"type": "tooltip_loop",
+				"values": [0,65535,1]
+			},
+			"default": "0",
+			"unit": "",
+			"tags": "output, word",
+			"edit": "3",
+			"order": 6,
+			"description": "LED Control",
+			"active": true,
+			"export": true
+		},
+		{
+			"name": "RevPiOutput",
+			"type": "BYTE",
+			"offset": 8,
+			"range":
+				{
+				"type": "tooltip_loop",
+				"values": [0,255,1]
+			},
+			"default": "0",
+			"unit": "",
+			"tags": "output, byte",
+			"edit": "3",
+			"order": 11,
+			"description": "Control byte for RevPi specific outputs like the Digital Output or watchdog toggle",
+			"active": true,
+			"export": true
+		},
+		{
+			"name": "RS485ErrorLimit1",
+			"type": "WORD",
+			"offset": 9,
+			"range":
+				{
+				"type": "tooltip_loop",
+				"values": [0,65535,1]
+			},
+			"default": "10",
+			"unit": "",
+			"tags": "output, word",
+			"edit": "3",
+			"order": 12,
+			"description": "RevPi Bridge Error Counter Limit 1",
+			"active": true,
+			"export": false
+		},
+		{
+			"name": "RS485ErrorLimit2",
+			"type": "WORD",
+			"offset": 11,
+			"range":
+				{
+				"type": "tooltip_loop",
+				"values": [0,65535,1]
+			},
+			"default": "1000",
+			"unit": "",
+			"tags": "output, word",
+			"edit": "3",
+			"order": 13,
+			"description": "RevPi Bridge Error Counter Limit 2",
+			"active": true,
+			"export": false
+		}
+	],
+	"memory": [],
+	"lang":	{
+		"de": {
+			"INPUT": "Eingang",
+			"OUTPUT": "Ausgang"
+		},
+		"en": {
+			"INPUT": "Input",
+			"OUTPUT": "Output"
+		}
+	},
+	"rules": { 
+		"DEVICE_POSITIONING": [ 
+			{
+				"mode": "FILTER",
+				"producttype": [96, 97, 98, 103, 118],
+				"productname": ["RevPi DIO", "RevPi DI", "RevPi DO", "RevPi AIO", "RevPi MIO"],
+				"position": "RIGHT"
+			},
+			{
+				"mode": "FILTER",
+				"producttype": [96, 97, 98, 103, 118],
+				"productname": ["RevPi DIO", "RevPi DI", "RevPi DO", "RevPi AIO", "RevPi MIO"],
+				"position": "LEFT"
+			}
+		]
+	} 
+}

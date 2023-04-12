@@ -182,6 +182,8 @@ cp "$BAKERYDIR/templates/rsyslog.conf" "$IMAGEDIR/etc"
 
 # REVPI-3106
 cp "$BAKERYDIR/templates/50-revpi.rules" "$IMAGEDIR/lib/udev/rules.d"
+
+cp -R "$BAKERYDIR/templates/pictory" "$IMAGEDIR/var/www/revpi/pictory/"
 # REVPI-3106 END
 
 # limit disk space occupied by logs

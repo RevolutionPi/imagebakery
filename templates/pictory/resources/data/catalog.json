@@ -1,0 +1,54 @@
+[
+	{"key": "f_01", "title": "Base Devices", "folder": true, "children": [
+		{"key": "RevPiCore_20170404_1_2", "title": "RevPi Core/3/3+/S", "tooltip": "RevPi Core/Core3/Core3+/CoreS", "icon": "##GSD_ICON_PATHNAME##"},
+		{"key": "RevPiCoreSE_20220401_1_0", "title": "RevPi Core SE", "tooltip": "RevPi Core SE", "icon": "##GSD_ICON_PATHNAME##"},
+		{"key": "RevPiConnect_20171023_1_0", "title": "RevPi Connect/+/S", "tooltip": "RevPi Connect/Connect+/ConnectS", "icon": "##GSD_ICON_PATHNAME##"},
+		{"key": "RevPiConnectSE_20220401_1_0", "title": "RevPi Connect SE", "tooltip": "RevPi Connect SE", "icon": "##GSD_ICON_PATHNAME##"},
+		{"key": "RevPiConnect4_20230409_1_0", "title": "RevPi Connect 4", "tooltip": "RevPi Connect 4", "icon": "##GSD_ICON_PATHNAME##"},
+		{"key": "RevPiCompact_20171023_1_0", "title": "RevPi Compact", "tooltip": "RevPi Compact", "icon": "##GSD_ICON_PATHNAME##"},
+		{"key": "RevPiFlat_20200921_1_0", "title": "RevPi Flat/S", "tooltip": "RevPi Flat/FlatS", "icon": "##GSD_ICON_PATHNAME##"}
+	]
+	},
+	{"key": "f_03", "title": "Gateway Devices", "folder": true, "children": [
+		{"key": "RevPiGateDMX_20160824_1_0", 		"title": "Gateway DMX", 	"tooltip": "Gateway DMX", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiGateCANopen_20161102_1_0", 	"title": "Gateway CANopen", 	"tooltip": "Gateway CANopen", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiGateDeviceNet_20161102_1_0", 	"title": "Gateway DeviceNet", 	"tooltip": "Gateway DeviceNet", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiGateEtherCAT_20161026_1_0", 	"title": "Gateway EtherCAT", 	"tooltip": "Gateway EtherCAT", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiGateEtherNetIP_20161012_1_0", 	"title": "Gateway EtherNet/IP", "tooltip": "Gateway EtherNet/IP", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiGateModbusRTU_20170125_1_0", 	"title": "Gateway ModbusRTU", 	"tooltip": "Gateway ModbusRTU", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiGateModbusTCP_20160922_1_0", 	"title": "Gateway ModbusTCP", 	"tooltip": "Gateway ModbusTCP", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiGatePowerlink_20160922_1_0",  	"title": "Gateway Powerlink", 	"tooltip": "Gateway Powerlink", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiGateProfibus_20161102_1_0", 	"title": "Gateway Profibus",	"tooltip": "Gateway Profibus", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiGateProfinet_20160916_1_0", 	"title": "Gateway Profinet IRT", "tooltip": "Gateway Profinet IRT", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiGateSercosIII_20161102_1_0", 	"title": "Gateway SercosIII", 	"tooltip": "Gateway SercosIII", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiGateSerial_20170125_1_0", 	"title": "Gateway Serial",	"tooltip": "Gateway Serial", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiGateCANopenMaster_20181023_1_0", 	"title": "Gateway CANopen Master", 	"tooltip": "Gateway CANopen Master", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiConCan_20180425_1_0", 		"title": "Connect Can",		"tooltip": "Socket CAN interface for RevPi Connect", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiConMBus_20180425_1_0", 		"title": "Connect M-Bus",	"tooltip": "M-Bus interface for RevPi Connect", "icon": "##GSD_ICON_PATHNAME##" }
+	]
+	},
+	{"key": "f_02", "title": "I/O Devices", "folder": true, "children": [
+		{"key": "RevPiDIO_20160818_1_0", "title": "RevPi DIO", "tooltip": "14 digital inputs and 14 digital outputs for RevPi", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiDI_20160818_1_0", "title": "RevPi DI", "tooltip": "16 digital inputs for RevPi", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiDO_20160818_1_0", "title": "RevPi DO", "tooltip": "16 digital outputs for RevPi", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiMIO_20200901_1_0", "title": "RevPi MIO", "tooltip": "Multi digital/analog inputs and outputs for RevPi", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiAIO_20170301_1_0", "title": "RevPi AIO", "tooltip": "4 analog inputs, 2 RTD inputs and 2 analog outputs for RevPi", "icon": "##GSD_ICON_PATHNAME##" }
+	]
+	},
+	{"key": "f_04", "title": "Virtual Devices", "folder": true, "children": [
+		{"key": "Virtual01_20160818_1_0", "title": "Virtual Device 32 Byte", "tooltip": "Virtual Device for user application with 32 Byte inputs and 32 byte output", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "Virtual01_20200429_1_0", "title": "Virtual Device 32 Byte (Ext.)", "tooltip": "Extended Virtual Device for user application", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "ModbusTCPSlave_20180122_1_1", 		"title": "ModbusTCP Slave",  	"tooltip": "ModbusTCP Slave", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "ModbusTCPSlave_20200518_1_0", 		"title": "ModbusTCP Slave (512)",  	"tooltip": "ModbusTCP Slave with 512 I/O Words", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "ModbusRTUSlave_20180122_1_1", 		"title": "ModbusRTU Slave",  	"tooltip": "ModbusRTU Slave", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "ModbusRTUSlave_20200518_1_0", 		"title": "ModbusRTU Slave (512)",  	"tooltip": "ModbusRTU Slave with 512 I/O Words", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "ModbusTCPMaster_20180122_1_1", 	"title": "ModbusTCP Master",  	"tooltip": "ModbusTCP Master", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "ModbusRTUMaster_20180122_1_1", 	"title": "ModbusRTU Master",  	"tooltip": "ModbusRTU Master", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "ModbusRTUMaster_20180406_1_2", 	"title": "ModbusRTU Master 150","tooltip": "ModbusRTU Master with 150 Input Words", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "ModbusTCPMaster_20210426_1_0", 	"title": "ModbusTCP Master 150","tooltip": "ModbusTCP Master with 150 Input/Output Words", "icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "RevPiSeven_20171011_1_0", 		"title": "RevPi7", 		"tooltip": "RevPi7", 		"icon": "##GSD_ICON_PATHNAME##" },
+		{"key": "VirtTimer_20170208_1_0", 		"title": "RevPiTimer",     	"tooltip": "Weekly Timer", "icon": "##GSD_ICON_PATHNAME##" }
+	]
+	}
+]
+
