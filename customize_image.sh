@@ -46,7 +46,7 @@ MINIMG=0
 FORCE=0
 
 # get the options
-if ! MYOPTS=$(getopt -o mh --long minimize,help -- "$@"); then
+if ! MYOPTS=$(getopt -o mfh --long minimize,force,help -- "$@"); then
 	usage;
 	exit 1;
 fi
