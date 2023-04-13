@@ -371,7 +371,7 @@ install -T "$IMAGEDIR/boot/overlays/revpi-dt-blob.dtbo" "$IMAGEDIR/boot/dt-blob.
 cp "$BAKERYDIR/templates/50-revpi.rules" "$IMAGEDIR/lib/udev/rules.d"
 
 # piCtory a4b5761fe3499fddfa76dedd9b45d7ef7485854e
-cp -R "$BAKERYDIR/templates/pictory" "$IMAGEDIR/var/www/revpi/pictory/"
+cp -R "$BAKERYDIR/templates/pictory" "$IMAGEDIR/var/www/revpi/"
 
 # Install fake version of piSerial script
 cp "$BAKERYDIR/templates/piSerial" "$IMAGEDIR/usr/sbin/"
