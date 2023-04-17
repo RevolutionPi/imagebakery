@@ -325,7 +325,7 @@ if [ "$MINIMG" != "1" ]; then
 
 	# remove fake procfs after NodeRed setup
 	for procfile in meminfo cpuinfo; do
-		unmount "$IMAGEDIR/proc/$procfile"
+		umount "$IMAGEDIR/proc/$procfile"
 		rm "$IMAGEDIR/proc/$procfile"
 	done
 fi
