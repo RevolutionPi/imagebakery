@@ -309,7 +309,7 @@ if [ "$MINIMG" != "1" ]; then
 	# fake a revpi procfs ... otherwise NodeRed installer will get confused
 	for procfile in meminfo cpuinfo; do
 		touch "$IMAGEDIR/proc/$procfile"
-		mount -o ro,bind templates/fake-procfs/$procfile "$IMAGEDIR/proc/$procfile"
+		mount -o ro,bind "$BAKERYDIR/templates/fake-procfs/$procfile" "$IMAGEDIR/proc/$procfile"
 	done
 
 	# install nodejs and nodered with an install script and revpi-nodes from npm repository
