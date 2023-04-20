@@ -405,6 +405,9 @@ find "$IMAGEDIR/etc/ssh" -name "ssh_host_*_key*" -delete
 # after package raspberrypi-kernel installed, install revpi-dt-blob.dtbo as default dt-blob
 install -T "$IMAGEDIR/boot/overlays/revpi-dt-blob.dtbo" "$IMAGEDIR/boot/dt-blob.bin"
 
+# Remove machine-id to match the systemd firstboot condition on first boot of image
+rm "$IMAGEDIR/etc/machine-id"
+
 cleanup_umount
 
 fsck.vfat -a "$LOOPDEVICE"p1
