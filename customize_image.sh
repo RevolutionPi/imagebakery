@@ -158,8 +158,9 @@ imgsize=$((imgblocks * blocksize))
 # An image like raspios-lite just have 2 GB , so we need to resize rootfs first before
 # we start processing the image. Otherwise build will fail with "no space left on device"
 if [ "$imgsize" -lt 3900000000 ] ; then
+    echo "Partition is being expanded for installation... This may take a while!"
 	bcount=$(((disksize-imgsize)/blocksize))
-	dd if=/dev/zero count=$bcount bs=$blocksize >> "$OUTPUT_IMAGE"
+	dd if=/dev/zero count=$bcount bs=$blocksize status=progress >> "$OUTPUT_IMAGE"
 	$PARTED "$OUTPUT_IMAGE" resizepart 2 "$((disksize-1))"B
 	losetup "$LOOPDEVICE" "$OUTPUT_IMAGE"
 	partprobe "$LOOPDEVICE"
