@@ -137,7 +137,12 @@ cleanup() {
 	cleanup_losetup
 }
 
-trap cleanup ERR SIGINT
+cleanup_with_error() {
+    echo "#################### BUILD PROCESS INCOMPLETE ####################"
+    cleanup
+}
+
+trap cleanup_with_error ERR SIGINT
 
 # Block size is 512 bytes
 blocksize=512
