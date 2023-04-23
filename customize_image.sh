@@ -5,6 +5,7 @@ usage () {
 	echo 'Usage: customize_image.sh [-m, --minimize | -h, --help] <source-image> [<target-image>]
   -m, --minimize	Install only software that is necessary for basic operation (eg. Pictory and other RevPi tools)
   -f, --force		Force in-place modification of the source image if not output image was specfied
+  -v, --verbose		Print all executed commands to the terminal (for debugging purposes)
   -h, --help		Print the usage page'
 }
 
@@ -34,7 +35,7 @@ if [ ! -x "$PARTED" ] ; then
 	exit 1
 fi
 
-set -ex
+set -e
 
 # pivot to new PID namespace
 if [ $$ != 2 ] && [ -x /usr/bin/newpid ] ; then
@@ -46,7 +47,7 @@ MINIMG=0
 FORCE=0
 
 # get the options
-if ! MYOPTS=$(getopt -o mfh --long minimize,force,help -- "$@"); then
+if ! MYOPTS=$(getopt -o mfvh --long minimize,force,verbose,help -- "$@"); then
 	usage;
 	exit 1;
 fi
@@ -57,6 +58,7 @@ while true ; do
 	case "$1" in
 		-m|--minimize) MINIMG=1 ; shift ;;
 		-f|--force) FORCE=1 ; shift ;;
+  		-v|--verbose) set -ex ; shift ;;
 		-h|--help) usage ; exit 0;;
 		*) shift; break ;;
 	esac
