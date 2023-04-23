@@ -36,6 +36,14 @@ sudo apt-get install qemu-user-static binfmt-support
 > ```
 > The issue is documented here: https://github.com/microsoft/WSL/issues/7181
 
+#### Required packages on the build system
+
+- curl
+- dosfstools
+- parted
+
+#### Image flavors
+
 In order to build an image with only software that is necessary for basic operation (eg. Pictory and other RevPi tools), you have to call the customization script with the `--minimize` option. This option is used to build our official lite image (based on the foundations lite image).
 
 `customize_image.sh --minimize <raspberrypi-image> [output-image]`
