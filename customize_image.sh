@@ -420,12 +420,7 @@ fsck.ext4 -f -p "$LOOPDEVICE"p2
 sleep 2
 
 # shrink image to speed up flashing
-# HACK: Get minimum image size, add some blocks for extra space and shrink image to this size
-# (will be removed when we have a first boot service)
-SHRINKED_SIZE=$(resize2fs -P "$LOOPDEVICE"p2 | cut -f 2 -d :)
-SHRINKED_SIZE=$((SHRINKED_SIZE + 20000))
-resize2fs "$LOOPDEVICE"p2 "$SHRINKED_SIZE"
-
+resize2fs -M "$LOOPDEVICE"p2
 PARTSIZE=$(dumpe2fs -h "$LOOPDEVICE"p2 | egrep "^Block count:" | cut -d" " -f3-)
 PARTSIZE=$((($PARTSIZE) * 8))   # ext4 uses 4k blocks, partitions use 512 bytes
 PARTSTART=$(cat /sys/block/$(basename "$LOOPDEVICE")/$(basename "$LOOPDEVICE"p2)/start)
