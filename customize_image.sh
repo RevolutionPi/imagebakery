@@ -386,6 +386,12 @@ cat <<EOL >$IMAGEDIR/etc/NetworkManager/conf.d/99-unmanaged-devices.conf
 unmanaged-devices=interface-name:pileft;interface-name:piright
 EOL
 
+# Use fallback to dhcp if no connection is configured
+install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-dhcp.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
+
+# Use fallback to link-local if dhcp fails
+install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-link-local.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
+
 # remove package lists, they will be outdated within days
 rm "$IMAGEDIR/var/lib/apt/lists/"*Packages
 
