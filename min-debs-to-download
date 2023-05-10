@@ -6,8 +6,8 @@ revpi-webstatus
 pictory
 piserial
 pitest
-pimodbus-master
-pimodbus-slave
+revpi-modbus-client
+revpi-modbus-server
 can-utils
 python3-can
 libsocketcan-dev
