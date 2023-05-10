@@ -1,0 +1,12 @@
+[connection]
+id==Link-local (fallback)
+uuid=a9883125-de1f-4d75-a049-124ee2adcff4
+type=ethernet
+autoconnect-priority=-99
+permissions=
+
+[ipv4]
+method=link-local
+
+[ipv6]
+method=link-local
