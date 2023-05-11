@@ -381,10 +381,7 @@ fi
 chroot "$IMAGEDIR" raspi-config nonint do_netconf 2
 
 # Don't manage pileft / piright with NetworkManager
-cat <<EOL >$IMAGEDIR/etc/NetworkManager/conf.d/99-unmanaged-devices.conf
-[keyfile]
-unmanaged-devices=interface-name:pileft;interface-name:piright
-EOL
+install -o root -m 0644 "$BAKERYDIR/templates/network-manager/99-unmanaged-devices.conf" "$IMAGEDIR/etc/NetworkManager/conf.d/99-unmanaged-devices.conf"
 
 # Use fallback to dhcp if no connection is configured
 install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-dhcp.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
