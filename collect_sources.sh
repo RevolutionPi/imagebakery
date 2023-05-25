@@ -63,12 +63,11 @@ fetch_deb_src() {
 
 # exclude binary-only Raspbian packages
 EXCLUDE='realvnc-vnc'
+EXCLUDE+='|widevine'
 # exclude Raspbian packages with missing source code
 EXCLUDE+='|nodered|nodejs'
 # exclude binary-only RevolutionPi packages
 EXCLUDE+='|teamviewer-revpi'
-# exclude non-binary RevolutionPi packages
-EXCLUDE+='|revpi-tools'
 # exclude RevolutionPi packages whose source code is fetched from GitHub
 EXCLUDE+='|raspberrypi-firmware|picontrol|revpi-firmware'
 
@@ -90,7 +89,6 @@ knl_tag=${knl_tag//\:/%25}
 wget -O "linux-$knl_version.tar.gz" "https://github.com/RevolutionPi/linux/archive/refs/tags/$knl_tag.tar.gz"
 wget -O "piControl-$knl_version.tar.gz" "https://github.com/RevolutionPi/piControl/archive/refs/tags/$knl_tag.tar.gz"
 wget -O IODeviceExample.tar.gz https://github.com/RevolutionPi/IODeviceExample/archive/master.tar.gz
-wget -O python3-revpimodio2.tar.gz https://github.com/naruxde/revpimodio2/archive/master.tar.gz
 
 # take node modules sources from root directory of npm
 test -d "$IMAGEDIR/usr/lib/node_modules" && tar -czvf node_modules.tar.gz "$IMAGEDIR/usr/lib/node_modules"
