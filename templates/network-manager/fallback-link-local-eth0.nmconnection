@@ -1,9 +1,12 @@
 [connection]
-id=Link-local (fallback)
+id=Link-local eth0 (fallback)
 uuid=a9883125-de1f-4d75-a049-124ee2adcff4
 type=ethernet
+interface-name=eth0
+autoconnect=yes
 autoconnect-priority=-99
-permissions=
+autoconnect-retries=-1
+may-fail=yes
 
 [ipv4]
 method=link-local

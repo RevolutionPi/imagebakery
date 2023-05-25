@@ -382,10 +382,11 @@ chroot "$IMAGEDIR" raspi-config nonint do_netconf 2
 install -o root -m 0644 "$BAKERYDIR/templates/network-manager/99-revpi.conf" "$IMAGEDIR/etc/NetworkManager/conf.d/99-revpi.conf"
 
 # Use fallback to dhcp if no connection is configured
-install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-dhcp.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
+install -o root -m 0600 "$BAKERYDIR/templates/network-manager/dhcp-eth0.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
 
 # Use fallback to link-local if dhcp fails
-install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-link-local.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
+install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-link-local-eth0.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
+install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-link-local-eth1.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
 
 # remove package lists, they will be outdated within days
 rm "$IMAGEDIR/var/lib/apt/lists/"*Packages
