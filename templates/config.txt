@@ -57,8 +57,8 @@ hdmi_drive=2
 dtparam=audio=on
 
 # Enable DRM VC4 V3D driver
-#dtoverlay=vc4-kms-v3d
-#max_framebuffers=2
+dtoverlay=vc4-kms-v3d
+max_framebuffers=2
 
 [pi4]
 [cm4s]
