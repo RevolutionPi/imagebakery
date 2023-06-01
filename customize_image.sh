@@ -327,10 +327,8 @@ if [ "$MINIMG" != "1" ]; then
 		--output "$IMAGEDIR/$NODEREDSCRIPT"
 	chmod 755 "$IMAGEDIR/$NODEREDSCRIPT"
 	NODERED_VER="3.0.2"
-	REVPI_NODES_VERSION="1.1.0"
 	chroot "$IMAGEDIR" /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi --no-init --nodered-version="$NODERED_VER"
 	rm "$IMAGEDIR/$NODEREDSCRIPT"
-	chroot "$IMAGEDIR" /usr/bin/sudo -u pi /usr/bin/npm install --prefix /home/pi/.node-red "https://github.com/RevolutionPi/node-red-contrib-revpi-nodes/archive/refs/tags/${REVPI_NODES_VERSION}.tar.gz"
 
 	# remove fake procfs after NodeRed setup
 	for procfile in meminfo cpuinfo; do
