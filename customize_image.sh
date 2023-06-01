@@ -319,7 +319,7 @@ if [ "$MINIMG" != "1" ]; then
 		--output "$IMAGEDIR/$NODEREDSCRIPT"
 	chmod 755 "$IMAGEDIR/$NODEREDSCRIPT"
 	NODERED_VER="2.2.3"
-	chroot "$IMAGEDIR" /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi --no-init --nodered-version="$NODERED_VER"
+	chroot "$IMAGEDIR" /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi --no-init --nodered-version="$NODERED_VER" --node18
 	rm "$IMAGEDIR/$NODEREDSCRIPT"
 	chroot "$IMAGEDIR" /usr/bin/sudo -u pi /usr/bin/npm install --prefix /home/pi/.node-red node-red-contrib-revpi-nodes
 fi
