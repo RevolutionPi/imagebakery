@@ -222,14 +222,12 @@ cp "$BAKERYDIR/templates/revpi.list" "$IMAGEDIR/etc/apt/sources.list.d"
 [[ -f "$IMAGEDIR/etc/ld.so.preload" ]] && mv "$IMAGEDIR/etc/ld.so.preload" "$IMAGEDIR/etc/ld.so.preload.bak"
 
 # copy piTest source code
-PICONTROLDIR=`mktemp -d -p /tmp piControl.XXXXXXXX`
-git clone https://github.com/RevolutionPi/piControl $PICONTROLDIR
-cp -pr $PICONTROLDIR/piTest "$IMAGEDIR/home/pi/demo"
-cp -p $PICONTROLDIR/piControl.h "$IMAGEDIR/home/pi/demo"
-sed -i -r -e 's%\.\./%%' "$IMAGEDIR/home/pi/demo/Makefile"
+PITESTDIR=`mktemp -d -p /tmp pitest.XXXXXXXX`
+git clone --recursive https://github.com/RevolutionPi/revpi-pitest $PITESTDIR
+mkdir -p "$IMAGEDIR/home/pi/demo"
+mv $PITESTDIR "$IMAGEDIR/home/pi/demo/piTest"
 chown -R 1000:1000 "$IMAGEDIR/home/pi/demo"
 chmod -R a+rX "$IMAGEDIR/home/pi/demo"
-rm -r $PICONTROLDIR
 
 # remove bookshelf if present
 if [[ -d $IMAGEDIR/home/pi/Bookshelf ]]; then
