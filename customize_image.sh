@@ -292,7 +292,13 @@ chroot "$IMAGEDIR" apt-get -y install revpi-wallpaper
 chroot "$IMAGEDIR" apt-mark hold raspi-copies-and-fills
 chroot "$IMAGEDIR" apt-get -y upgrade
 chroot "$IMAGEDIR" apt-mark unhold raspi-copies-and-fills
-chroot "$IMAGEDIR" apt-get clean
+
+# clean up image and free as much as possible space
+rm -rf "$IMAGEDIR"/var/cache/apt/archives/*.deb
+rm -rf "$IMAGEDIR"/var/cache/apt/*.bin
+rm -rf "$IMAGEDIR"/var/lib/apt/lists/*
+rm -rf "$IMAGEDIR"/tmp/*
+rm -rf "$IMAGEDIR"/var/tmp/*
 
 if [ -e "$IMAGEDIR/etc/init.d/apache2" ] ; then
 	# annoyingly, the postinstall script starts apache2 on fresh installs
