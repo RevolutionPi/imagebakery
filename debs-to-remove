@@ -64,6 +64,10 @@ lxde
 # work fine without them
 desktop-base
 gtk2-engines
+gnome-icon-theme
 
 # Collides with the RevPi's hardware RTC
 fake-hwclock
+
+# Text to speach engines
+pocketsphinx-en-us
