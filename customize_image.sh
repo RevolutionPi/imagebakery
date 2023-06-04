@@ -308,15 +308,20 @@ if [ -e "$IMAGEDIR/etc/init.d/apache2" ] ; then
 fi
 
 if [ "$MINIMG" != "1" ]; then
-	# install nodejs and nodered with an install script and revpi-nodes from npm repository
-	NODEREDSCRIPT="/tmp/update-nodejs-and-nodered.sh"
-	/usr/bin/curl -sL \
-		https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered\
-		--output "$IMAGEDIR/$NODEREDSCRIPT"
-	chmod 755 "$IMAGEDIR/$NODEREDSCRIPT"
+	# Use NodeJS LTS 18 sources
+	cp "$BAKERYDIR/templates/nodered/nodesource.gpg" "$IMAGEDIR/etc/apt/trusted.gpg.d"
+	cp "$BAKERYDIR/templates/nodered/nodesource.list" "$IMAGEDIR/etc/apt/sources.list.d"
+
+	# Install nodejs 18 including npm
+	chroot "$IMAGEDIR" apt-get update
+	chroot "$IMAGEDIR" apt-get -y install nodejs
+
+	# Install node-red via npm as explained in the node-red documentation
 	NODERED_VER="3.0.2"
-	chroot "$IMAGEDIR" /usr/bin/sudo -u pi $NODEREDSCRIPT --confirm-install --confirm-pi --no-init --nodered-version="$NODERED_VER"
-	rm "$IMAGEDIR/$NODEREDSCRIPT"
+	chroot "$IMAGEDIR" npm install -g --unsafe-perm node-red@${NODERED_VER} || true
+
+	# Install systemd-unit file which uses pi user
+	cp "$BAKERYDIR/templates/nodered/nodered.service" "$IMAGEDIR/usr/lib/systemd/system"
 fi
 # enable ssh daemon by default, disable swap, disable bluetooth on mini-uart
 chroot "$IMAGEDIR" systemctl enable ssh
@@ -326,7 +331,6 @@ chroot "$IMAGEDIR" systemctl disable hciuart
 # disable 3rd party software
 if [ "$MINIMG" != "1" ]; then
 	chroot "$IMAGEDIR" systemctl disable logiclab
-	chroot "$IMAGEDIR" systemctl disable nodered
 fi
 chroot "$IMAGEDIR" systemctl disable noderedrevpinodes-server
 chroot "$IMAGEDIR" systemctl disable revpipyload
