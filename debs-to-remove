@@ -39,11 +39,12 @@ debian-reference-common
 # Remove duplicate boost libraries, keep only libboost-iostreams1.67.0
 libboost-iostreams1.58.0
 
-# Remove duplicate gcc base files, keep only gcc-6-base
+# Remove duplicate gcc base files, keep only gcc-9-base and gcc-10-base
 gcc-4.9-base
 gcc-5-base
 gcc-6-base
 gcc-7-base
+gcc-8-base
 
 # Remove header files not required by any other package
 libfreetype6-dev
