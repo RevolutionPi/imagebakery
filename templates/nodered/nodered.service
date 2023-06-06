@@ -20,8 +20,9 @@ EnvironmentFile=-/home/pi/.node-red/EnvironmentFile
 # uncomment next line if you need to wait for time sync before starting
 #ExecStartPre=/bin/bash -c '/bin/journalctl -b -u systemd-timesyncd | /bin/grep -q "systemd-timesyncd.* Synchronized to time server"'
 
-ExecStart=/usr/bin/env node-red-pi $NODE_OPTIONS $NODE_RED_OPTIONS
-#ExecStart=/usr/bin/env node $NODE_OPTIONS red.js $NODE_RED_OPTIONS
+Environment="NODE_RED_OPTIONS=-v --settings /etc/revpi/node-red-settings.js"
+ExecStart=/bin/bash -c '/usr/bin/env CERT_KEY="$(sudo cat /etc/ssl/private/revpi-self-signed.key)" CERT="$(sudo cat /etc/ssl/certs/revpi-self-signed.pem)" node-red-pi $NODE_OPTIONS $NODE_RED_OPTIONS'
+
 # Use SIGINT to stop
 KillSignal=SIGINT
 # Auto restart on crash
