@@ -16,20 +16,19 @@ EnvironmentFile=-/home/pi/.node-red/EnvironmentFile
 # uncomment and edit next line if you need an http proxy
 #Environment="HTTP_PROXY=my.httpproxy.server.address"
 # uncomment the next line for a more verbose log output
-#Environment="NODE_RED_OPTIONS=-v"
-# uncomment next line if you need to wait for time sync before starting
-#ExecStartPre=/bin/bash -c '/bin/journalctl -b -u systemd-timesyncd | /bin/grep -q "systemd-timesyncd.* Synchronized to time server"'
+#Environment="-v"
 
-ExecStart=/usr/bin/env node-red-pi $NODE_OPTIONS $NODE_RED_OPTIONS
-#ExecStart=/usr/bin/env node $NODE_OPTIONS red.js $NODE_RED_OPTIONS
+ExecStart=/usr/bin/env node-red-pi $NODE_OPTIONS $NODE_RED_OPTIONS -D uiPort=1881 -D uiHost=127.0.0.1
+
 # Use SIGINT to stop
 KillSignal=SIGINT
+
 # Auto restart on crash
 Restart=on-failure
 RestartSec=20
+
 # Tag things in the log
 SyslogIdentifier=Node-RED
-#StandardOutput=syslog
 
 [Install]
 WantedBy=multi-user.target
