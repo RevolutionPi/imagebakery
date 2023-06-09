@@ -2,3 +2,6 @@ revpicommander
 noderedrevpinodes-server
 node-red-contrib-revpi-nodes
 epiphany-browser
+# required for webstatus to reach a TLS secured Node-RED on port 41880
+# https://github.com/RevolutionPi/webstatus/commit/70b041d6d58044748f908dcecae81e2cac285e2d
+revpi-nodered-proxy-apache
