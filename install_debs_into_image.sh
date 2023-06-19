@@ -136,7 +136,7 @@ fi
 # from ld.so:
 #   ERROR: ld.so: object '/usr/lib/arm-linux-gnueabihf/libarmmem-${PLATFORM}.so'
 #   from /etc/ld.so.preload cannot be preloaded (cannot open shared object file): ignored.
-mv "$IMAGEDIR/etc/ld.so.preload" "$IMAGEDIR/etc/ld.so.preload.bak"
+[[ -f "$IMAGEDIR/etc/ld.so.preload" ]] && mv "$IMAGEDIR/etc/ld.so.preload" "$IMAGEDIR/etc/ld.so.preload.bak"
 
 # customize settings
 echo `basename "$1"` > "$IMAGEDIR/etc/revpi/image-release"
@@ -158,7 +158,7 @@ find "$IMAGEDIR/var/log" -type f -delete
 find "$IMAGEDIR/etc/ssh" -name "ssh_host_*_key*" -delete
 
 # restore ld.so.preload
-mv "$IMAGEDIR/etc/ld.so.preload.bak" "$IMAGEDIR/etc/ld.so.preload"
+[[ -f "$IMAGEDIR/etc/ld.so.preload.bak" ]] && mv "$IMAGEDIR/etc/ld.so.preload.bak" "$IMAGEDIR/etc/ld.so.preload"
 
 cleanup_umount
 
