@@ -6,18 +6,34 @@
 
 ### Download Raspberry Pi OS (previously called Raspbian) image
 
-Works with both [Raspberry Pi OS](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit) desktop and lite images.
+Works with both [Raspberry Pi OS](https://www.raspberrypi.org/software/operating-systems/) desktop and lite images, supporting both 32-bit and 64-bit architectures.
+
+[Raspberry Pi OS - Bullseye 32bits](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit)
 
 *Raspberry Pi OS with desktop*
 ```
-curl -O https://downloads.raspberrypi.org/raspios_oldstable_armhf/images/raspios_oldstable_armhf-2022-09-26/2022-09-22-raspios-buster-armhf.img.xz
-xz -d 2022-09-22-raspios-buster-armhf.img.xz
+curl -O https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2023-05-03/2023-05-03-raspios-bullseye-armhf.img.xz
+xz -d 2023-05-03-raspios-bullseye-armhf.img.xz
 ```
 
 *Raspberry Pi OS Lite*
 ```
-curl -O https://downloads.raspberrypi.org/raspios_oldstable_lite_armhf/images/raspios_oldstable_lite_armhf-2022-09-26/2022-09-22-raspios-buster-armhf-lite.img.xz
-xz -d 2022-09-22-raspios-buster-armhf-lite.img.xz
+curl -O https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2023-05-03/2023-05-03-raspios-bullseye-armhf-lite.img.xz
+xz -d 2023-05-03-raspios-bullseye-armhf-lite.img.xz
+```
+
+[Raspberry Pi OS - Bullseye 64bits](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-64-bit)
+
+*Raspberry Pi OS with desktop*
+```
+curl -O https://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2023-05-03/2023-05-03-raspios-bullseye-arm64.img.xz
+xz -d 2023-05-03-raspios-bullseye-arm64.img.xz
+```
+
+*Raspberry Pi OS Lite*
+```
+curl -O https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2023-05-03/2023-05-03-raspios-bullseye-arm64-lite.img.xz
+xz -d 2023-05-03-raspios-bullseye-arm64-lite.img.xz
 ```
 
 ### Customize for Revolution Pi
