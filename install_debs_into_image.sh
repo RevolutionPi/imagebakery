@@ -97,18 +97,21 @@ cleanup() {
 }
 
 trap cleanup ERR SIGINT
-imgsize=$($PARTED "$1" unit b print | grep -e "\.img" | awk -F ":" '{gsub(/^[ \t]+|[B \t]+$/,"",$2); print $2}')
-[ "x$imgsize" = "x" ] && echo 1>&1 "Error: Image size not found" && exit 1
-secsize=$($PARTED "$1" unit b print | grep -e "Sector size" | awk -F "/" '{gsub(/^[ \t]+|[B \t]+$/,"",$3); print $3}')
-[ "x$secsize" = "x" ] && echo 1>&1 "Error: Sector size not found" && exit 1
+
+# Block size is 512 bytes
+blocksize=512
+# Minimal eMMC size is 4 GB with an available disk size of 3909091328 bytes
+disksize=3909091328
+imgblocks=$(/sbin/blockdev --getsz "$1")
+[ "$imgblocks" = "" ] && echo 1>&1 "Error: Cannot get image size" && exit 1
+imgsize=$((imgblocks * blocksize))
 
 # The smallest size of CM3-eMMC is 4 GB  , the available disksize for a system is 3909091328 bytes
 # An image like raspios-lite just have 2 GB , so we need to resize rootfs first before
 # we start processing the image. Otherwise build will fail with "no space left on device"
-if [ $imgsize -lt 3900000000 ] ; then
-	disksize=3909091328
-	bcount=$(echo "($disksize-$imgsize)/$secsize" | bc )
-	dd if=/dev/zero count=$bcount bs=$secsize >> "$1"
+if [ "$imgsize" -lt 3900000000 ] ; then
+	bcount=$(((disksize-imgsize)/blocksize))
+	dd if=/dev/zero count=$bcount bs=$blocksize status=progress >> "$1"
 	$PARTED "$1" resizepart 2 "$((disksize-1))"B
 	losetup "$LOOPDEVICE" "$1"
 	partprobe "$LOOPDEVICE"
