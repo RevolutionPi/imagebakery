@@ -290,13 +290,6 @@ chroot "$IMAGEDIR" apt-mark hold raspi-copies-and-fills
 chroot "$IMAGEDIR" apt-get -y upgrade
 chroot "$IMAGEDIR" apt-mark unhold raspi-copies-and-fills
 
-# clean up image and free as much as possible space
-rm -rf "$IMAGEDIR"/var/cache/apt/archives/*.deb
-rm -rf "$IMAGEDIR"/var/cache/apt/*.bin
-rm -rf "$IMAGEDIR"/var/lib/apt/lists/*
-rm -rf "$IMAGEDIR"/tmp/*
-rm -rf "$IMAGEDIR"/var/tmp/*
-
 if [ -e "$IMAGEDIR/etc/init.d/apache2" ] ; then
 	# annoyingly, the postinstall script starts apache2 on fresh installs
 	mount -t proc procfs "$IMAGEDIR/proc"
@@ -384,8 +377,12 @@ install -o root -m 0600 "$BAKERYDIR/templates/network-manager/dhcp-eth1.nmconnec
 install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-link-local-eth0.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
 install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-link-local-eth1.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
 
-# remove package lists, they will be outdated within days
-rm "$IMAGEDIR/var/lib/apt/lists/"*Packages
+# clean up image and free as much as possible space
+rm -rf "$IMAGEDIR"/var/cache/apt/archives/*.deb || true
+rm -rf "$IMAGEDIR"/var/cache/apt/*.bin || true
+rm -rf "$IMAGEDIR"/var/lib/apt/lists/* || true
+rm -rf "$IMAGEDIR"/tmp/* || true
+rm -rf "$IMAGEDIR"/var/tmp/* || true
 
 # install local packages
 if [ "$(/bin/ls "$BAKERYDIR/debs-to-install/"*.deb 2>/dev/null)" ] ; then
