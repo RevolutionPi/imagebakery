@@ -93,7 +93,6 @@ fi
 IMAGEDIR=`mktemp -d -p /tmp img.XXXXXXXX`
 BAKERYDIR=$(dirname "$0")
 LOOPDEVICE=$(losetup -f)
-CONFIGTXT="$IMAGEDIR/boot/config.txt"
 
 cleanup_umount() {
 	if [ -e "$IMAGEDIR" ] ; then
