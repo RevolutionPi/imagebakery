@@ -262,6 +262,15 @@ chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive locales
 chroot "$IMAGEDIR" /usr/bin/patch /etc/sysctl.conf	\
 	< "$BAKERYDIR/templates/sysctl.conf.patch"
 
+# ensure that pileft and piright are enabled, even if NetworkManager ignores them for configuration
+cat <<EOX >"$IMAGEDIR/etc/network/interfaces.d/revpi.conf"
+auto pileft
+iface pileft inet manual
+
+auto piright
+iface piright inet manual
+EOX
+
 # display IP address at login prompt
 sed -i -e '1s/$/ \\4 \\6/' "$IMAGEDIR/etc/issue"
 
