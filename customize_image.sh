@@ -258,9 +258,6 @@ chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive keyboard-configuration
 chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive tzdata
 chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive locales
 
-# automatically bring up eth0 and eth1 again after a USB bus reset
-sed -i -e '6i# allow-hotplug eth0\n# allow-hotplug eth1\n' "$IMAGEDIR/etc/network/interfaces"
-
 # harden network configuration
 chroot "$IMAGEDIR" /usr/bin/patch /etc/sysctl.conf	\
 	< "$BAKERYDIR/templates/sysctl.conf.patch"
