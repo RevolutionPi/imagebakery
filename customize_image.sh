@@ -346,8 +346,8 @@ if [ -e "$IMAGEDIR/etc/systemd/system/getty@tty1.service.d/autologin.conf" ] ; t
 	rm -f "$IMAGEDIR/etc/systemd/system/getty@tty1.service.d/autologin.conf"
 fi
 
-# peg cpu at 1200 MHz to maximize spi0 throughput and avoid jitter
-chroot "$IMAGEDIR" /usr/bin/revpi-config enable perf-governor
+# Disable cpufrequtils to keep the default cpu governor
+chroot "$IMAGEDIR" systemctl disable cpufrequtils.service
 
 # Since Raspberry Pi OS Bullseye the default user pi will only be used for the first
 # boot and then replaced by a username which has to be defined in the first boot wizard.
