@@ -348,6 +348,7 @@ fi
 
 # Disable cpufrequtils to keep the default cpu governor
 chroot "$IMAGEDIR" systemctl disable cpufrequtils.service
+chroot "$IMAGEDIR" systemctl disable raspi-config.service
 
 # Since Raspberry Pi OS Bullseye the default user pi will only be used for the first
 # boot and then replaced by a username which has to be defined in the first boot wizard.
