@@ -72,3 +72,7 @@ fake-hwclock
 
 # Text to speach engines
 pocketsphinx-en-us
+
+# Remove rename wizards for user pi
+userconf-pi
+piwiz
