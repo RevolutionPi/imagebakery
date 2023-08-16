@@ -251,7 +251,6 @@ sed -i -r -e 's/^(# en_US.UTF-8 UTF-8)/en_US.UTF-8 UTF-8/' "$IMAGEDIR/etc/locale
 sed -i -r -e 's/^(en_GB.UTF-8 UTF-8)/# en_GB.UTF-8 UTF-8/' "$IMAGEDIR/etc/locale.gen"
 install -d -m 755 -o root -g root "$IMAGEDIR/etc/revpi"
 basename "$OUTPUT_IMAGE" > "$IMAGEDIR/etc/revpi/image-release"
-install -d -m 700 -o 1000 -g 1000 "$IMAGEDIR/home/pi/.ssh"
 
 # activate settings
 chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive keyboard-configuration
