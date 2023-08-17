@@ -2,6 +2,7 @@ raspberrypi-kernel
 revpi-firmware
 revpi-repo
 revpi-tools
+revpi-base-files
 revpi-webstatus-redirect
 revpi-webstatus
 pictory
