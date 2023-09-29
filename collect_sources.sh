@@ -55,9 +55,9 @@ apt-get -o Dir=$APTROOT -o Dir::State::status=$APTROOT/var/lib/dpkg/status \
 # (in the future we may additionally try downloading from
 # snapshot.debian.org, e.g. using Debian::Snapshot on CPAN)
 fetch_deb_src() {
-	apt-get -o RootDir=$APTROOT -o APT::Sandbox::User="" --download-only \
+	apt-get -q -o RootDir=$APTROOT -o APT::Sandbox::User="" --download-only \
 		source "$1" ||
-		apt-get -o RootDir=$APTROOT -o APT::Sandbox::User="" --download-only \
+		apt-get -q -o RootDir=$APTROOT -o APT::Sandbox::User="" --download-only \
 			source "$(echo "$1" | cut -d= -f1)"
 }
 
@@ -86,9 +86,9 @@ knl_tag="raspberrypi-kernel_$knl_version"
 # GIT tags cannot contain the ':' character, therefore we substitute it with '%' (url-encoded).
 # see https://dep-team.pages.debian.net/deps/dep14/ (Version mangling) for more details
 knl_tag=${knl_tag//\:/%25}
-wget -O "linux-$knl_version.tar.gz" "https://github.com/RevolutionPi/linux/archive/refs/tags/$knl_tag.tar.gz"
-wget -O "piControl-$knl_version.tar.gz" "https://github.com/RevolutionPi/piControl/archive/refs/tags/$knl_tag.tar.gz"
-wget -O IODeviceExample.tar.gz https://github.com/RevolutionPi/IODeviceExample/archive/master.tar.gz
+wget -nv -O "linux-$knl_version.tar.gz" "https://github.com/RevolutionPi/linux/archive/refs/tags/$knl_tag.tar.gz"
+wget -nv -O "piControl-$knl_version.tar.gz" "https://github.com/RevolutionPi/piControl/archive/refs/tags/$knl_tag.tar.gz"
+wget -nv -O IODeviceExample.tar.gz https://github.com/RevolutionPi/IODeviceExample/archive/master.tar.gz
 
 # take node modules sources from root directory of npm
 test -d "$IMAGEDIR/usr/lib/node_modules" && tar -czvf node_modules.tar.gz "$IMAGEDIR/usr/lib/node_modules"
