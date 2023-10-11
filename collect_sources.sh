@@ -9,12 +9,13 @@ fi
 
 set -ex
 
+IMAGENAME="$1"
 IMAGEDIR=/tmp/img.$$
 APTROOT=/tmp/apt.$$
 LOOPDEVICE=$(losetup -f)
 
 # mount ext4 + FAT filesystems
-losetup "$LOOPDEVICE" "$1"
+losetup "$LOOPDEVICE" "$IMAGENAME"
 partprobe "$LOOPDEVICE"
 mkdir $IMAGEDIR
 mount -o ro "$LOOPDEVICE"p2 $IMAGEDIR
@@ -49,6 +50,11 @@ sed -i -r -e 's/#(deb-src.*)/\1/' $APTROOT/etc/apt/sources.list \
 apt-get -o Dir=$APTROOT -o Dir::State::status=$APTROOT/var/lib/dpkg/status \
 	--allow-releaseinfo-change \
 	update
+
+# compile list of all installed packages (this includes the binary-only packages, thus no need for excludes)
+image_without_path=$(basename "$IMAGENAME")
+package_list="packages_${image_without_path%.*}.txt"
+dpkg-query --admindir $APTROOT/var/lib/dpkg -W -f='${source:Package}=${source:Version}\n' | sort | uniq > "$package_list"
 
 # try downloading the exact version of a package,
 # fall back to latest version if not found
