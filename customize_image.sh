@@ -298,8 +298,8 @@ chroot "$IMAGEDIR" systemctl disable hciuart
 # disable 3rd party software
 if [ "$MINIMG" != "1" ]; then
 	chroot "$IMAGEDIR" systemctl disable logiclab
+	chroot "$IMAGEDIR" systemctl disable noderedrevpinodes-server
 fi
-chroot "$IMAGEDIR" systemctl disable noderedrevpinodes-server
 chroot "$IMAGEDIR" systemctl disable revpipyload
 
 # boot to console by default, disable autologin
