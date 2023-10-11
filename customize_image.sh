@@ -333,9 +333,6 @@ if [[ -f "$IMAGEDIR/etc/ssh/sshd_config.d/rename_user.conf" ]]; then
 	rm "$IMAGEDIR/etc/ssh/sshd_config.d/rename_user.conf"
 fi
 
-# Use NetworkManager instead of dhcpcd
-chroot "$IMAGEDIR" raspi-config nonint do_netconf 2
-
 # clean up image and free as much as possible space
 rm -rf "$IMAGEDIR"/var/cache/apt/archives/*.deb || true
 rm -rf "$IMAGEDIR"/var/cache/apt/*.bin || true
