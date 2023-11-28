@@ -185,7 +185,6 @@ fi
 cp "$BAKERYDIR/templates/config.txt" "$IMAGEDIR/boot"
 cp "$BAKERYDIR/templates/cmdline.txt" "$IMAGEDIR/boot"
 cp "$BAKERYDIR/templates/revpi-aliases.sh" "$IMAGEDIR/etc/profile.d"
-cp "$BAKERYDIR/templates/rsyslog.conf" "$IMAGEDIR/etc"
 
 # dwc_otg is broken on 64-bit and shows a kernel panic on newer Cores and Connects
 # prevent this by using dwc2 also for CM3 based devices
