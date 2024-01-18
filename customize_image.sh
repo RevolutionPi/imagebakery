@@ -341,17 +341,6 @@ fi
 # Use NetworkManager instead of dhcpcd
 chroot "$IMAGEDIR" raspi-config nonint do_netconf 2
 
-# Don't manage pileft / piright with NetworkManager
-install -o root -m 0644 "$BAKERYDIR/templates/network-manager/99-revpi.conf" "$IMAGEDIR/etc/NetworkManager/conf.d/99-revpi.conf"
-
-# Use fallback to dhcp if no connection is configured
-install -o root -m 0600 "$BAKERYDIR/templates/network-manager/dhcp-eth0.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
-install -o root -m 0600 "$BAKERYDIR/templates/network-manager/dhcp-eth1.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
-
-# Use fallback to link-local if dhcp fails
-install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-link-local-eth0.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
-install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-link-local-eth1.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
-
 # clean up image and free as much as possible space
 rm -rf "$IMAGEDIR"/var/cache/apt/archives/*.deb || true
 rm -rf "$IMAGEDIR"/var/cache/apt/*.bin || true

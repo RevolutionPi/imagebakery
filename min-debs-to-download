@@ -27,3 +27,4 @@ python3-schema
 python3-revpi-device-info
 network-manager
 revpi-sos-report
+revpi-nm-config
