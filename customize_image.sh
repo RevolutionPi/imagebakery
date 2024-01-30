@@ -220,7 +220,6 @@ echo UTC > "$IMAGEDIR/etc/timezone"
 rm "$IMAGEDIR/etc/localtime"
 echo RevPi > "$IMAGEDIR/etc/hostname"
 sed -i -e 's/raspberrypi/RevPi/g' "$IMAGEDIR/etc/hosts"
-echo piControl >> "$IMAGEDIR/etc/modules"
 sed -i -r -e 's/^(XKBMODEL).*/\1="pc104"/' \
 	-e 's/^(XKBLAYOUT).*/\1="us"/' \
 	-e 's/^(XKBVARIANT).*/\1=""/' \
