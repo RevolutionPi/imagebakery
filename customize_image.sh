@@ -235,10 +235,6 @@ chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive keyboard-configuration
 chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive tzdata
 chroot "$IMAGEDIR" dpkg-reconfigure -fnoninteractive locales
 
-# harden network configuration
-chroot "$IMAGEDIR" /usr/bin/patch /etc/sysctl.conf	\
-	< "$BAKERYDIR/templates/sysctl.conf.patch"
-
 # display IP address at login prompt
 sed -i -e '1s/$/ \\4 \\6/' "$IMAGEDIR/etc/issue"
 
