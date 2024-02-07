@@ -346,9 +346,7 @@ chroot "$IMAGEDIR" systemctl disable raspi-config.service
 # Since Raspberry Pi OS Bullseye the default user pi will only be used for the first
 # boot and then replaced by a username which has to be defined in the first boot wizard.
 # Therefore we set the password to the previous default `raspberry`
-if ! grep -q -E '^pi:\*' "$IMAGEDIR/etc/shadow"; then
-	echo 'pi:raspberry' | chroot "$IMAGEDIR" /usr/sbin/chpasswd
-fi
+echo 'pi:raspberry' | chroot "$IMAGEDIR" /usr/sbin/chpasswd
 
 # Remove banner warning which is shows on every ssh login (present since Bullseye)
 if [[ -f "$IMAGEDIR/etc/ssh/sshd_config.d/rename_user.conf" ]]; then
