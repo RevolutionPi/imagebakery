@@ -74,7 +74,7 @@ EXCLUDE+='|widevine'
 EXCLUDE+='|nodered|nodejs'
 # exclude binary-only RevolutionPi packages
 EXCLUDE+='|teamviewer-revpi'
-# exclude RevolutionPi packages whose source code is fetched from GitHub
+# exclude RevolutionPi packages whose source code is fetched from GitLab
 EXCLUDE+='|raspberrypi-firmware|picontrol|revpi-firmware'
 
 # fetch Raspbian sources
@@ -92,9 +92,9 @@ knl_tag="raspberrypi-kernel_$knl_version"
 # GIT tags cannot contain the ':' character, therefore we substitute it with '%' (url-encoded).
 # see https://dep-team.pages.debian.net/deps/dep14/ (Version mangling) for more details
 knl_tag=${knl_tag//\:/%25}
-wget -nv -O "linux-$knl_version.tar.gz" "https://github.com/RevolutionPi/linux/archive/refs/tags/$knl_tag.tar.gz"
-wget -nv -O "piControl-$knl_version.tar.gz" "https://github.com/RevolutionPi/piControl/archive/refs/tags/$knl_tag.tar.gz"
-wget -nv -O IODeviceExample.tar.gz https://github.com/RevolutionPi/IODeviceExample/archive/master.tar.gz
+wget -nv -O "linux-$knl_version.tar.gz" "https://gitlab.com/revolutionpi/linux/-/archive/$knl_tag/linux-$knl_tag.tar.gz"
+wget -nv -O "piControl-$knl_version.tar.gz" "https://gitlab.com/revolutionpi/piControl/-/archive/$knl_tag/piControl-$knl_tag.tar.gz"
+wget -nv -O IODeviceExample.tar.gz "https://gitlab.com/revolutionpi/IODeviceExample/-/archive/master/IODeviceExample-master.tar.gz"
 
 # take node modules sources from root directory of npm
 test -d "$IMAGEDIR/usr/lib/node_modules" && tar -czvf node_modules.tar.gz "$IMAGEDIR/usr/lib/node_modules"
