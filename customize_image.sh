@@ -222,7 +222,7 @@ cp "$BAKERYDIR/templates/revpi.list" "$IMAGEDIR/etc/apt/sources.list.d"
 
 # copy piTest source code
 PITESTDIR=`mktemp -d -p /tmp pitest.XXXXXXXX`
-git clone --recursive https://github.com/RevolutionPi/revpi-pitest $PITESTDIR
+git clone --recursive https://gitlab.com/revolutionpi/revpi-pitest.git $PITESTDIR
 mkdir -p "$IMAGEDIR/home/pi/demo"
 mv $PITESTDIR "$IMAGEDIR/home/pi/demo/piTest"
 chown -R 1000:1000 "$IMAGEDIR/home/pi/demo"
