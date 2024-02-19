@@ -367,6 +367,12 @@ install -o root -m 0600 "$BAKERYDIR/templates/network-manager/dhcp-eth1.nmconnec
 install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-link-local-eth0.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
 install -o root -m 0600 "$BAKERYDIR/templates/network-manager/fallback-link-local-eth1.nmconnection" "$IMAGEDIR/etc/NetworkManager/system-connections"
 
+# Ensure WLAN is deactivated (rfkill) on all interfaces, unless the region has been selected
+# Compute Module 4 based devices
+echo 1 > "${IMAGEDIR}/var/lib/systemd/rfkill/platform-3f300000.mmc:wlan"
+# RevPi Flat / Flat S
+echo 1 > "${IMAGEDIR}/var/lib/systemd/rfkill/platform-3f300000.mmcnr:wlan"
+
 # clean up image and free as much as possible space
 rm -rf "$IMAGEDIR"/var/cache/apt/archives/*.deb || true
 rm -rf "$IMAGEDIR"/var/cache/apt/*.bin || true
