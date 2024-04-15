@@ -26,28 +26,28 @@ Works with both [Raspberry Pi OS](https://www.raspberrypi.org/software/operating
 
 *Raspberry Pi OS with desktop*
 ```
-curl -O https://downloads.raspberrypi.org/raspios_armhf/images/raspios_armhf-2023-05-03/2023-05-03-raspios-bullseye-armhf.img.xz
-xz -d 2023-05-03-raspios-bullseye-armhf.img.xz
+curl -O https://downloads.raspberrypi.com/raspios_oldstable_armhf/images/raspios_oldstable_armhf-2024-03-12/2024-03-12-raspios-bullseye-armhf.img.xz
+xz -d 2024-03-12-raspios-bullseye-armhf.img.xz
 ```
 
 *Raspberry Pi OS Lite*
 ```
-curl -O https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2023-05-03/2023-05-03-raspios-bullseye-armhf-lite.img.xz
-xz -d 2023-05-03-raspios-bullseye-armhf-lite.img.xz
+curl -O https://downloads.raspberrypi.com/raspios_oldstable_lite_armhf/images/raspios_oldstable_lite_armhf-2024-03-12/2024-03-12-raspios-bullseye-armhf-lite.img.xz
+xz -d 2024-03-12-raspios-bullseye-armhf-lite.img.xz
 ```
 
 [Raspberry Pi OS - Bullseye 64bits](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-64-bit)
 
 *Raspberry Pi OS with desktop*
 ```
-curl -O https://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2023-05-03/2023-05-03-raspios-bullseye-arm64.img.xz
-xz -d 2023-05-03-raspios-bullseye-arm64.img.xz
+curl -O https://downloads.raspberrypi.com/raspios_oldstable_arm64/images/raspios_oldstable_arm64-2024-03-12/2024-03-12-raspios-bullseye-arm64.img.xz
+xz -d 2024-03-12-raspios-bullseye-arm64.img.xz
 ```
 
 *Raspberry Pi OS Lite*
 ```
-curl -O https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2023-05-03/2023-05-03-raspios-bullseye-arm64-lite.img.xz
-xz -d 2023-05-03-raspios-bullseye-arm64-lite.img.xz
+curl -O https://downloads.raspberrypi.com/raspios_oldstable_lite_arm64/images/raspios_oldstable_lite_arm64-2024-03-12/2024-03-12-raspios-bullseye-arm64-lite.img.xz
+xz -d 2024-03-12-raspios-bullseye-arm64-lite.img.xz
 ```
 
 ### Customize for Revolution Pi
