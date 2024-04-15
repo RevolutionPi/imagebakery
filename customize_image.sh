@@ -305,7 +305,7 @@ if [ "$MINIMG" != "1" ]; then
 	chroot "$IMAGEDIR" apt-get -y install nodejs
 
 	# Install node-red via npm as explained in the node-red documentation
-	NODERED_VER="3.0.2"
+	NODERED_VER="3.1.9"
 	chroot "$IMAGEDIR" npm install -g --unsafe-perm node-red@${NODERED_VER} || true
  	# This will just check successful installation, because npm will return an exit code != 0 in a chroot environment
 	chroot "$IMAGEDIR" npm list -g node-red@${NODERED_VER}
