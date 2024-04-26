@@ -1,0 +1,6 @@
+---
+include:
+  - project: "revolutionpi/infrastructure/ci-templates"
+    file: "base.yml"
+  - project: "revolutionpi/infrastructure/ci-templates"
+    file: "/check-commit/lint-commit.yml"
