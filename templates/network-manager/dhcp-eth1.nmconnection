@@ -3,15 +3,15 @@ id=DHCP eth1
 uuid=4e764ae2-0a96-11ee-b8b2-97bdf6db4268
 type=ethernet
 interface-name=eth1
-autoconnect=yes
+autoconnect=true
 autoconnect-priority=0
 autoconnect-retries=2
 
 [ipv4]
 method=auto
-may-fail=no
+may-fail=false
 dhcp-timeout=15
 
 [ipv6]
 method=auto
-may-fail=yes
+may-fail=true
