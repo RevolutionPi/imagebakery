@@ -2,8 +2,10 @@
 # Customize packages of an existing image for Revolution Pi
 
 usage () {
-	echo 'Usage: install_debs_into_image.sh [-h, --help] <image>
-  -h, --help		Print the usage page'
+	echo 'Usage: install_debs_into_image.sh [-h, -i, --help] <image>
+	-i				Interactive mode (does not install anything automatically
+					and runs chroot in image instead)
+	-h, --help		Print the usage page'
 }
 
 if [ ! -x "$(which fsck.vfat)" ]; then
@@ -36,20 +38,23 @@ fi
 
 
 # get the options
-if ! MYOPTS=$(getopt -o mh --long minimize,help -- "$@"); then
+if ! MYOPTS=$(getopt -o hi --long help -- "$@"); then
 	usage;
 	exit 1;
 fi
 eval set -- "$MYOPTS"
 
+INTERACTIVE=0
 # extract options and their arguments into variables.
 while true ; do
 	case "$1" in
 		-h|--help) usage ; exit 0;;
+		-i) INTERACTIVE=1; shift;;
 		*) shift; break ;;
 	esac
 done
 
+IMAGEFILE="$1"
 IMAGEDIR=`mktemp -d -p /tmp img.XXXXXXXX`
 BAKERYDIR=$(dirname "$0")
 LOOPDEVICE=$(losetup -f)
@@ -101,7 +106,7 @@ trap cleanup ERR SIGINT
 blocksize=512
 # Minimal eMMC size is 4 GB with an available disk size of 3909091328 bytes
 disksize=3909091328
-imgblocks=$(/sbin/blockdev --getsz "$1")
+imgblocks=$(/sbin/blockdev --getsz "$IMAGEFILE")
 [ "$imgblocks" = "" ] && echo 1>&1 "Error: Cannot get image size" && exit 1
 imgsize=$((imgblocks * blocksize))
 
@@ -137,19 +142,23 @@ fi
 #   from /etc/ld.so.preload cannot be preloaded (cannot open shared object file): ignored.
 [[ -f "$IMAGEDIR/etc/ld.so.preload" ]] && mv "$IMAGEDIR/etc/ld.so.preload" "$IMAGEDIR/etc/ld.so.preload.bak"
 
-# customize settings
-echo `basename "$1"` > "$IMAGEDIR/etc/revpi/image-release"
+if [[ $INTERACTIVE -eq 1 ]]; then
+	chroot "$IMAGEDIR" /bin/bash
+else
+	# customize settings
+	echo `basename "$1"` > "$IMAGEDIR/etc/revpi/image-release"
 
-chroot "$IMAGEDIR" apt-get update
-chroot "$IMAGEDIR" apt-get -y install `egrep -v '^#' "$BAKERYDIR/debs-to-download"`
-# remove package lists, they will be outdated within days
-rm "$IMAGEDIR/var/lib/apt/lists/"*Packages
+	chroot "$IMAGEDIR" apt-get update
+	chroot "$IMAGEDIR" apt-get -y install `egrep -v '^#' "$BAKERYDIR/debs-to-download"`
+	# remove package lists, they will be outdated within days
+	rm "$IMAGEDIR/var/lib/apt/lists/"*Packages
 
-# install local packages
-if [ "$(/bin/ls "$BAKERYDIR/debs-to-install/"*.deb 2>/dev/null)" ] ; then
-	mkdir "$IMAGEDIR/tmp/debs-to-install"
-	mount --bind "$BAKERYDIR/debs-to-install" "$IMAGEDIR/tmp/debs-to-install"
-	chroot "$IMAGEDIR" sh -c "dpkg -i /tmp/debs-to-install/*.deb"
+	# install local packages
+	if [ "$(/bin/ls "$BAKERYDIR/debs-to-install/"*.deb 2>/dev/null)" ] ; then
+		mkdir "$IMAGEDIR/tmp/debs-to-install"
+		mount --bind "$BAKERYDIR/debs-to-install" "$IMAGEDIR/tmp/debs-to-install"
+		chroot "$IMAGEDIR" sh -c "dpkg -i /tmp/debs-to-install/*.deb"
+	fi
 fi
 
 # remove logs and ssh host keys
