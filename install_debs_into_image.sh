@@ -99,6 +99,11 @@ cleanup_losetup() {
 }
 
 cleanup() {
+	# Clean up tools, which could be used in interactive mode
+ 	rm /root/.bash_history
+	apt-get clean
+ 	apt clean
+     
 	cleanup_umount
 	cleanup_losetup
 }
