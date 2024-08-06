@@ -5,6 +5,7 @@ usage () {
 	echo 'Usage: install_debs_into_image.sh [-h, -i, --help] <image>
 	-i				Interactive mode (does not install anything automatically
 					and runs chroot in image instead)
+	-8				Resize image for working process to 7,5 GB (for 8 GB version)
 	-h, --help		Print the usage page'
 }
 
@@ -38,18 +39,20 @@ fi
 
 
 # get the options
-if ! MYOPTS=$(getopt -o hi --long help -- "$@"); then
+if ! MYOPTS=$(getopt -o hi8 --long help -- "$@"); then
 	usage;
 	exit 1;
 fi
 eval set -- "$MYOPTS"
 
 INTERACTIVE=0
+IMAGE8=0
 # extract options and their arguments into variables.
 while true ; do
 	case "$1" in
 		-h|--help) usage ; exit 0;;
 		-i) INTERACTIVE=1; shift;;
+		-8) IMAGE8=1; shift;;
 		*) shift; break ;;
 	esac
 done
@@ -104,8 +107,13 @@ trap cleanup ERR SIGINT
 
 # Block size is 512 bytes
 blocksize=512
-# Minimal eMMC size is 4 GB with an available disk size of 3909091328 bytes
-disksize=3909091328
+if [ $IMAGE8 -eq 1 ]; then
+	# Use more space to create custom images bigger than 4 GB
+	disksize=8053063680
+ else
+	# Minimal eMMC size is 4 GB with an available disk size of 3909091328 bytes
+	disksize=3909091328
+fi
 imgblocks=$(/sbin/blockdev --getsz "$IMAGEFILE")
 [ "$imgblocks" = "" ] && echo 1>&1 "Error: Cannot get image size" && exit 1
 imgsize=$((imgblocks * blocksize))
@@ -113,7 +121,7 @@ imgsize=$((imgblocks * blocksize))
 # The smallest size of CM3-eMMC is 4 GB  , the available disksize for a system is 3909091328 bytes
 # An image like raspios-lite just have 2 GB , so we need to resize rootfs first before
 # we start processing the image. Otherwise build will fail with "no space left on device"
-if [ "$imgsize" -lt 3900000000 ] ; then
+if [ "$imgsize" -lt $disksize ] ; then
 	bcount=$(((disksize-imgsize)/blocksize))
 	dd if=/dev/zero count=$bcount bs=$blocksize status=progress >> "$1"
 	$PARTED "$1" resizepart 2 "$((disksize-1))"B
