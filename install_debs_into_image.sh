@@ -72,6 +72,9 @@ cleanup_umount() {
 	if mountpoint -q "$IMAGEDIR/tmp/debs-to-install" ; then
 		umount "$IMAGEDIR/tmp/debs-to-install"
 	fi
+	if mountpoint -q "$IMAGEDIR/mnt" ; then
+		umount "$IMAGEDIR/mnt"
+	fi
 	if [ -e "$IMAGEDIR/tmp/debs-to-install" ] ; then
 		rmdir "$IMAGEDIR/tmp/debs-to-install"
 	fi
@@ -156,6 +159,9 @@ fi
 [[ -f "$IMAGEDIR/etc/ld.so.preload" ]] && mv "$IMAGEDIR/etc/ld.so.preload" "$IMAGEDIR/etc/ld.so.preload.bak"
 
 if [[ $INTERACTIVE -eq 1 ]]; then
+	# Mount local file system to /mnt in the image
+	mount --bind "$(pwd)" "$IMAGEDIR/mnt"
+  	# Change root dir to image and start interactive shell
 	chroot "$IMAGEDIR" /bin/bash
 else
 	# customize settings
