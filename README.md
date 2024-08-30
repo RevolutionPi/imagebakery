@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2017-2024 KUNBUS GmbH
+
+SPDX-License-Identifier: GPL-2.0-or-later
+-->
+
 <details>
 <summary>We have moved to GitLab! Read this for more information.</summary>
 
