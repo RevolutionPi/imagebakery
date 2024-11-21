@@ -87,6 +87,12 @@ If you would like to modify an existing image by only installing some packages (
 
 `install_debs_into_image.sh <revpi-image>`
 
+### Shrink custom Revolution Pi Image
+
+If you have created an image of the Revolution Pi, it is as large as your eMMC, even if not so much data is stored. To reduce this image and speed up the flash process, the `schrink_image.sh` script can be used.
+
+`shrink_image.sh <revpi-image>`
+
 ### Collect sources on a physical medium for GPL compliance
 
 The script `collect_sources.sh` can be used to collect the sources of the packages shipped with our official image. The official images can be found on our [download page](https://revolutionpi.de/tutorials/downloads/#revpiimages). 
